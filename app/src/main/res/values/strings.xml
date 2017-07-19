@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">FightLapyApp</string>
+    <string name="dodaj_zawodniczke">Dodaj zawodniczkę</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="get_imie">Imię</string>
+    <string name="get_nazwisko">Nazwisko</string>
+    <string name="get_numer">Numer</string>
+    <string name="pozycja_spinner">Pozycja</string>
+    <string name="zapisz_zawodniczke">Zapisz</string>
+    <string name="dodajZawodniczke">Dodaj zawodniczke</string>
+
+    <string name="position_prompt">Pozycja</string>
+        <string-array name="position_arrays">
+            <item>Rozegranie</item>
+            <item>Atak</item>
+            <item>Przyjęcie</item>
+            <item>Środek</item>
+            <item>Libero</item>
+        </string-array>
+
+
+</resources>
