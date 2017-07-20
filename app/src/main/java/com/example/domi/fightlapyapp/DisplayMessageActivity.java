@@ -9,6 +9,9 @@ import android.widget.TextView;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +28,9 @@ import org.w3c.dom.Text;
 
 public class DisplayMessageActivity extends AppCompatActivity {
     private Spinner spinner1;
-
+    private EditText imieET;
+    private EditText nazwiskoET;
+    private EditText numerET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +46,44 @@ public class DisplayMessageActivity extends AppCompatActivity {
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         // Capture the layout's TextView and set the string as its text
-        EditText imie = (EditText) findViewById(R.id.imie);
-        EditText nazwisko = (EditText) findViewById(R.id.nazwisko);
-        EditText numer = (EditText) findViewById(R.id.numer);
+        imieET = (EditText) findViewById(R.id.imie);
+        nazwiskoET = (EditText) findViewById(R.id.nazwisko);
+        numerET = (EditText) findViewById(R.id.numer);
 
-        //String imie_zawodniczki= textView.getText().toString();
+        findViewById(R.id.zapisz).setOnClickListener(new OnClickListener() {
 
-        //textView.setText(message);
+            @Override
+
+            public void onClick(View v) {
+                int czyOk=0;
+
+                final String imie_zawodniczki = imieET.getText().toString();
+
+                if (!czyImieLubNazwiskoOK(imie_zawodniczki)) {
+                    imieET.setError("Błędna wartość w polu imie");
+                    czyOk++;
+                    }
+
+                final String nazwisko_zawodniczki = nazwiskoET.getText().toString();
+                if (!czyImieLubNazwiskoOK(nazwisko_zawodniczki)) {
+                    nazwiskoET.setError("Błędna wartość w polu nazwisko");
+                    czyOk++;
+                }
+
+                final String numer_zawodniczki = numerET.getText().toString();
+                if (!czyNumerOK(numer_zawodniczki)) {
+                    numerET.setError("Błędna wartość w polu numer");
+                    czyOk++;
+                }
+
+                if(czyOk==0) {
+                    zapisz_zawodniczke(v);
+                }
+                //else?
+            }
+
+
+        });
     }
 
     public void addListenerOnSpinnerItemSelection() {
@@ -55,48 +91,81 @@ public class DisplayMessageActivity extends AppCompatActivity {
         spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
     }
 
-    public void zapisz_zawodniczke(View view) {
-        EditText imie = (EditText) findViewById(R.id.imie);
-        String imie_zawodniczki = imie.getText().toString();
-        EditText nazwisko = (EditText) findViewById(R.id.nazwisko);
-        String nazwisko_zawodniczki = nazwisko.getText().toString();
-        EditText numer = (EditText) findViewById(R.id.numer);
-        String numer_zawodniczki = numer.getText().toString();
+    private boolean czyImieLubNazwiskoOK(String imieLubNazwisko_zawodniczki)
+    {
+        String IMIENAZWISKO_PATTERN = "[a-zA-Z]+";
+
+        Pattern pattern = Pattern.compile(IMIENAZWISKO_PATTERN);
+        Matcher matcher = pattern.matcher(imieLubNazwisko_zawodniczki);
+        return matcher.matches();
+    }
+
+    private boolean czyNumerOK(String numer_zawodniczki)
+    {
+        String NUMER_PATTERN = "[0-9]+";
+
+        Pattern pattern = Pattern.compile(NUMER_PATTERN);
+        Matcher matcher = pattern.matcher(numer_zawodniczki);
+        return matcher.matches();
+    }
+
+    private void zapisz_zawodniczke(View view) {
+
+        String imie_zawodniczki = imieET.getText().toString();
+        String nazwisko_zawodniczki = nazwiskoET.getText().toString();
+        String numer_zawodniczki = numerET.getText().toString();
+        Integer numerInt = Integer.parseInt(numer_zawodniczki);
+        String pozycja_zawidniczki = String.valueOf(spinner1.getSelectedItem());
+
+        Integer idPozycji = jakaToPozycja(pozycja_zawidniczki);
 
         DatabaseHandler db = new DatabaseHandler(this);
         Log.d("Insert: ", "Inserting ..");
-        Zawodniczka zawodniczkaTestowa = new Zawodniczka(imie_zawodniczki, nazwisko_zawodniczki, 3, 88);
+        Zawodniczka zawodniczkaTestowa = new Zawodniczka(imie_zawodniczki, nazwisko_zawodniczki, idPozycji, numerInt);
         db.dodajZawodniczke(zawodniczkaTestowa);
 
         Log.d("Reading: ", "Reading all contacts..");
         List<Zawodniczka> zawodniczki = db.getWszystkieZawodniczki();
-        for (Zawodniczka zaw : zawodniczki) {
-            String log = "Id: " + zaw.get_id() + " ,Name: " + zaw.get_imie() + " ,Numer: " + zaw.get_numer();
-            // Writing Contacts to log
-            Log.d("Name: ", log);
+        int ostatnia=zawodniczki.size();
+        Zawodniczka zaw = zawodniczki.get(ostatnia-1);
+        //for (Zawodniczka zaw : zawodniczki) {
+            String log = "Id: " + zaw.get_id() + " ,Name: " + zaw.get_imie() + " ,Nazwisko: " + zaw.get_nazwisko()+" ,id pozycji "+zaw.get_id_pozycji()+" ,numer "+zaw.get_numer();
+            Log.d("Ostatnia: ", log);
             db.close();
-        }
-        // get the selected dropdown list value
-    /*
-    public void addListenerOnButton() {
-
-        spinner1 = (Spinner) findViewById(R.id.spinner1);
-        //spinner2 = (Spinner) findViewById(R.id.spinner2);
-        //btnSubmit = (Button) findViewById(R.id.btnSubmit);
-
-        btnSubmit.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(DisplayMessageActivity.this,
-                        "OnClickListener : " +
-                                "\nSpinner 1 : "+ String.valueOf(spinner1.getSelectedItem()),
-                        Toast.LENGTH_SHORT).show();
-            }
-
-        });
+        //}
     }
-    */
+
+    private Integer jakaToPozycja(String pozycja)
+    {
+        Integer idPozycji=0;
+
+        switch(pozycja){
+            case ("Rozegranie"):
+                idPozycji=1;
+                break;
+            case("Atak"):
+                idPozycji=2;
+                break;
+            case("Przyjęcie"):
+                idPozycji=3;
+                break;
+            case("Środek"):
+                idPozycji=4;
+                break;
+            case("Libero"):
+                idPozycji=5;
+                break;
+        }
+
+        return idPozycji;
+    }
+
+    private boolean czyWszystkoOK(Integer licznik)
+    {
+        boolean czOk=true;
+        if(licznik!=0)
+            czOk=false;
+
+        return czOk;
     }
 }
