@@ -79,7 +79,6 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 if(czyOk==0) {
                     zapisz_zawodniczke(v);
                 }
-                //else?
             }
 
 
