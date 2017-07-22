@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.domi.fightlapyapp.DodanieZawodniczki">
+
+    <Button
+        android:id="@+id/zapisz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/zapisz_zawodniczke"
+        android:onClick="zapisz_zawodniczke"
+        android:text="@string/zapisz_zawodniczke"
+        app:layout_constraintHorizontal_bias="0.883"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_wydarzenie" />
+
+    <EditText
+        android:id="@+id/miejsce_wydarzenia"
+        android:layout_width="283dp"
+        android:layout_height="43dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="21dp"
+        android:ems="10"
+        android:hint="@string/get_numer"
+        android:inputType="number"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cena_wydarzenia"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp" />
+
+    <EditText
+        android:id="@+id/cena_wydarzenia"
+        android:layout_width="283dp"
+        android:layout_height="43dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/get_nazwisko"
+        android:inputType="textPersonName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imie"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp" />
+
+    <EditText
+        android:id="@+id/imie"
+        android:layout_width="283dp"
+        android:layout_height="43dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="65dp"
+        android:ems="10"
+        android:hint="@string/get_imie"
+        android:inputType="textPersonName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp" />
+
+    <Spinner
+        android:id="@+id/spinner_wydarzenie"
+        android:layout_width="281dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="16dp"
+        android:entries="@array/position_arrays"
+        android:prompt="@string/position_prompt"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/miejsce_wydarzenia" />
+
+        />
+
+</android.support.constraint.ConstraintLayout>
