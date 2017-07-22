@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.domi.fightlapyapp.DodanieWydarzeniaActivity">
+
+    <Button
+        android:id="@+id/zapisz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/zapisz_zawodniczke"
+        android:onClick="zapisz_zawodniczke"
+        android:text="@string/zapisz_zawodniczke"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cena_wydarzenia" />
+
+    <EditText
+        android:id="@+id/miejsce_wydarzenia"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/miejsce_wydarzenie"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cena_wydarzenia"
+        app:layout_constraintTop_toBottomOf="@+id/godzina_wydarzenia" />
+
+    <EditText
+        android:id="@+id/cena_wydarzenia"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="@string/get_nazwisko"
+        android:inputType="number"
+        android:text="@string/cena_wydarzenia"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/zapisz"
+        app:layout_constraintTop_toBottomOf="@+id/miejsce_wydarzenia" />
+
+    <Spinner
+        android:id="@+id/spinner_wydarzenie"
+        android:layout_width="300dp"
+        android:layout_height="28dp"
+        android:entries="@array/event_arrays"
+        android:prompt="@string/event_prompt"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/datePicker" />
+
+    <TimePicker
+        android:id="@+id/godzina_wydarzenia"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:clickable="true"
+        android:headerBackground="?attr/colorPrimaryDark"
+        android:numbersSelectorColor="@color/colorPrimary"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/miejsce_wydarzenia"
+        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:headerBackground="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toTopOf="@+id/godzina_wydarzenia"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_wydarzenie" /><![CDATA[
+
+
+
+    />
+
+
+]]>
+</android.support.constraint.ConstraintLayout>

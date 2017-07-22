@@ -98,8 +98,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return zawodniczka;
     }
 
-    public List<Zawodniczka> getWszystkieZawodniczki() /*throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception, Niedozwolony_Id_Exception*/{
-        List<Zawodniczka> zawodniczkaList = new ArrayList<Zawodniczka>();
+    public ArrayList<Zawodniczka> getWszystkieZawodniczki() /*throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception, Niedozwolony_Id_Exception*/{
+        ArrayList<Zawodniczka> zawodniczkaList = new ArrayList<Zawodniczka>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PLAYERS;
 
