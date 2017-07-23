@@ -26,7 +26,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_NUMBER = "numer";
     //private static final String KEY_ID_EVENT = "idWydarzenia";
 
-    private static final String TABLE_EVENTS = "TabelaWydarzen";
     private static final String TABLE_POSITIONS = "SlownikPozycji";
 
     public DatabaseHandler(Context context) {
@@ -37,14 +36,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        /*String CREATE_PLAYERS_TABLE = "CREATE TABLE " + TABLE_PLAYERS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY, "
-                + KEY_NAME + " TEXT, "
-                + KEY_LAST_NAME + " TEXT, "
-                + KEY_ID_POSITION + " TEXT, "
-                + KEY_NUMBER + " TEXT);";
-        db.execSQL(CREATE_PLAYERS_TABLE);
-        */
         db.execSQL("CREATE TABLE " + TABLE_PLAYERS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY,"
                 + KEY_NAME + " TEXT NOT NULL,"

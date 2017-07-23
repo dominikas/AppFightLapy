@@ -125,6 +125,9 @@
     <string name="miejsce_wydarzenie">Miejsce</string>
     <string name="data_wydarzenia">Data</string>
     <string name="cena_wydarzenia">Cena</string>
+    <string name="tytul_wydarzenia">Tytuł</string>
+    <string name="godzina_wydarzenia">Godzina</string>
+    <string name="udany_zapis_wydarzenia">Wydarzenie zapisane</string>
 
 
 </resources>

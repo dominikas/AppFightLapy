@@ -35,8 +35,8 @@ public class DodanieZawodniczki extends AppCompatActivity {
 
         // Capture the layout's TextView and set the string as its text
         imieET = (EditText) findViewById(R.id.imie);
-        nazwiskoET = (EditText) findViewById(R.id.cena_wydarzenia);
-        numerET = (EditText) findViewById(R.id.miejsce_wydarzenia);
+        nazwiskoET = (EditText) findViewById(R.id.nazwisko);
+        numerET = (EditText) findViewById(R.id.numer_zawodniczki);
 
         findViewById(R.id.zapisz).setOnClickListener(new OnClickListener() {
 
@@ -74,7 +74,7 @@ public class DodanieZawodniczki extends AppCompatActivity {
     }
 
     public void addListenerOnSpinnerItemSelection() {
-        spinner1 = (Spinner) findViewById(R.id.spinner_wydarzenie);
+        spinner1 = (Spinner) findViewById(R.id.spinner_pozycja);
         spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
     }
 
@@ -102,15 +102,15 @@ public class DodanieZawodniczki extends AppCompatActivity {
         String nazwisko_zawodniczki = nazwiskoET.getText().toString();
         String numer_zawodniczki = numerET.getText().toString();
         Integer numerInt = Integer.parseInt(numer_zawodniczki);
-        String pozycja_zawidniczki = String.valueOf(spinner1.getSelectedItem());
+        String pozycja_zawodniczki = String.valueOf(spinner1.getSelectedItem());
 
-        Integer idPozycji = jakaToPozycja(pozycja_zawidniczki);
+        Integer idPozycji = jakaToPozycja(pozycja_zawodniczki);
 
         DatabaseHandler db = new DatabaseHandler(this);
         Log.d("Insert: ", "Inserting ..");
         Zawodniczka zawodniczkaTestowa = new Zawodniczka(imie_zawodniczki, nazwisko_zawodniczki, idPozycji, numerInt);
         db.dodajZawodniczke(zawodniczkaTestowa);
-
+        db.close();
         /*
         Log.d("Reading: ", "Reading all contacts..");
         List<Zawodniczka> zawodniczki = db.getWszystkieZawodniczki();

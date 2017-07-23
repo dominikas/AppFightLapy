@@ -20,7 +20,7 @@ public class WyborWydarzeniaActivity extends AppCompatActivity {
 
     public void listaWydarzen(View view)
     {
-        //Intent intent = new Intent(this, ListaZawodniczekActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, ListaWydarzenActivity.class);
+        startActivity(intent);
     }
 }

@@ -34,15 +34,26 @@
             android:parentActivityName=".WyborZawodniczkiActivity">
             >
         </activity>
+
         <activity
             android:name=".WyborWydarzeniaActivity"
             android:parentActivityName=".MainActivity">
             >
         </activity>
+
         <activity
             android:name=".DodanieWydarzeniaActivity"
             android:parentActivityName=".WyborWydarzeniaActivity">
+        </activity>
 
+        <activity
+            android:name=".Udany_zapis_wydarzenia"
+            android:parentActivityName=".WyborWydarzeniaActivity">
+        </activity>
+
+        <activity
+            android:name=".ListaWydarzenActivity"
+            android:parentActivityName=".WyborWydarzeniaActivity">
         </activity>
     </application>
 

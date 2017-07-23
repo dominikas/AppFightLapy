@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.domi.fightlapyapp.Udany_zapis_zawodniczki">
+    tools:context="com.example.domi.fightlapyapp.Udany_zapis_wydarzenia">
 
     <TextView
-        android:id="@+id/udany_zapis_zawodniczki"
+        android:id="@+id/udany_zapis_wydarzenia"
         android:layout_width="244dp"
         android:layout_height="124dp"
-        android:text="@string/udany_zapis_zawodniczki"
+        android:text="@string/udany_zapis_wydarzenia"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintHorizontal_bias="0.497"
