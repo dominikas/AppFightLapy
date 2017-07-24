@@ -33,4 +33,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void zapisZawodniczkiNaWydarzenie(View view)
+    {
+        Intent intent = new Intent(this, ZapisZawodniczkiNaWydarzenieActivity.class);
+        startActivity(intent);
+    }
 }

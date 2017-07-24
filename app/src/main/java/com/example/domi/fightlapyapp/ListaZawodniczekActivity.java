@@ -38,7 +38,6 @@ public class ListaZawodniczekActivity extends AppCompatActivity {
             listItems[zawodniczkiList.indexOf(zaw)] = zaw.get_imie();
         }
 
-
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
         mListView.setAdapter(adapter);
     }

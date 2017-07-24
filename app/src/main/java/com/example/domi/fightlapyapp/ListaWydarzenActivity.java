@@ -8,7 +8,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import DatabaseHandler.DatabaseHandlerEvents;
+import DatabaseHandler.*;
 import Wydarzenie.Wydarzenie;
 import Zawodniczka.Zawodniczka;
 
@@ -22,7 +22,7 @@ public class ListaWydarzenActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.listawydarzen_list_view);
 
         Log.d("Reading: ", "Reading all events..");
-        DatabaseHandlerEvents db = new DatabaseHandlerEvents(this);
+        DatabaseHandler db = new DatabaseHandler(this);
         ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
         db.close();
         String[] listItems = new String[wydarzenieList.size()];

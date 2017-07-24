@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
@@ -20,9 +21,9 @@ import Wydarzenie.*;
 
 public class DodanieWydarzeniaActivity extends AppCompatActivity {
 
-    private EditText date;
+    private TextView date;
     private DatePickerDialog datePickerDialog;
-    private EditText time;
+    private TextView time;
     private TimePickerDialog timePickerDialog;
     private EditText miejsceET;
     private EditText cenaET;
@@ -39,7 +40,7 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
         opisET = (EditText) findViewById(R.id.tytul);
         typWydarzeniaSpinner = (Spinner) findViewById(R.id.spinner_wydarzenie);
 
-        date = (EditText) findViewById(R.id.data);
+        date = (TextView) findViewById(R.id.data);
         date.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -67,7 +68,7 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
         });
 
         //  initiate the edit text
-        time = (EditText) findViewById(R.id.godzina);
+        time = (TextView) findViewById(R.id.godzina);
         // perform click event listener on edit text
         time.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +150,7 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
 
         Integer idWydarzenia = jakieToWydarzenie(typWydarzenia);
 
-        DatabaseHandlerEvents db = new DatabaseHandlerEvents(this);
+        DatabaseHandler db = new DatabaseHandler(this);
         Log.d("Insert: ", "Inserting ..");
         Wydarzenie wydarzenieTestowe = new Wydarzenie(idWydarzenia, dataWydarzenia, godzinaWydarzenia, miejsceWydarzenia, opisWydarzenia, cenaInt);
 

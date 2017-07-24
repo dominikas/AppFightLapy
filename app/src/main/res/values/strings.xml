@@ -128,6 +128,10 @@
     <string name="tytul_wydarzenia">Tytuł</string>
     <string name="godzina_wydarzenia">Godzina</string>
     <string name="udany_zapis_wydarzenia">Wydarzenie zapisane</string>
+    <string name="zapisz_zawodniczke_wydarzenie">Zapisz zawodniczkę na wydarzenie</string>
+    <string name="wybierz_zawodniczke">Wybierz zawodniczkę</string>
+    <string name="wybierz_wydarzenie" >Wybierz wydarzenie</string>
+    <string name="status">Status</string>
 
 
 </resources>
