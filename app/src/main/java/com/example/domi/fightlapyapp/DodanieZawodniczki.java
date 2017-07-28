@@ -123,7 +123,7 @@ public class DodanieZawodniczki extends AppCompatActivity {
             */
         //}
 
-        Intent intent = new Intent(this, Udany_zapis_zawodniczki.class);
+        Intent intent = new Intent(this, udany_zapis_zawodniczki.class);
         startActivity(intent);
     }
 

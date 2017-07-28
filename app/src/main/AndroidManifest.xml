@@ -23,27 +23,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name=".ListaZawodniczekActivity"
             android:parentActivityName=".WyborZawodniczkiActivity" />
-
         <activity
             android:name=".DodanieZawodniczki"
             android:parentActivityName=".WyborZawodniczkiActivity" />
-
         <activity
-            android:name=".Udany_zapis_zawodniczki"
+            android:name=".udany_zapis_zawodniczki"
             android:parentActivityName=".WyborZawodniczkiActivity">
             >
         </activity>
-
         <activity
             android:name=".WyborWydarzeniaActivity"
             android:parentActivityName=".MainActivity">
             >
         </activity>
-
         <activity
             android:name=".DodanieWydarzeniaActivity"
             android:parentActivityName=".WyborWydarzeniaActivity">
@@ -62,6 +57,15 @@
         <activity
             android:name=".ZapisZawodniczkiNaWydarzenieActivity"
             android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".WybranaZawodniczkaZListy"
+            android:parentActivityName=".ListaZawodniczekActivity">
+        </activity>
+
+        <activity android:name=".UdanyZapisZawodniczkiNaWydarzenieActivity"
+            android:parentActivityName=".WyborZawodniczkiActivity">
         </activity>
     </application>
 

@@ -2,9 +2,11 @@ package DatabaseHandler;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_PRICE + " TEXT NOT NULL)";
 
     private static final String CREATE_TABLE_PLAYER_EVENT="CREATE TABLE " + TABLE_PLAYER_EVENT + "("
+            + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_PLAYER_ID + " INTEGER,"
             + KEY_EVENT_ID + " INTEGER,"
             + KEY_PRESENCE + " TEXT NOT NULL)";
@@ -113,14 +116,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        Zawodniczka zawodniczka = new Zawodniczka(cursor.getString(0),
-                cursor.getString(1),
-                Integer.parseInt(cursor.getString(2)),
-                Integer.parseInt(cursor.getString(3)));
-                //cursor.getString(4));
-                //Integer.parseInt(cursor.getString(3)),
-                //Integer.parseInt(cursor.getString(4)));
-        // return contact
+                //(cursor.getInt(cursor.getColumnIndex(KEY_ID))),
+        Zawodniczka zawodniczka = new Zawodniczka(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
+                cursor.getString(cursor.getColumnIndex(KEY_NAME)),
+                cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME)),
+                cursor.getInt(cursor.getColumnIndex(KEY_ID_POSITION)),
+                cursor.getInt(cursor.getColumnIndex(KEY_NUMBER)));
+
         return zawodniczka;
     }
 
@@ -136,17 +138,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Zawodniczka zawodniczka = new Zawodniczka();
-                zawodniczka.set_id(Integer.parseInt(cursor.getString(0)));
-                zawodniczka.set_imie(cursor.getString(1));
-                zawodniczka.set_nazwisko(cursor.getString(2));
-                zawodniczka.set_id_pozycji(Integer.parseInt(cursor.getString(3)));
-                zawodniczka.set_numer(Integer.parseInt(cursor.getString(4)));;
+                zawodniczka.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                zawodniczka.set_imie(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
+                zawodniczka.set_nazwisko(cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME)));
+                zawodniczka.set_id_pozycji(cursor.getInt(cursor.getColumnIndex(KEY_ID_POSITION)));
+                zawodniczka.set_numer(cursor.getInt(cursor.getColumnIndex(KEY_NUMBER)));;
                 // Adding contact to list
                 zawodniczkaList.add(zawodniczka);
             } while (cursor.moveToNext());
         }
-
-        // return contact list
+        // return all players list
         return zawodniczkaList;
     }
 
@@ -165,8 +166,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, zawodniczka.get_imie()); // Contact Name
-        values.put(KEY_LAST_NAME, zawodniczka.get_nazwisko()); // Contact Phone Number
+        values.put(KEY_NAME, zawodniczka.get_imie());
+        values.put(KEY_LAST_NAME, zawodniczka.get_nazwisko());
         values.put(KEY_ID_POSITION, zawodniczka.get_id_pozycji());
         values.put(KEY_NUMBER, zawodniczka.get_numer());
 
@@ -207,13 +208,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        Wydarzenie wydarzenie = new Wydarzenie(Integer.parseInt(cursor.getString(0)),
-                Integer.parseInt(cursor.getString(1)),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5),
-                Integer.parseInt(cursor.getString(6)));
+        Wydarzenie wydarzenie = new Wydarzenie(cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT)),
+                cursor.getInt(cursor.getColumnIndex(KEY_ID_TYPE)),
+                cursor.getString(cursor.getColumnIndex(KEY_DATE)),
+                cursor.getString(cursor.getColumnIndex(KEY_HOUR)),
+                cursor.getString(cursor.getColumnIndex(KEY_PLACE)),
+                cursor.getString(cursor.getColumnIndex(KEY_DESC)),
+                cursor.getInt(cursor.getColumnIndex(KEY_PRICE)));
 
         return wydarzenie;
     }
@@ -230,19 +231,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Wydarzenie wydarzenie = new Wydarzenie();
-                wydarzenie.set_id_wydarzenia(Integer.parseInt(cursor.getString(0)));
-                wydarzenie.set_id_typu_wydarzenia(Integer.parseInt(cursor.getString(1)));
-                wydarzenie.set_data(cursor.getString(2));
-                wydarzenie.set_godzina(cursor.getString(3));
-                wydarzenie.set_miejsce(cursor.getString(4));
-                wydarzenie.set_opis(cursor.getString(5));
-                wydarzenie.set_cena(Integer.parseInt(cursor.getString(6)));
+                wydarzenie.set_id_wydarzenia(cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT)));
+                wydarzenie.set_id_typu_wydarzenia(cursor.getInt(cursor.getColumnIndex(KEY_ID_TYPE)));
+                wydarzenie.set_data(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
+                wydarzenie.set_godzina(cursor.getString(cursor.getColumnIndex(KEY_HOUR)));
+                wydarzenie.set_miejsce(cursor.getString(cursor.getColumnIndex(KEY_PLACE)));
+                wydarzenie.set_opis(cursor.getString(cursor.getColumnIndex(KEY_DESC)));
+                wydarzenie.set_cena(cursor.getInt(cursor.getColumnIndex(KEY_PRICE)));
 
                 wydarzenieList.add(wydarzenie);
             } while (cursor.moveToNext());
         }
 
-        // return contact list
+        // return events list
         return wydarzenieList;
     }
 
@@ -278,4 +279,103 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(wydarzenie.get_id_wydarzenia()) });
         db.close();
     }
+
+    public void zapiszZawodniczkeNaWydarzenie(Integer idZawodniczki, Integer idWydarzenia, Integer idStatusu){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_PLAYER_ID , idZawodniczki);
+        values.put(KEY_EVENT_ID , idWydarzenia);
+        values.put(KEY_PRESENCE ,idStatusu);
+
+        // Inserting Row
+        db.insert(TABLE_PLAYER_EVENT, null, values);
+        db.close(); // Closing datab
+    }
+/*
+    public Integer getIdZaw(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_PLAYER_EVENT, new String[] { KEY_ID,
+                        KEY_PLAYER_ID, KEY_EVENT_ID, KEY_PRESENCE}, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+       Integer idZaw = cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_ID));
+
+        return idZaw;
+    }
+*/
+    public Integer getIdWyd(int id){
+
+        Integer idWyd;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_PLAYER_EVENT, new String[] { KEY_ID,
+                        KEY_PLAYER_ID, KEY_EVENT_ID, KEY_PRESENCE}, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        idWyd = cursor.getInt(cursor.getColumnIndex(KEY_EVENT_ID));
+/*
+        String selectQuery = "SELECT  * FROM " + TABLE_PLAYER_EVENT + " where IDZawodniczki="+id;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        idWyd= cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT));;
+*/
+        return idWyd;
+    }
+
+/*
+    public Integer getIdStatus(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_PLAYER_EVENT, new String[] { KEY_ID,
+                        KEY_PLAYER_ID, KEY_EVENT_ID, KEY_PRESENCE}, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Integer idStatus = cursor.getInt(cursor.getColumnIndex(KEY_PRESENCE));
+
+        return idStatus;
+    }
+    */
+//public void getWszystkieWydarzeniaPoZawodniczce(Integer idZawodniczki) {
+
+    public List<Wydarzenie> getWszystkieWydarzeniaPoZawodniczce(Integer idZawodniczki){
+
+        List<Wydarzenie> wydarzenia = new ArrayList<>();
+        String selectQuery="SELECT  * FROM " + TABLE_PLAYERS + " tp, "
+                + TABLE_EVENTS + " te, " + TABLE_PLAYER_EVENT + " tpe WHERE tp."
+                + KEY_ID + " = '" + idZawodniczki + "'" + " AND tp." + KEY_ID
+                + " = " + "tpe." + KEY_PLAYER_ID;
+
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Wydarzenie wydarzenie = new Wydarzenie();
+                wydarzenie.set_id_wydarzenia(cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT)));
+                wydarzenie.set_id_typu_wydarzenia(cursor.getInt(cursor.getColumnIndex(KEY_ID_TYPE)));
+                wydarzenie.set_data(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
+                wydarzenie.set_godzina(cursor.getString(cursor.getColumnIndex(KEY_HOUR)));
+                wydarzenie.set_miejsce(cursor.getString(cursor.getColumnIndex(KEY_PLACE)));
+                wydarzenie.set_opis(cursor.getString(cursor.getColumnIndex(KEY_DESC)));
+                wydarzenie.set_cena(cursor.getInt(cursor.getColumnIndex(KEY_PRICE)));
+
+                wydarzenia.add(wydarzenie);
+            } while (cursor.moveToNext());
+            }
+        return wydarzenia;
+    }
 }
+
+
