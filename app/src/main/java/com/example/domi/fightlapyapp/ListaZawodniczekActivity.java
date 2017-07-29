@@ -51,11 +51,8 @@ public class ListaZawodniczekActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String product = ((TextView) view).getText().toString();
                 // Launching new Activity on selecting single List Item
-
                 // sending data to new activity
-
                 i.putExtra("imie i nazwisko", product);
-
                 startActivity(i);
             }
         });

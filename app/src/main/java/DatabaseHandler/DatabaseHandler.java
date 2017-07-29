@@ -376,6 +376,57 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
         return wydarzenia;
     }
+
+    public Wydarzenie getDaneWydarzeniaPoIdWydarzenia(String idWydarzenia) {
+
+        String selectQuery="SELECT  * FROM " + TABLE_EVENTS + " te WHERE te."
+                + KEY_ID_EVENT + " = '" + idWydarzenia +"'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Wydarzenie wydarzenie = new Wydarzenie();
+
+        if (cursor.moveToFirst()) {
+
+                wydarzenie.set_id_wydarzenia(cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT)));
+                wydarzenie.set_id_typu_wydarzenia(cursor.getInt(cursor.getColumnIndex(KEY_ID_TYPE)));
+                wydarzenie.set_data(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
+                wydarzenie.set_godzina(cursor.getString(cursor.getColumnIndex(KEY_HOUR)));
+                wydarzenie.set_miejsce(cursor.getString(cursor.getColumnIndex(KEY_PLACE)));
+                wydarzenie.set_opis(cursor.getString(cursor.getColumnIndex(KEY_DESC)));
+                wydarzenie.set_cena(cursor.getInt(cursor.getColumnIndex(KEY_PRICE)));
+        }
+    return wydarzenie;
+    }
+
+    public List<Zawodniczka> getDaneZawodniczekPoIdWydarzenia(String idWydarzenia) {
+
+        String selectQuery="SELECT  tp.* FROM " + TABLE_PLAYER_EVENT+ " tpe, "
+                + TABLE_PLAYERS + " tp WHERE tpe."
+                + KEY_ID_EVENT + " = '" + idWydarzenia + "'" + " AND tpe." + KEY_PLAYER_ID
+                + " = " + "tp." + KEY_ID;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        List<Zawodniczka> zawodniczkiList = new ArrayList<Zawodniczka>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                Zawodniczka zawodniczka = new Zawodniczka();
+                zawodniczka.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                zawodniczka.set_imie(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
+                zawodniczka.set_nazwisko(cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME)));
+                zawodniczka.set_id_pozycji(cursor.getInt(cursor.getColumnIndex(KEY_ID_POSITION)));
+                zawodniczka.set_numer(cursor.getInt(cursor.getColumnIndex(KEY_NUMBER)));
+
+                zawodniczkiList.add(zawodniczka);
+
+            } while (cursor.moveToNext());
+        }
+        return zawodniczkiList;
+    }
+
 }
 
 
