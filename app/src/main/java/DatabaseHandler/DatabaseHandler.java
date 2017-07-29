@@ -410,7 +410,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         List<Zawodniczka> zawodniczkiList = new ArrayList<Zawodniczka>();
-
+//ddd
         if (cursor.moveToFirst()) {
             do {
                 Zawodniczka zawodniczka = new Zawodniczka();
