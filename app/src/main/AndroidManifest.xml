@@ -57,7 +57,9 @@
         <activity
             android:name=".UdanyZapisZawodniczkiNaWydarzenieActivity"
             android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".WybraneWydarzenieZListyActivity"></activity>
+        <activity android:name=".WybraneWydarzenieZListyActivity"
+                  android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

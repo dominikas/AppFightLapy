@@ -401,16 +401,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<Zawodniczka> getDaneZawodniczekPoIdWydarzenia(String idWydarzenia) {
 
-        String selectQuery="SELECT  tp.* FROM " + TABLE_PLAYER_EVENT+ " tpe, "
+
+        String selectQuery="SELECT  * FROM " + TABLE_PLAYER_EVENT + " tpe, "
                 + TABLE_PLAYERS + " tp WHERE tpe."
                 + KEY_ID_EVENT + " = '" + idWydarzenia + "'" + " AND tpe." + KEY_PLAYER_ID
                 + " = " + "tp." + KEY_ID;
+                /*"SELECT  * FROM " + TABLE_PLAYERS + " tp, "
+                + TABLE_EVENTS + " te, " + TABLE_PLAYER_EVENT + " tpe WHERE te."
+                + KEY_ID_EVENT + " = '" + idWydarzenia + "'" + " AND te." + KEY_ID_EVENT
+                + " = " + "tpe." + KEY_EVENT_ID +
+                " AND tp."+KEY_ID +" = " + "tpe."+ KEY_PLAYER_ID;
+                */
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
+        if (cursor.moveToFirst()) {
+            if (!cursor.isNull(cursor.getInt(cursor.getColumnIndex(KEY_LAST_NAME)))) {
+                Log.d("nie", " jest puste");
+            } else
+                Log.d("jest", " puste");
+        }
         List<Zawodniczka> zawodniczkiList = new ArrayList<Zawodniczka>();
 //ddd
+        if (cursor.moveToFirst()) {
+            Log.d("nazwisko zawodniczek", cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME)));
+        }
         if (cursor.moveToFirst()) {
             do {
                 Zawodniczka zawodniczka = new Zawodniczka();
@@ -424,6 +440,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             } while (cursor.moveToNext());
         }
+
+        Integer liczbaZaw = zawodniczkiList.size();
+        Log.d("liczba zawodniczek", liczbaZaw.toString());
+
         return zawodniczkiList;
     }
 
