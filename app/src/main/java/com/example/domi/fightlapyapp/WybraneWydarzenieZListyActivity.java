@@ -75,8 +75,6 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
 
         String[] listItems = new String[wybraneZawodniczki.size()];
         for (Zawodniczka zaw : wybraneZawodniczki) {
-            //          int indeks = wydarzeniaList.indexOf(wyd);
-//            Integer indeks1 = (Integer) indeks;
             listItems[wybraneZawodniczki.indexOf(zaw)] = zaw.get_imie() + " " + zaw.get_nazwisko();
         }
 

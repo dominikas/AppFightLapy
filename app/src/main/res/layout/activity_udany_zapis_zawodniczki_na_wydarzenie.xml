@@ -15,8 +15,9 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="Zawodniczka zapisana na wydarzenie"
+        android:textAlignment="center"
         android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
