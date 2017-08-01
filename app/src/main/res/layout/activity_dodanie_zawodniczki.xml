@@ -6,80 +6,114 @@
     android:layout_height="match_parent"
     tools:context="com.example.domi.fightlapyapp.DodanieZawodniczki">
 
-    <EditText
-        android:id="@+id/imie"
-        android:layout_width="283dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="65dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:ems="10"
-        android:filterTouchesWhenObscured="false"
-        android:hint="@string/get_imie"
-        android:inputType="textPersonName"
-        android:textColorLink="@color/colorPrimary"
-        android:maxLength="50"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/nazwisko"
-        android:layout_width="283dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginStart="16dp"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_imie"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:ems="10"
-        android:hint="@string/get_nazwisko"
-        android:inputType="textPersonName"
-        android:maxLength="50"
-        android:textColorLink="@color/colorPrimary"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imie" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp">
+
+        <EditText
+            android:id="@+id/imie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="65dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:ems="10"
+            android:filterTouchesWhenObscured="false"
+            android:hint="@string/get_imie"
+            android:inputType="textPersonName"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:textColorLink="@color/colorPrimary"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_nazwisko"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_imie"
+        tools:layout_editor_absoluteX="61dp">
+
+        <EditText
+            android:id="@+id/nazwisko"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:ems="10"
+            android:hint="@string/get_nazwisko"
+            android:inputType="textPersonName"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:textColorLink="@color/colorPrimary"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imie" />
+    </android.support.design.widget.TextInputLayout>
+
 
     <Spinner
         android:id="@+id/spinner_pozycja"
-        android:layout_width="281dp"
-        android:layout_height="28dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="32dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:entries="@array/position_arrays"
         android:prompt="@string/position_prompt"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/nazwisko" />
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_nazwisko" />
 
-    <EditText
-        android:id="@+id/numer_zawodniczki"
-        android:layout_width="283dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginStart="16dp"
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_numer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:ems="10"
-        android:hint="@string/get_numer"
-        android:inputType="number"
-        android:maxLength="3"
-        android:textColorLink="@color/colorPrimary"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_pozycja" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_pozycja"
+        tools:layout_editor_absoluteX="8dp">
+
+        <EditText
+            android:id="@+id/numer_zawodniczki"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:ems="10"
+            android:hint="@string/get_numer"
+            android:inputType="number"
+            android:maxLength="3"
+            android:maxLines="1"
+            android:textColorLink="@color/colorPrimary"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_pozycja" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/zapisz"
@@ -92,7 +126,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/numer_zawodniczki" />
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_numer" />
 
         />
 

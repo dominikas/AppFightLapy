@@ -1,8 +1,10 @@
 package com.example.domi.fightlapyapp;
 
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -21,11 +23,16 @@ public class DodanieZawodniczki extends AppCompatActivity {
     private EditText imieET;
     private EditText nazwiskoET;
     private EditText numerET;
+    private TextInputLayout inputLayoutImie, inputLayoutNazwisko, inputLayoutNumer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodanie_zawodniczki);
+
+        inputLayoutImie = (TextInputLayout) findViewById(R.id.input_layout_imie);
+        inputLayoutNazwisko=(TextInputLayout) findViewById(R.id.input_layout_nazwisko);
+        inputLayoutNumer=(TextInputLayout) findViewById(R.id.input_layout_numer);
 
         imieET = (EditText) findViewById(R.id.imie);
         nazwiskoET = (EditText) findViewById(R.id.nazwisko);
@@ -43,21 +50,32 @@ public class DodanieZawodniczki extends AppCompatActivity {
                 final String imie_zawodniczki = imieET.getText().toString();
 
                 if (!czyImieLubNazwiskoOK(imie_zawodniczki)) {
-                    imieET.setError("Błędna wartość w polu imie");
+                    inputLayoutImie.setError("Błędna wartość w polu imię");
+                    requestFocus(imieET);
                     czyOk++;
                     }
+                else
+                    inputLayoutImie.setErrorEnabled(false);
+
 
                 final String nazwisko_zawodniczki = nazwiskoET.getText().toString();
                 if (!czyImieLubNazwiskoOK(nazwisko_zawodniczki)) {
-                    nazwiskoET.setError("Błędna wartość w polu nazwisko");
+                    inputLayoutNazwisko.setError(getString(R.string.err_msg_nazwisko));
+                    requestFocus(nazwiskoET);
                     czyOk++;
                 }
+                else
+                    inputLayoutNazwisko.setErrorEnabled(false);
 
                 final String numer_zawodniczki = numerET.getText().toString();
                 if (!czyNumerOK(numer_zawodniczki)) {
-                    numerET.setError("Błędna wartość w polu numer");
+                    //numerET.setError("Błędna wartość w polu numer");
+                    inputLayoutNumer.setError(getString(R.string.err_msg_numer));
+                    requestFocus(numerET);
                     czyOk++;
                 }
+                else
+                    inputLayoutNumer.setEnabled(false);
 
                 if(czyOk==0) {
                     zapisz_zawodniczke(v);
@@ -154,5 +172,11 @@ public class DodanieZawodniczki extends AppCompatActivity {
             czOk=false;
 
         return czOk;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 }

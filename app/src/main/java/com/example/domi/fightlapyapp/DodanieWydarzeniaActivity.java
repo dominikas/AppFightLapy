@@ -1,10 +1,12 @@
 package com.example.domi.fightlapyapp;
 
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.app.DatePickerDialog;
@@ -30,10 +32,18 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
     private Spinner typWydarzeniaSpinner;
     private EditText opisET;
 
+    private TextInputLayout inputLayoutMiejsce;
+    private TextInputLayout inputLayoutCena;
+    private TextInputLayout inputLayoutTytul;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodanie_wydarzenia);
+
+        inputLayoutMiejsce = (TextInputLayout) findViewById(R.id.input_layout_miejsce);
+        inputLayoutCena = (TextInputLayout) findViewById(R.id.input_layout_cena);
+        inputLayoutTytul = (TextInputLayout) findViewById(R.id.input_layout_tytul);
 
         miejsceET = (EditText) findViewById(R.id.miejsce);
         cenaET = (EditText) findViewById(R.id.cena_wydarzenia);
@@ -106,21 +116,32 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
                 final String miejsce = miejsceET.getText().toString();
 
                 if (!czyPoleOk(miejsce)) {
-                    miejsceET.setError("Błędna wartość w polu miejsce");
+                    inputLayoutMiejsce.setError("Błedna wartość w polu miejsce");
+                    //miejsceET.setError("Błędna wartość w polu miejsce");
+                    requestFocus(miejsceET);
                     czyOk++;
                 }
+                else
+                    inputLayoutMiejsce.setErrorEnabled(false);
 
                 final String cena = cenaET.getText().toString();
                 if (!czyPoleOk(cena)) {
-                    miejsceET.setError("Błędna wartość w polu cena");
+                    inputLayoutCena.setError("Błędna wartość w polu cena");
+                    //cenaET.setError("Błędna wartość w polu cena");
                     czyOk++;
                 }
+                else
+                    inputLayoutCena.setErrorEnabled(false);
 
                 final String opis = opisET.getText().toString();
                 if (!czyPoleOk(opis)) {
-                    opisET.setError("Błędna wartość w polu opis");
+                    inputLayoutTytul.setError("Błedna wartość w polu opis");
+                    //opisET.setError("Błędna wartość w polu opis");
+                    requestFocus(opisET);
                     czyOk++;
                 }
+                else
+                    inputLayoutTytul.setErrorEnabled(false);
 
                 if (czyOk == 0) {
                     zapiszWydarzenie(v);
@@ -193,6 +214,12 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
     public void addListenerOnSpinnerItemSelection() {
         typWydarzeniaSpinner = (Spinner) findViewById(R.id.spinner_wydarzenie);
         typWydarzeniaSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 }
 
