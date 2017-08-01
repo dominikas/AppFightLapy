@@ -28,22 +28,18 @@ public class ListaWydarzenActivity extends AppCompatActivity {
         i= new Intent(getApplicationContext(), WybraneWydarzenieZListyActivity.class);
         mListView = (ListView) findViewById(R.id.listawydarzen_list_view);
 
-        Log.d("Reading: ", "Reading all events..");
         DatabaseHandler db = new DatabaseHandler(this);
         ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
         db.close();
         String[] listItems = new String[wydarzenieList.size()];
 
-        //for(int i = 0; i < zawodniczkiList.size(); i++)
         for (Wydarzenie wyd : wydarzenieList){
-            //Zawodniczka zawodniczka = zawodniczkiList.get(i);
-            String log = "Id: " + wyd.get_id_typu_wydarzenia() + " ,Opis: " + wyd.get_opis() + " ,Data: " + wyd.get_data();
-            Log.d("Ostatnia: ", log);
             int indeks = wydarzenieList.indexOf(wyd);
             Integer indeks1 = (Integer) indeks;
-            Log.d("Indeks", indeks1.toString());
+
             //TODO zamiast ID wypisac opis -> wyszukowanie w db handler zmienic na wyszukiwanie po opisie
             listItems[wydarzenieList.indexOf(wyd)] = wyd.get_id_wydarzenia().toString();
+            //listItems[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);

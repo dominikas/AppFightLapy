@@ -189,11 +189,11 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
 
         DatabaseHandler db = new DatabaseHandler(this);
 
-        Integer idZawodniczki=0;
-        Integer idWydarzenia=0;
+        Integer idZawodniczki=666;
+        Integer idWydarzenia=666;
 
         ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
-        List<Wydarzenie> wydarzenieList=new ArrayList<>();
+        List<Wydarzenie> wydarzenieList=db.getWszystkieWydarzenia();
 
 
         for(Zawodniczka zaw:zawodniczkiList)
