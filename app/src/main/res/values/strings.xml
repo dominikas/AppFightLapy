@@ -53,5 +53,9 @@
     <string name="err_msg_numer">Błędna wartość w polu nazwisko</string>
     <string name="lista_zapisanych_zawodniczek">Zapisane zawodniczki</string>
     <string name="lista_wydarzen_zawodniczki">Wydarzenia, na które zapisana jest zawodniczka</string>
+    <string name="edycja_wydarzenia">Edytuj wydarzenie</string>
+    <string name="title_activity_edycja_wydarzenia">EdycjaWydarzeniaActivity</string>
+    <string name="zapisz_wydarzenie_edycja">ZAPISZ</string>
+    <string name="udana_edycja_wydarzenia">Wydarzenie pomyślnie zaktualizowane</string>
 
 </resources>

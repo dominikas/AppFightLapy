@@ -41,25 +41,36 @@
         </activity>
         <activity
             android:name=".DodanieWydarzeniaActivity"
-            android:parentActivityName=".WyborWydarzeniaActivity"></activity>
+            android:parentActivityName=".WyborWydarzeniaActivity" />
         <activity
             android:name=".Udany_zapis_wydarzenia"
-            android:parentActivityName=".WyborWydarzeniaActivity"></activity>
+            android:parentActivityName=".WyborWydarzeniaActivity" />
         <activity
             android:name=".ListaWydarzenActivity"
-            android:parentActivityName=".WyborWydarzeniaActivity"></activity>
+            android:parentActivityName=".WyborWydarzeniaActivity" />
         <activity
             android:name=".ZapisZawodniczkiNaWydarzenieActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".WybranaZawodniczkaZListy"
-            android:parentActivityName=".ListaZawodniczekActivity"></activity>
+            android:parentActivityName=".ListaZawodniczekActivity" />
         <activity
             android:name=".UdanyZapisZawodniczkiNaWydarzenieActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".WybraneWydarzenieZListyActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ListaWydarzenEdycjaActivity"
+            android:parentActivityName=".WyborWydarzeniaActivity" />
+        <activity
+            android:name=".WybraneWydarzenieZListyEdycja"
+            android:parentActivityName=".WyborWydarzeniaActivity" />
 
-        <activity android:name=".WybraneWydarzenieZListyActivity"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".UdanyEdycjaWydarzenia"
+            android:parentActivityName=".MainActivity"/>
+
+
     </application>
 
 </manifest>

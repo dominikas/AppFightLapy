@@ -23,4 +23,11 @@ public class WyborWydarzeniaActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListaWydarzenActivity.class);
         startActivity(intent);
     }
+
+    public void listaWydarzenEdycja(View view)
+    {
+        Intent intent = new Intent(this, ListaWydarzenEdycjaActivity.class);
+        startActivity(intent);
+    }
+
 }

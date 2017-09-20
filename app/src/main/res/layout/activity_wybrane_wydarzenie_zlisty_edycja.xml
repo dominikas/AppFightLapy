@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.domi.fightlapyapp.WybraneWydarzenieZListyEdycja">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Spinner
+            android:id="@+id/spinner_wydarzenie_edycja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:entries="@array/event_arrays"
+            android:prompt="@string/event_prompt"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/data_edycja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:hint="Data"
+            android:padding="15dp"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_wydarzenie_edycja" />
+
+        <TextView
+            android:id="@+id/godzina_edycja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/godzina_wydarzenia"
+            android:padding="15dp"
+            android:textSize="18sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/data" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_miejsce_edycja"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/godzina_edycja"
+            tools:layout_editor_absoluteX="8dp">
+
+            <EditText
+                android:id="@+id/miejsce_edycja"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:drawableTint="@color/colorPrimary"
+                android:ems="10"
+                android:hint="@string/miejsce_wydarzenie"
+                android:inputType="text"
+                android:padding="15dp"
+                android:textSize="18sp"
+                android:maxLines="1"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/godzina_edycja" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_cena_edycja"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_miejsce_edycja"
+            tools:layout_editor_absoluteX="8dp">
+
+            <EditText
+                android:id="@+id/cena_wydarzenia_edycja"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="@string/cena_wydarzenia"
+                android:inputType="number"
+                android:padding="15dp"
+                android:textSize="18sp"
+                android:maxLines="1"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tytul_edycja" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_tytul_edycja"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_cena_edycja"
+            tools:layout_editor_absoluteX="8dp">
+
+            <EditText
+                android:id="@+id/tytul_edycja"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:drawableTint="@color/colorPrimary"
+                android:hint="@string/tytul_wydarzenia"
+                android:padding="15dp"
+                android:textSize="18sp"
+                android:maxLines="1"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/miejsce_edycja" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/zapisz_edycja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/zapisz_zawodniczke"
+            android:onClick="zapisEdytowanegoWydarzenia"
+            android:text="@string/zapisz_zawodniczke"
+            tools:layout_editor_absoluteX="148dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_tytul_edycja" />
+
+    </LinearLayout>
+</ScrollView>
+
