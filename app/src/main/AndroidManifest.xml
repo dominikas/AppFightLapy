@@ -59,7 +59,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".WybraneWydarzenieZListyActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".WyborWydarzeniaActivity" />
         <activity
             android:name=".ListaWydarzenEdycjaActivity"
             android:parentActivityName=".WyborWydarzeniaActivity" />

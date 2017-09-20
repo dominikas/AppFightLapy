@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,11 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
     private TextView rodzajWydarzeniaTV;
     private TextView dataWydarzeniaTV;
     private ListView listaZawodniczekTV;
+    //private TextView opisWydarzeniaTV;
+    private TextView cenaWydarzeniaTV;
+    private TextView godzinaWydarzeniaTV;
+    private TextView miejsceWydarzeniaTV;
+
     private String product;
 
     @Override
@@ -32,6 +39,11 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
         rodzajWydarzeniaTV=(TextView) findViewById(R.id.rodzaj_wydarzenie);
         dataWydarzeniaTV=(TextView) findViewById(R.id.data_wydarzenia);
         listaZawodniczekTV=(ListView) findViewById(R.id.lista_zapisanych_zawodniczek);
+        //opisWydarzeniaTV=(TextView) findViewById(R.id.tytul);
+        cenaWydarzeniaTV=(TextView) findViewById(R.id.cena_wydarzenia);
+        godzinaWydarzeniaTV=(TextView) findViewById(R.id.godzina) ;
+        miejsceWydarzeniaTV=(TextView) findViewById(R.id.miejsce);
+
         product=new String();
 
         //pobranie danych wybranego wydarzenia, ktore chcemu przedstawic
@@ -68,9 +80,15 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
         rodzajWydarzeniaTV.setText(typWydarzeniaString);
         dataWydarzeniaTV.setText(wybraneWydarzenie.get_data());
 
+        godzinaWydarzeniaTV.setText(wybraneWydarzenie.get_godzina().toString());
+        miejsceWydarzeniaTV.setText(wybraneWydarzenie.get_miejsce());
+       cenaWydarzeniaTV.setText(wybraneWydarzenie.get_cena().toString());
+
         //wyszuaknie i wypisanie zawodniczek zapisanych na wybrane wydarzenie
         DatabaseHandler db1 = new DatabaseHandler(this);
         List<Zawodniczka> wybraneZawodniczki = db1.getDaneZawodniczekPoIdWydarzenia(idWydarzenia);
+        Integer liczbaZaw=wybraneZawodniczki.size();
+
         db1.close();
 
         String[] listItems = new String[wybraneZawodniczki.size()];
@@ -82,6 +100,7 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
         if (wybraneZawodniczki.isEmpty())
             Log.d("pusta", "pusta");
         else {
+            Log.d("liczba zawodniczek", liczbaZaw.toString());
             ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
             listaZawodniczekTV.setAdapter(adapter);
 
