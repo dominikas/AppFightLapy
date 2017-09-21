@@ -12,6 +12,7 @@ public class WyborWydarzeniaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wybor_wydarzenia);
     }
+
     public void dodanieWydarzenia(View view)
     {
         Intent intent = new Intent(this, DodanieWydarzeniaActivity.class);

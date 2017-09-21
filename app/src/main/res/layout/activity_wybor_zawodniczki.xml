@@ -29,4 +29,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nowe_wydarzenie" />
+
+    <Button
+        android:id="@+id/edytuj_zawodniczke"
+        android:layout_width="192dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="8dp"
+        android:onClick="edycjaZawodniczki"
+        android:text="@string/edycja_zawodniczki"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lista_zawodniczek" />
 </android.support.constraint.ConstraintLayout>

@@ -12,34 +12,35 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import DatabaseHandler.*;
-import Wydarzenie.Wydarzenie;
+import DatabaseHandler.DatabaseHandler;
 import Zawodniczka.Zawodniczka;
 
-public class ListaWydarzenActivity extends AppCompatActivity {
+public class ListaZawodniczekEdycjaActivity extends AppCompatActivity {
+
     private ListView mListView;
     Intent i;
+    Integer indeks1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_wydarzen);
+        setContentView(R.layout.activity_lista_zawodniczek_edycja);
 
-        i= new Intent(getApplicationContext(), WybraneWydarzenieZListyActivity.class);
-        mListView = (ListView) findViewById(R.id.listawydarzen_list_view);
+        i= new Intent(getApplicationContext(), WybranaZawodniczkaZListyEdycjaActivity.class);
 
+        mListView = (ListView) findViewById(R.id.listazawodniczekedycja_list_view);
+
+        Log.d("Reading: ", "Reading all contacts..");
         DatabaseHandler db = new DatabaseHandler(this);
-        ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
+        ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
         db.close();
-        String[] listItems = new String[wydarzenieList.size()];
+        String[] listItems = new String[zawodniczkiList.size()];
 
-        for (Wydarzenie wyd : wydarzenieList){
-            int indeks = wydarzenieList.indexOf(wyd);
-            Integer indeks1 = (Integer) indeks;
-            //TODO zamiast ID wypisac opis -> wyszukowanie w db handler zmienic na wyszukiwanie po opisie
-            listItems[wydarzenieList.indexOf(wyd)] = wyd.get_id_wydarzenia().toString();
-            //listItems[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
+
+        for (Zawodniczka zaw : zawodniczkiList){
+            listItems[zawodniczkiList.indexOf(zaw)] = zaw.get_imie()+" "+zaw.get_nazwisko();
         }
+
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
         mListView.setAdapter(adapter);
@@ -48,9 +49,11 @@ public class ListaWydarzenActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String product = ((TextView) view).getText().toString();
+                //String product = indeks1.toString();
+                Log.d("indeks wybranej zawodn ", product);
                 // Launching new Activity on selecting single List Item
                 // sending data to new activity
-                i.putExtra("wydarzenie", product);
+                i.putExtra("imie i nazwisko", product);
                 startActivity(i);
             }
         });

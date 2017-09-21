@@ -31,14 +31,10 @@
             android:parentActivityName=".WyborZawodniczkiActivity" />
         <activity
             android:name=".udany_zapis_zawodniczki"
-            android:parentActivityName=".WyborZawodniczkiActivity">
-            >
-        </activity>
+            android:parentActivityName=".WyborZawodniczkiActivity" />
         <activity
             android:name=".WyborWydarzeniaActivity"
-            android:parentActivityName=".MainActivity">
-            >
-        </activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DodanieWydarzeniaActivity"
             android:parentActivityName=".WyborWydarzeniaActivity" />
@@ -66,10 +62,21 @@
         <activity
             android:name=".WybraneWydarzenieZListyEdycja"
             android:parentActivityName=".WyborWydarzeniaActivity" />
+        <activity
+            android:name=".UdanyEdycjaWydarzenia"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ListaZapisanychZawodniczek"
+            android:parentActivityName=".ListaWydarzenEdycjaActivity" />
+        <activity
+            android:name=".ListaZawodniczekEdycjaActivity"
+            android:parentActivityName=".WyborZawodniczkiActivity" />
+        <activity
+            android:name=".WybranaZawodniczkaZListyEdycjaActivity"
+            android:parentActivityName=".ListaZawodniczekEdycjaActivity" />
 
-        <activity android:name=".UdanyEdycjaWydarzenia"
-            android:parentActivityName=".MainActivity"/>
-
+        <activity android:name=".UdanaEdycjaZawodniczkiActivity"
+        android:parentActivityName=".ListaZawodniczekEdycjaActivity" />
 
     </application>
 

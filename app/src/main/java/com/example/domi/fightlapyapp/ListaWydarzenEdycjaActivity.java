@@ -3,6 +3,7 @@ package com.example.domi.fightlapyapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -47,6 +48,7 @@ public class ListaWydarzenEdycjaActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String product = ((TextView) view).getText().toString();
+                Log.d("produkt ", product);
                 // Launching new Activity on selecting single List Item
                 // sending data to new activity
                 i.putExtra("wydarzenie_edycja", product);

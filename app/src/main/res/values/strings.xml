@@ -57,5 +57,9 @@
     <string name="title_activity_edycja_wydarzenia">EdycjaWydarzeniaActivity</string>
     <string name="zapisz_wydarzenie_edycja">ZAPISZ</string>
     <string name="udana_edycja_wydarzenia">Wydarzenie pomyślnie zaktualizowane</string>
+    <string name="lista_zawodniczek_button">Lista zapisanych zawodniczek</string>
+    <string name="edycja_zawodniczki">Edytuj dane zawodniczki</string>
+    <string name="zapisz_edycja_zawodniczka">zapisz</string>
+    <string name="udana_edycja_zawodniczki">Dane zawodniczki pomyślnie zaktualizowano</string>
 
 </resources>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
     private TextView miejsceWydarzeniaTV;
 
     private String product;
+    Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
         wybraneWydarzenieTV=(TextView) findViewById(R.id.wybrane_wyd_z_listy);
         rodzajWydarzeniaTV=(TextView) findViewById(R.id.rodzaj_wydarzenie);
         dataWydarzeniaTV=(TextView) findViewById(R.id.data_wydarzenia);
-        listaZawodniczekTV=(ListView) findViewById(R.id.lista_zapisanych_zawodniczek);
+        //listaZawodniczekTV=(ListView) findViewById(R.id.lista_zapisanych_zawodniczek);
         //opisWydarzeniaTV=(TextView) findViewById(R.id.tytul);
         cenaWydarzeniaTV=(TextView) findViewById(R.id.cena_wydarzenia);
         godzinaWydarzeniaTV=(TextView) findViewById(R.id.godzina) ;
@@ -49,6 +51,7 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
         //pobranie danych wybranego wydarzenia, ktore chcemu przedstawic
         Intent i = getIntent();
         product = i.getStringExtra("wydarzenie");
+        Log.d("wybrane wydarzenie ", product);
         wyszukanieDanychWydarzenia(product);
 
     }
@@ -82,28 +85,13 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
 
         godzinaWydarzeniaTV.setText(wybraneWydarzenie.get_godzina().toString());
         miejsceWydarzeniaTV.setText(wybraneWydarzenie.get_miejsce());
-       cenaWydarzeniaTV.setText(wybraneWydarzenie.get_cena().toString());
+        cenaWydarzeniaTV.setText(wybraneWydarzenie.get_cena().toString());
+    }
 
-        //wyszuaknie i wypisanie zawodniczek zapisanych na wybrane wydarzenie
-        DatabaseHandler db1 = new DatabaseHandler(this);
-        List<Zawodniczka> wybraneZawodniczki = db1.getDaneZawodniczekPoIdWydarzenia(idWydarzenia);
-        Integer liczbaZaw=wybraneZawodniczki.size();
+    public void listaZapianychZawodniczek(View view) {
 
-        db1.close();
-
-        String[] listItems = new String[wybraneZawodniczki.size()];
-        for (Zawodniczka zaw : wybraneZawodniczki) {
-            listItems[wybraneZawodniczki.indexOf(zaw)] = zaw.get_imie() + " " + zaw.get_nazwisko();
-        }
-
-        //wypisanie wszystkich wydarzen, na ktore zapisana jest wybrana zawodniczka
-        if (wybraneZawodniczki.isEmpty())
-            Log.d("pusta", "pusta");
-        else {
-            Log.d("liczba zawodniczek", liczbaZaw.toString());
-            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-            listaZawodniczekTV.setAdapter(adapter);
-
-        }
+        Intent intent = new Intent(this, ListaZapisanychZawodniczek.class);
+        intent.putExtra("lista_zawodniczek", product);
+        startActivity(intent);
     }
 }

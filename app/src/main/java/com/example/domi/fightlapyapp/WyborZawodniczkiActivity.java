@@ -23,4 +23,10 @@ public class WyborZawodniczkiActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListaZawodniczekActivity.class);
         startActivity(intent);
     }
+
+    public void edycjaZawodniczki(View view)
+    {
+        Intent intent = new Intent(this, ListaZawodniczekEdycjaActivity.class);
+        startActivity(intent);
+    }
 }

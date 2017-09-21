@@ -4,19 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.domi.fightlapyapp.ListaWydarzenActivity">
+    tools:context="com.example.domi.fightlapyapp.ListaZawodniczekEdycjaActivity">
 
     <ListView
-        android:id="@+id/listawydarzen_list_view"
+        android:id="@+id/listazawodniczekedycja_list_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="parent">
-
-    </ListView>
+        app:layout_constraintLeft_toLeftOf="parent"></ListView>
 
 </android.support.constraint.ConstraintLayout>

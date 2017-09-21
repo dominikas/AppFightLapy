@@ -105,6 +105,7 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
 
             }
         });
+
 //TO DO odkomentowac, gdy ma zadzialac zapis
 
         findViewById(R.id.zapisz_edycja).setOnClickListener(new View.OnClickListener() {
@@ -179,7 +180,9 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
         opisET.setSelection(opisET.getText().length());
 
         Integer typWydarzenia = wybraneWydarzenie.get_id_typu_wydarzenia();
-        typWydarzeniaSpinner.setSelection(typWydarzenia);
+        Log.d("id wydarzenia", typWydarzenia.toString());
+
+       typWydarzeniaSpinner.setSelection(typWydarzenia-1);
 
         date.setText(wybraneWydarzenie.get_data().toString());
 

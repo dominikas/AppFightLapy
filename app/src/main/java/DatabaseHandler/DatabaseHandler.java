@@ -162,18 +162,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
-    public int updateZawodniczka(Zawodniczka zawodniczka) {
+    public void updateZawodniczka(Zawodniczka zawodniczka) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        Log.d("Update Indeks : ", zawodniczka.get_id().toString());
+        values.put(KEY_ID, zawodniczka.get_id());
         values.put(KEY_NAME, zawodniczka.get_imie());
         values.put(KEY_LAST_NAME, zawodniczka.get_nazwisko());
         values.put(KEY_ID_POSITION, zawodniczka.get_id_pozycji());
         values.put(KEY_NUMBER, zawodniczka.get_numer());
 
         // updating row
-        return db.update(TABLE_PLAYERS, values, KEY_ID + " = ?",
+        db.update(TABLE_PLAYERS, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(zawodniczka.get_id()) });
+        db.close();
+
     }
 
     public void deleteZawodniczka(Zawodniczka zawodniczka) {
@@ -258,7 +262,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
-    public int updateWydarzenie(Wydarzenie wydarzenie) {
+    public void updateWydarzenie(Wydarzenie wydarzenie) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -269,8 +273,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_DESC, wydarzenie.get_opis());
         values.put(KEY_PRICE, wydarzenie.get_cena());
         // updating row
-        return db.update(TABLE_EVENTS, values, KEY_ID_EVENT + " = ?",
+        db.update(TABLE_EVENTS, values, KEY_ID_EVENT + " = ?",
                 new String[] { String.valueOf(wydarzenie.get_id_wydarzenia()) });
+
+        db.close();
     }
 
     public void deleteWydarzenie(Wydarzenie wydarzenie) {

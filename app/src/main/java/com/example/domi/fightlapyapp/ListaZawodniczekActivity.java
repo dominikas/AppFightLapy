@@ -16,8 +16,10 @@ import DatabaseHandler.DatabaseHandler;
 import Zawodniczka.Zawodniczka;
 
 public class ListaZawodniczekActivity extends AppCompatActivity {
+
     private ListView mListView;
     Intent i;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
