@@ -195,18 +195,30 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
         List<Wydarzenie> wydarzenieList=db.getWszystkieWydarzenia();
 
-
+        Integer licznikZaw=0;
         for(Zawodniczka zaw:zawodniczkiList)
         {
-            if(zaw.get_imie().equals(wybranaZawodniczka))
-                idZawodniczki=zaw.get_id();
+            if(zaw.get_imie().equals(wybranaZawodniczka)) {
+                idZawodniczki = zaw.get_id();
+                licznikZaw++;
+            }
         }
 
+        Log.d("stan licznika id zaw", licznikZaw.toString());
+        Log.d("wybrana zawodniczka", idZawodniczki.toString());
+
+        Integer licznikWyd=0;
         for(Wydarzenie wyd:wydarzenieList)
         {
-            if(wyd.get_opis().equals(wybraneWydarzenie))
+            if(wyd.get_opis().equals(wybraneWydarzenie)){
                 idWydarzenia=wyd.get_id_wydarzenia();
+                licznikWyd++;
+
+            }
         }
+
+        Log.d("stan licznika id wyd", licznikWyd.toString());
+        Log.d("wybrane wydarzenie", idWydarzenia.toString());
 
         db.zapiszZawodniczkeNaWydarzenie(idZawodniczki, idWydarzenia, idStatusu);
         //wydarzenieList=db.getWszystkieWydarzeniaPoZawodniczce(idZawodniczki);

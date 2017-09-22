@@ -46,14 +46,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_EVENT_ID = "IDWydarzenia";
     private static final String KEY_PRESENCE = "dyspozycja";
 
-    private static final String CREATE_TABLE_PLAYERS="CREATE TABLE " + TABLE_PLAYERS + "("
+    private static final String CREATE_TABLE_PLAYERS = "CREATE TABLE " + TABLE_PLAYERS + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_NAME + " TEXT NOT NULL,"
             + KEY_LAST_NAME + " TEXT NOT NULL,"
             + KEY_ID_POSITION + " TEXT NOT NULL,"
             + KEY_NUMBER + " TEXT NOT NULL)";
 
-    private static final String CREATE_TABLE_EVENTS="CREATE TABLE " + TABLE_EVENTS + "("
+    private static final String CREATE_TABLE_EVENTS = "CREATE TABLE " + TABLE_EVENTS + "("
             + KEY_ID_EVENT + " INTEGER PRIMARY KEY,"
             + KEY_ID_TYPE + " TEXT NOT NULL,"
             + KEY_DATE + " TEXT NOT NULL,"
@@ -62,7 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_DESC + " TEXT NOT NULL,"
             + KEY_PRICE + " TEXT NOT NULL)";
 
-    private static final String CREATE_TABLE_PLAYER_EVENT="CREATE TABLE " + TABLE_PLAYER_EVENT + "("
+    private static final String CREATE_TABLE_PLAYER_EVENT = "CREATE TABLE " + TABLE_PLAYER_EVENT + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_PLAYER_ID + " INTEGER,"
             + KEY_EVENT_ID + " INTEGER,"
@@ -93,30 +93,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void dodajZawodniczke(Zawodniczka zawodniczka) {
-            SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
-            ContentValues values = new ContentValues();
-            //values.put(KEY_ID, zawodniczka.get_id());
-            values.put(KEY_NAME, zawodniczka.get_imie());
-            values.put(KEY_LAST_NAME, zawodniczka.get_nazwisko());
-            values.put(KEY_ID_POSITION, zawodniczka.get_id_pozycji());
-            values.put(KEY_NUMBER, zawodniczka.get_numer());
+        ContentValues values = new ContentValues();
+        //values.put(KEY_ID, zawodniczka.get_id());
+        values.put(KEY_NAME, zawodniczka.get_imie());
+        values.put(KEY_LAST_NAME, zawodniczka.get_nazwisko());
+        values.put(KEY_ID_POSITION, zawodniczka.get_id_pozycji());
+        values.put(KEY_NUMBER, zawodniczka.get_numer());
         //values.put(KEY_ID_EVENT, zawodniczka.);
-            // Inserting Row
-            db.insert(TABLE_PLAYERS, null, values);
-            db.close(); // Closing database connection
+        // Inserting Row
+        db.insert(TABLE_PLAYERS, null, values);
+        db.close(); // Closing database connection
     }
 
     public Zawodniczka getZawodcznika(int id) throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_PLAYERS, new String[] { KEY_ID,
-                        KEY_NAME, KEY_LAST_NAME, KEY_ID_POSITION, KEY_NUMBER }, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_PLAYERS, new String[]{KEY_ID,
+                        KEY_NAME, KEY_LAST_NAME, KEY_ID_POSITION, KEY_NUMBER}, KEY_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-                //(cursor.getInt(cursor.getColumnIndex(KEY_ID))),
+        //(cursor.getInt(cursor.getColumnIndex(KEY_ID))),
         Zawodniczka zawodniczka = new Zawodniczka(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                 cursor.getString(cursor.getColumnIndex(KEY_NAME)),
                 cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME)),
@@ -126,7 +126,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return zawodniczka;
     }
 
-    public ArrayList<Zawodniczka> getWszystkieZawodniczki() /*throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception, Niedozwolony_Id_Exception*/{
+    public ArrayList<Zawodniczka> getWszystkieZawodniczki() /*throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception, Niedozwolony_Id_Exception*/ {
         ArrayList<Zawodniczka> zawodniczkaList = new ArrayList<Zawodniczka>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PLAYERS;
@@ -142,11 +142,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 zawodniczka.set_imie(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
                 zawodniczka.set_nazwisko(cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME)));
                 zawodniczka.set_id_pozycji(cursor.getInt(cursor.getColumnIndex(KEY_ID_POSITION)));
-                zawodniczka.set_numer(cursor.getInt(cursor.getColumnIndex(KEY_NUMBER)));;
+                zawodniczka.set_numer(cursor.getInt(cursor.getColumnIndex(KEY_NUMBER)));
+                ;
                 // Adding contact to list
                 zawodniczkaList.add(zawodniczka);
             } while (cursor.moveToNext());
         }
+
+        //dodalam
+        db.close();
+
         // return all players list
         return zawodniczkaList;
     }
@@ -157,6 +162,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
+
+        //dodalam
+        db.close();
 
         // return count
         return cursor.getCount();
@@ -175,7 +183,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // updating row
         db.update(TABLE_PLAYERS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(zawodniczka.get_id()) });
+                new String[]{String.valueOf(zawodniczka.get_id())});
         db.close();
 
     }
@@ -183,7 +191,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void deleteZawodniczka(Zawodniczka zawodniczka) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PLAYERS, KEY_ID + " = ?",
-                new String[] { String.valueOf(zawodniczka.get_id()) });
+                new String[]{String.valueOf(zawodniczka.get_id())});
         db.close();
     }
 
@@ -206,9 +214,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Wydarzenie getWydarzenie(int id) throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_EVENTS, new String[] { KEY_ID_EVENT,
-                        KEY_ID_TYPE, KEY_DATE, KEY_HOUR, KEY_PLACE, KEY_DESC, KEY_PRICE }, KEY_ID_EVENT + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_EVENTS, new String[]{KEY_ID_EVENT,
+                        KEY_ID_TYPE, KEY_DATE, KEY_HOUR, KEY_PLACE, KEY_DESC, KEY_PRICE}, KEY_ID_EVENT + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
@@ -220,10 +228,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(cursor.getColumnIndex(KEY_DESC)),
                 cursor.getInt(cursor.getColumnIndex(KEY_PRICE)));
 
+        //dodalam
+        //db.close();
+
         return wydarzenie;
     }
 
-    public ArrayList<Wydarzenie> getWszystkieWydarzenia() /*throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception, Niedozwolony_Id_Exception*/{
+    public ArrayList<Wydarzenie> getWszystkieWydarzenia() /*throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception, Niedozwolony_Id_Exception*/ {
         ArrayList<Wydarzenie> wydarzenieList = new ArrayList<Wydarzenie>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_EVENTS;
@@ -245,6 +256,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
                 wydarzenieList.add(wydarzenie);
             } while (cursor.moveToNext());
+
+            //dodalam
+            //db.close();
         }
 
         // return events list
@@ -257,7 +271,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
-
+        //dodalam
+        db.close();
         // return count
         return cursor.getCount();
     }
@@ -274,7 +289,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PRICE, wydarzenie.get_cena());
         // updating row
         db.update(TABLE_EVENTS, values, KEY_ID_EVENT + " = ?",
-                new String[] { String.valueOf(wydarzenie.get_id_wydarzenia()) });
+                new String[]{String.valueOf(wydarzenie.get_id_wydarzenia())});
 
         db.close();
     }
@@ -282,46 +297,49 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void deleteWydarzenie(Wydarzenie wydarzenie) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_EVENTS, KEY_ID_EVENT + " = ?",
-                new String[] { String.valueOf(wydarzenie.get_id_wydarzenia()) });
+                new String[]{String.valueOf(wydarzenie.get_id_wydarzenia())});
         db.close();
     }
 
-    public void zapiszZawodniczkeNaWydarzenie(Integer idZawodniczki, Integer idWydarzenia, Integer idStatusu){
+    public void zapiszZawodniczkeNaWydarzenie(Integer idZawodniczki, Integer idWydarzenia, Integer idStatusu) {
         SQLiteDatabase db = this.getWritableDatabase();
+        Log.d("dodaje zaw ", idZawodniczki.toString());
+        Log.d("dodaje wyd", idWydarzenia.toString());
 
         ContentValues values = new ContentValues();
 
-        values.put(KEY_PLAYER_ID , idZawodniczki);
-        values.put(KEY_EVENT_ID , idWydarzenia);
-        values.put(KEY_PRESENCE ,idStatusu);
+        values.put(KEY_PLAYER_ID, idZawodniczki);
+        values.put(KEY_EVENT_ID, idWydarzenia);
+        values.put(KEY_PRESENCE, idStatusu);
 
         // Inserting Row
         db.insert(TABLE_PLAYER_EVENT, null, values);
         db.close(); // Closing datab
     }
-/*
-    public Integer getIdZaw(int id){
-        SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_PLAYER_EVENT, new String[] { KEY_ID,
-                        KEY_PLAYER_ID, KEY_EVENT_ID, KEY_PRESENCE}, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
+    /*
+        public Integer getIdZaw(int id){
+            SQLiteDatabase db = this.getReadableDatabase();
 
-       Integer idZaw = cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_ID));
+            Cursor cursor = db.query(TABLE_PLAYER_EVENT, new String[] { KEY_ID,
+                            KEY_PLAYER_ID, KEY_EVENT_ID, KEY_PRESENCE}, KEY_ID + "=?",
+                    new String[] { String.valueOf(id) }, null, null, null, null);
+            if (cursor != null)
+                cursor.moveToFirst();
 
-        return idZaw;
-    }
-*/
-    public Integer getIdWyd(int id){
+           Integer idZaw = cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_ID));
+
+            return idZaw;
+        }
+    */
+    public Integer getIdWyd(int id) {
 
         Integer idWyd;
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_PLAYER_EVENT, new String[] { KEY_ID,
+        Cursor cursor = db.query(TABLE_PLAYER_EVENT, new String[]{KEY_ID,
                         KEY_PLAYER_ID, KEY_EVENT_ID, KEY_PRESENCE}, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+                new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
@@ -335,6 +353,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         idWyd= cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT));;
 */
+        //dodalam
+        //db.close();
+
         return idWyd;
     }
 
@@ -355,16 +376,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     */
 //public void getWszystkieWydarzeniaPoZawodniczce(Integer idZawodniczki) {
 
-    public List<Wydarzenie> getWszystkieWydarzeniaPoZawodniczce(Integer idZawodniczki){
+    public List<Wydarzenie> getWszystkieWydarzeniaPoZawodniczce(Integer idZawodniczki) {
 
         List<Wydarzenie> wydarzenia = new ArrayList<>();
-        String selectQuery="SELECT  * FROM " + TABLE_PLAYERS + " tp, "
+        String selectQuery = "SELECT  * FROM " + TABLE_PLAYERS + " tp, "
                 + TABLE_EVENTS + " te, " + TABLE_PLAYER_EVENT + " tpe WHERE tp."
                 + KEY_ID + " = '" + idZawodniczki + "'" + " AND tp." + KEY_ID
                 + " = " + "tpe." + KEY_PLAYER_ID;
 
-            SQLiteDatabase db = this.getReadableDatabase();
-            Cursor cursor = db.rawQuery(selectQuery, null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -379,14 +400,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
                 wydarzenia.add(wydarzenie);
             } while (cursor.moveToNext());
-            }
+        }
+
+        //dodalam
+        //db.close();
         return wydarzenia;
     }
 
     public Wydarzenie getDaneWydarzeniaPoIdWydarzenia(String idWydarzenia) {
 
-        String selectQuery="SELECT  * FROM " + TABLE_EVENTS + " te WHERE te."
-                + KEY_ID_EVENT + " = '" + idWydarzenia +"'";
+        String selectQuery = "SELECT  * FROM " + TABLE_EVENTS + " te WHERE te."
+                + KEY_ID_EVENT + " = '" + idWydarzenia + "'";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -395,20 +419,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
 
-                wydarzenie.set_id_wydarzenia(cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT)));
-                wydarzenie.set_id_typu_wydarzenia(cursor.getInt(cursor.getColumnIndex(KEY_ID_TYPE)));
-                wydarzenie.set_data(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
-                wydarzenie.set_godzina(cursor.getString(cursor.getColumnIndex(KEY_HOUR)));
-                wydarzenie.set_miejsce(cursor.getString(cursor.getColumnIndex(KEY_PLACE)));
-                wydarzenie.set_opis(cursor.getString(cursor.getColumnIndex(KEY_DESC)));
-                wydarzenie.set_cena(cursor.getInt(cursor.getColumnIndex(KEY_PRICE)));
+            wydarzenie.set_id_wydarzenia(cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT)));
+            wydarzenie.set_id_typu_wydarzenia(cursor.getInt(cursor.getColumnIndex(KEY_ID_TYPE)));
+            wydarzenie.set_data(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
+            wydarzenie.set_godzina(cursor.getString(cursor.getColumnIndex(KEY_HOUR)));
+            wydarzenie.set_miejsce(cursor.getString(cursor.getColumnIndex(KEY_PLACE)));
+            wydarzenie.set_opis(cursor.getString(cursor.getColumnIndex(KEY_DESC)));
+            wydarzenie.set_cena(cursor.getInt(cursor.getColumnIndex(KEY_PRICE)));
         }
-    return wydarzenie;
+
+        //dodalam
+        //db.close();
+
+        return wydarzenie;
     }
 
     public List<Zawodniczka> getDaneZawodniczekPoIdWydarzenia(String idWydarzenia) {
 
-        String selectQuery="SELECT  * FROM " + TABLE_PLAYERS + " tp, "
+        String selectQuery = "SELECT  * FROM " + TABLE_PLAYERS + " tp, "
                 + TABLE_EVENTS + " te, " + TABLE_PLAYER_EVENT + " tpe WHERE te."
                 + KEY_ID_EVENT + " = '" + idWydarzenia + "'" + " AND te." + KEY_ID_EVENT
                 + " = " + "tpe." + KEY_EVENT_ID;
@@ -417,7 +445,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         List<Zawodniczka> zawodniczkiList = new ArrayList<>();
-//ddd
+
         if (cursor.moveToFirst()) {
             do {
                 Zawodniczka zawodniczka = new Zawodniczka();
@@ -431,22 +459,52 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             } while (cursor.moveToNext());
         }
+
+        //dodalam
+        //db.close();
+        Integer liczbaZaw = zawodniczkiList.size();
+        Log.d("liczba zaw getDane", liczbaZaw.toString());
+
         return zawodniczkiList;
     }
 
-    public void getWszystkoTabelaZawodniczkaWydarzenie()
-    {
-        String selectQuery="SELECT * FROM " + TABLE_EVENTS;
+    public void getWszystkoTabelaZawodniczkaWydarzenie() {
+        String selectQuery = "SELECT * FROM " + TABLE_EVENTS;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                Integer idPl=cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT));
+                Integer idPl = cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT));
                 Log.d("ID Wydarzenia", idPl.toString());
-                String idEv=cursor.getString(cursor.getColumnIndex(KEY_DESC));
+                String idEv = cursor.getString(cursor.getColumnIndex(KEY_DESC));
                 Log.d("ID opis", idEv);
             } while (cursor.moveToNext());
+        }
+        //dodalam, moze byc niepotrzebne?
+        db.close();
+    }
+
+    public void deleteZawodniczkeZWydarzenia(Integer idZawodniczki) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PLAYER_EVENT, KEY_ID + " = ?",
+                new String[]{idZawodniczki.toString()});
+
+        String selectQuery = "SELECT * FROM " + TABLE_PLAYER_EVENT;
+
+        db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Integer idPl = cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT));
+                Log.d("ID Wydarzenia", idPl.toString());
+                //String idEv = cursor.getString(cursor.getColumnIndex(KEY_DESC));
+                //Log.d("ID opis", idEv);
+            } while (cursor.moveToNext());
+
+            //db.close();
         }
     }
 }
