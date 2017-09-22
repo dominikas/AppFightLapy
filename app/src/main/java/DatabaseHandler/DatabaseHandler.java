@@ -21,6 +21,7 @@ import Zawodniczka.*;
 public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "FightLapyDateBase";
+
     //tabela zawodniczek
     private static final String TABLE_PLAYERS = "TabelaZawodniczek";
     private static final String KEY_ID = "id";
@@ -436,34 +437,58 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<Zawodniczka> getDaneZawodniczekPoIdWydarzenia(String idWydarzenia) {
 
-        String selectQuery = "SELECT  * FROM " + TABLE_PLAYERS + " tp, "
-                + TABLE_EVENTS + " te, " + TABLE_PLAYER_EVENT + " tpe WHERE te."
-                + KEY_ID_EVENT + " = '" + idWydarzenia + "'" + " AND te." + KEY_ID_EVENT
-                + " = " + "tpe." + KEY_EVENT_ID;
+        String selectQuery = "SELECT "+ KEY_PLAYER_ID +" FROM " + TABLE_PLAYER_EVENT + " WHERE "
+                + KEY_EVENT_ID + " = '" + idWydarzenia + "'";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        List<Zawodniczka> zawodniczkiList = new ArrayList<>();
+        List<Integer> zawodniczkiID=new ArrayList<Integer>();
 
         if (cursor.moveToFirst()) {
             do {
-                Zawodniczka zawodniczka = new Zawodniczka();
-                zawodniczka.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-                zawodniczka.set_imie(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
-                zawodniczka.set_nazwisko(cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME)));
-                zawodniczka.set_id_pozycji(cursor.getInt(cursor.getColumnIndex(KEY_ID_POSITION)));
-                zawodniczka.set_numer(cursor.getInt(cursor.getColumnIndex(KEY_NUMBER)));
-
-                zawodniczkiList.add(zawodniczka);
+                Integer idZaw=cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_ID));
+                Log.d("id zawodniczki", idZaw.toString());
+                zawodniczkiID.add(idZaw);
 
             } while (cursor.moveToNext());
+        }
+        Log.d("liczba zawodniczek ", Integer.valueOf(zawodniczkiID.size()).toString());
+        db.close();
+
+        List<Zawodniczka> zawodniczkiList = new ArrayList<>();
+        SQLiteDatabase db1 = this.getReadableDatabase();
+
+        for(Integer listaZawodniczek:zawodniczkiID){
+
+            Integer idZawodniczki=zawodniczkiID.get(zawodniczkiID.indexOf(listaZawodniczek));
+
+            String selectQuery1 = "SELECT * FROM " + TABLE_PLAYERS + " tp WHERE tp."
+                    + KEY_ID + " = '" + idZawodniczki + "'";
+
+            Cursor cursor1 = db1.rawQuery(selectQuery1, null);
+
+            if (cursor1.moveToFirst()) {
+                do {
+                    Zawodniczka zawodniczka = new Zawodniczka();
+                    zawodniczka.set_id(cursor1.getInt(cursor1.getColumnIndex(KEY_ID)));
+                    zawodniczka.set_imie(cursor1.getString(cursor1.getColumnIndex(KEY_NAME)));
+                    zawodniczka.set_nazwisko(cursor1.getString(cursor1.getColumnIndex(KEY_LAST_NAME)));
+                    zawodniczka.set_id_pozycji(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_POSITION)));
+                    zawodniczka.set_numer(cursor1.getInt(cursor1.getColumnIndex(KEY_NUMBER)));
+
+                    Log.d("imie zaw ", zawodniczka.get_imie());
+
+                    zawodniczkiList.add(zawodniczka);
+
+                } while (cursor1.moveToNext());
+            }
         }
 
         //dodalam
         //db.close();
         Integer liczbaZaw = zawodniczkiList.size();
-        Log.d("liczba zaw getDane", liczbaZaw.toString());
+        Log.i("GET DANE ZAW", liczbaZaw.toString());
 
         return zawodniczkiList;
     }

@@ -43,7 +43,7 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
         List<Zawodniczka> wybraneZawodniczki = db1.getDaneZawodniczekPoIdWydarzenia(product);
         Integer liczbaZaw=wybraneZawodniczki.size();
 
-        Log.d("liczba za na liscie", liczbaZaw.toString());
+        //Log.d("liczba za na liscie", liczbaZaw.toString());
 
         db1.close();
 
