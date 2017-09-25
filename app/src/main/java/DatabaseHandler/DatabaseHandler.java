@@ -437,6 +437,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<Zawodniczka> getDaneZawodniczekPoIdWydarzenia(String idWydarzenia) {
 
+        // byc moze da sie uproscic, ale na razie dziala
         String selectQuery = "SELECT "+ KEY_PLAYER_ID +" FROM " + TABLE_PLAYER_EVENT + " WHERE "
                 + KEY_EVENT_ID + " = '" + idWydarzenia + "'";
 
