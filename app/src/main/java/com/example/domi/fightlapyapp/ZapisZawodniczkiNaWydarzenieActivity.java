@@ -204,42 +204,6 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
 
         idZawodniczki=jakaToZawodniczka(wybranaZawodniczka);
 
-        /*
-        List<Wydarzenie> wydarzenieList=db.getWydarzeniaNaKtoreNieJestZapisanaZawodniczka(idZawodniczki);
-
-        //jeżeli nie jest na nic zapisana
-        if(wydarzenieList.size()==0){
-            Log.d("zapisana na ", "zero wydarzen");
-            List<Wydarzenie> wydarzeniaWszystkieList=db.getWszystkieWydarzenia();
-            for(Wydarzenie wyd:wydarzeniaWszystkieList)
-            {
-                if(wyd.get_opis().equals(wybraneWydarzenie)){
-                    idWydarzenia=wyd.get_id_wydarzenia();
-//                    licznikWyd++;
-                }
-            }
-        }
-        //jeżeli jest już na coś zapisana
-        else
-        {
-            Log.d("zapisana na ", "co najmniej 1 wydarzenie");
-            Integer licznikWyd=0;
-            Log.d("SZUKAM WYDARZENIa ", wybraneWydarzenie);
-            for(Wydarzenie wyd:wydarzenieList)
-            {
-                if(wyd.get_opis().equals(wybraneWydarzenie)){
-
-                    idWydarzenia=wyd.get_id_wydarzenia();
-                    licznikWyd++;
-                }
-            }
-            if(licznikWyd>0)
-                Log.d("znalazłam wydarzenie ", "TAK");
-            else
-                Log.d("znalazłam wydarzenie ", "NIE");
-        }
-        */
-
         Integer licznikWyd = 0;
         for (Wydarzenie wyd : wydarzenieList) {
             if (wyd.get_opis().equals(wybraneWydarzenie)) {
@@ -296,34 +260,6 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         for (Wydarzenie wyd : wydarzenieList) {
             valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
         }
-
-        /*
-        //Integer liczbaWydarzen=db.getLiczbaWydarzen();
-
-        List<Wydarzenie> wydarzenieList = db.getWydarzeniaNaKtoreNieJestZapisanaZawodniczka(jakaToZawodniczka(idZawodniczki));
-
-        Integer idWydarzenia = 0;
-
-        //jeżeli nie jest zapisana na nic
-        if (wydarzenieList.size() == 0) {
-            Log.d("wypisanieWydarzenZapisa", "wszystko ");
-            //TO DO jest zapisana na wszystko -> nic nie powinno być na liście
-            List<Wydarzenie> wydarzeniaWszystkieList = db.getWszystkieWydarzenia();
-            valuesWydarzenie=new String[wydarzeniaWszystkieList.size()];
-            for (Wydarzenie wyd : wydarzeniaWszystkieList) {
-                valuesWydarzenie[wydarzeniaWszystkieList.indexOf(wyd)] = wyd.get_opis();
-            }
-
-        }
-        //jeżeli jest już na coś zapisana
-        else {
-            Log.d("wypisanieWydarzenZapisa", "co najmniej 1 wydarzenie");
-            valuesWydarzenie=new String[wydarzenieList.size()];
-            for (Wydarzenie wyd : wydarzenieList) {
-                valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
-            }
-        }
-        */
     }
 
     public Integer jakaToZawodniczka(String szukanaZawodniczka){
