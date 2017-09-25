@@ -47,34 +47,34 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
 
         DatabaseHandler db = new DatabaseHandler(this);
         ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
-        ArrayList<Wydarzenie> wydarzenieList=db.getWszystkieWydarzenia();
+        ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
         db.close();
-        valuesZawodniczka=new String[zawodniczkiList.size()];
-        valuesWydarzenie=new String[wydarzenieList.size()];
+        valuesZawodniczka = new String[zawodniczkiList.size()];
+        //valuesWydarzenie = new String[wydarzenieList.size()];
 
         for (Zawodniczka zaw : zawodniczkiList){
             valuesZawodniczka[zawodniczkiList.indexOf(zaw)] = zaw.get_imie();
         }
 
-        for (Wydarzenie wyd : wydarzenieList){
+        /*
+        for (Wydarzenie wyd : wydarzenieList) {
             valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
         }
-
+*/
         valuesStatus = new String[3];
-        valuesStatus[0]="Tak";
-        valuesStatus[1]="Nie";
-        valuesStatus[2]="TBC";
+        valuesStatus[0] = "Tak";
+        valuesStatus[1] = "Nie";
+        valuesStatus[2] = "TBC";
 
-        wybranaZawodniczkaET=(TextView) findViewById(R.id.wybrana_zawodniczka);
+        wybranaZawodniczkaET = (TextView) findViewById(R.id.wybrana_zawodniczka);
         wybranaZawodniczkaET.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateAlertDialogWithRadioButtonGroupZawodniczka() ;
-
-                }
+                CreateAlertDialogWithRadioButtonGroupZawodniczka();
+            }
         });
 
-        wybraneWydarzenieET=(TextView) findViewById(R.id.wybrane_wydarzenie);
+        wybraneWydarzenieET = (TextView) findViewById(R.id.wybrane_wydarzenie);
         wybraneWydarzenieET.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +82,7 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
             }
         });
 
-        statusET=(TextView) findViewById(R.id.status);
+        statusET = (TextView) findViewById(R.id.status);
         statusET.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,30 +94,30 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         findViewById(R.id.zapisz_zaw_na_wyd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int czyDobrze=0;
-                if(wybranaZawodniczkaET.getText().toString().isEmpty()) {
+                int czyDobrze = 0;
+                if (wybranaZawodniczkaET.getText().toString().isEmpty()) {
                     wybranaZawodniczkaET.setError("Puste pole zawodniczki");
                     czyDobrze++;
                 }
 
-                if(wybraneWydarzenieET.getText().toString().isEmpty()) {
+                if (wybraneWydarzenieET.getText().toString().isEmpty()) {
                     wybraneWydarzenieET.setError("Puste pole wydarzenia");
                     czyDobrze++;
                 }
 
-                if(statusET.getText().toString().isEmpty()) {
+                if (statusET.getText().toString().isEmpty()) {
                     statusET.setError("Puste pole status");
                     czyDobrze++;
                 }
 
-                if(czyDobrze==0)
-                zapiszZawodniczkiNaWydarzenie();
+                if (czyDobrze == 0)
+                    zapiszZawodniczkiNaWydarzenie();
             }
         });
 
     }
 
-    public void CreateAlertDialogWithRadioButtonGroupZawodniczka(){
+    public void CreateAlertDialogWithRadioButtonGroupZawodniczka() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ZapisZawodniczkiNaWydarzenieActivity.this);
         builder.setTitle("Wybierz zawodniczke");
@@ -125,8 +125,8 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int item) {
                 ListView lwZaw = (alertDialogZawodniczka).getListView();
                 Object checkedZaw = lwZaw.getAdapter().getItem(lwZaw.getCheckedItemPosition());
-                wybranaZawodniczka= checkedZaw.toString();
-                Log.d("zawodniczka ",wybranaZawodniczka);
+                wybranaZawodniczka = checkedZaw.toString();
+                Log.d("zawodniczka ", wybranaZawodniczka);
                 wybranaZawodniczkaET.setText(wybranaZawodniczka);
                 alertDialogZawodniczka.dismiss();
             }
@@ -135,15 +135,27 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         alertDialogZawodniczka.show();
     }
 
-    public void CreateAlertDialogWithRadioButtonGroupWydarzenie(){
+    public void CreateAlertDialogWithRadioButtonGroupWydarzenie() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ZapisZawodniczkiNaWydarzenieActivity.this);
         builder.setTitle("Wybierz wydarzenie");
+        if(!wybranaZawodniczkaET.getText().toString().isEmpty()) {
+            wypisanieWydarzenNaKtoreNieJestZapisanaZawodniczka(wybranaZawodniczka.toString());
+        }
+        else
+        {
+            DatabaseHandler db = new DatabaseHandler(this);
+            ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
+            for (Wydarzenie wyd : wydarzenieList) {
+                valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
+            }
+        }
+        //spr, co sie dzieje, jak zawodniczka nie jest wybrana
         builder.setSingleChoiceItems(valuesWydarzenie, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 ListView lwWyd = (alertDialogWydarzenie).getListView();
                 Object checkedWyd = lwWyd.getAdapter().getItem(lwWyd.getCheckedItemPosition());
-                wybraneWydarzenie=checkedWyd.toString();
+                wybraneWydarzenie = checkedWyd.toString();
                 Log.d("wydarzenie ", wybraneWydarzenie);
                 wybraneWydarzenieET.setText(wybraneWydarzenie);
                 alertDialogWydarzenie.dismiss();
@@ -154,14 +166,14 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         alertDialogWydarzenie.show();
     }
 
-    public void CreateAlertDialogWithRadioButtonGroupStatus(){
+    public void CreateAlertDialogWithRadioButtonGroupStatus() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ZapisZawodniczkiNaWydarzenieActivity.this);
         builder.setTitle("Wybierz status");
         builder.setSingleChoiceItems(valuesStatus, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 ListView lwStatus = (alertDialogStatus).getListView();
                 Object checkedStatus = lwStatus.getAdapter().getItem(lwStatus.getCheckedItemPosition());
-                wybranyStatus=checkedStatus.toString();
+                wybranyStatus = checkedStatus.toString();
                 Log.d("status ", wybranyStatus);
                 statusET.setText(wybranyStatus);
                 alertDialogStatus.dismiss();
@@ -171,53 +183,80 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         alertDialogStatus.show();
     }
 
-    public void zapiszZawodniczkiNaWydarzenie(){
+    public void zapiszZawodniczkiNaWydarzenie() {
 
-        Integer idStatusu=0;
+        Integer idStatusu = 0;
 
-        switch (wybranyStatus){
-            case("Tak"):
-                idStatusu=1;
+        switch (wybranyStatus) {
+            case ("Tak"):
+                idStatusu = 1;
                 break;
-            case("Nie"):
-                idStatusu=2;
+            case ("Nie"):
+                idStatusu = 2;
                 break;
-            case("TBC"):
-                idStatusu=3;
+            case ("TBC"):
+                idStatusu = 3;
                 break;
         }
 
         DatabaseHandler db = new DatabaseHandler(this);
 
-        Integer idZawodniczki=666;
-        Integer idWydarzenia=666;
+        Integer idZawodniczki = 666;
+        Integer idWydarzenia = 666;
 
         ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
-        List<Wydarzenie> wydarzenieList=db.getWszystkieWydarzenia();
+        List<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
 
-        Integer licznikZaw=0;
-        for(Zawodniczka zaw:zawodniczkiList)
-        {
-            if(zaw.get_imie().equals(wybranaZawodniczka)) {
-                idZawodniczki = zaw.get_id();
-                licznikZaw++;
+        Integer licznikZaw = 0;
+
+        idZawodniczki=jakaToZawodniczka(wybranaZawodniczka);
+
+        /*
+        List<Wydarzenie> wydarzenieList=db.getWydarzeniaNaKtoreNieJestZapisanaZawodniczka(idZawodniczki);
+
+        //jeżeli nie jest na nic zapisana
+        if(wydarzenieList.size()==0){
+            Log.d("zapisana na ", "zero wydarzen");
+            List<Wydarzenie> wydarzeniaWszystkieList=db.getWszystkieWydarzenia();
+            for(Wydarzenie wyd:wydarzeniaWszystkieList)
+            {
+                if(wyd.get_opis().equals(wybraneWydarzenie)){
+                    idWydarzenia=wyd.get_id_wydarzenia();
+//                    licznikWyd++;
+                }
             }
         }
-
-        Log.d("stan licznika id zaw", licznikZaw.toString());
-        Log.d("wybrana zawodniczka", idZawodniczki.toString());
-
-        Integer licznikWyd=0;
-        for(Wydarzenie wyd:wydarzenieList)
+        //jeżeli jest już na coś zapisana
+        else
         {
-            if(wyd.get_opis().equals(wybraneWydarzenie)){
-                idWydarzenia=wyd.get_id_wydarzenia();
+            Log.d("zapisana na ", "co najmniej 1 wydarzenie");
+            Integer licznikWyd=0;
+            Log.d("SZUKAM WYDARZENIa ", wybraneWydarzenie);
+            for(Wydarzenie wyd:wydarzenieList)
+            {
+                if(wyd.get_opis().equals(wybraneWydarzenie)){
+
+                    idWydarzenia=wyd.get_id_wydarzenia();
+                    licznikWyd++;
+                }
+            }
+            if(licznikWyd>0)
+                Log.d("znalazłam wydarzenie ", "TAK");
+            else
+                Log.d("znalazłam wydarzenie ", "NIE");
+        }
+        */
+
+        Integer licznikWyd = 0;
+        for (Wydarzenie wyd : wydarzenieList) {
+            if (wyd.get_opis().equals(wybraneWydarzenie)) {
+
+                idWydarzenia = wyd.get_id_wydarzenia();
                 licznikWyd++;
-
             }
         }
 
-        Log.d("stan licznika id wyd", licznikWyd.toString());
+        //Log.d("stan licznika id wyd", licznikWyd.toString());
         Log.d("wybrane wydarzenie", idWydarzenia.toString());
 
         db.zapiszZawodniczkeNaWydarzenie(idZawodniczki, idWydarzenia, idStatusu);
@@ -227,6 +266,46 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, UdanyZapisZawodniczkiNaWydarzenieActivity.class);
         startActivity(intent);
+    }
 
+    public void wypisanieWydarzenNaKtoreNieJestZapisanaZawodniczka(String idZawodniczki) {
+
+        DatabaseHandler db = new DatabaseHandler(this);
+        List<Wydarzenie> wydarzenieList = db.getWydarzeniaNaKtoreNieJestZapisanaZawodniczka(jakaToZawodniczka(idZawodniczki));
+
+        Integer idWydarzenia = 0;
+
+        //jeżeli nie jest zapisana na nic
+        if (wydarzenieList.size() == 0) {
+            Log.d("zapisana na ", "zero wydarzen");
+            List<Wydarzenie> wydarzeniaWszystkieList = db.getWszystkieWydarzenia();
+            valuesWydarzenie=new String[wydarzeniaWszystkieList.size()];
+            for (Wydarzenie wyd : wydarzeniaWszystkieList) {
+                valuesWydarzenie[wydarzeniaWszystkieList.indexOf(wyd)] = wyd.get_opis();
+            }
+
+        }
+        //jeżeli jest już na coś zapisana
+        else {
+            Log.d("zapisana na ", "co najmniej 1 wydarzenie");
+            valuesWydarzenie=new String[wydarzenieList.size()];
+            for (Wydarzenie wyd : wydarzenieList) {
+                valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
+            }
+        }
+    }
+
+    public Integer jakaToZawodniczka(String szukanaZawodniczka){
+
+        DatabaseHandler db = new DatabaseHandler(this);
+        ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
+
+        Integer idZawodniczki = 0;
+        for (Zawodniczka zaw : zawodniczkiList) {
+            if (zaw.get_imie().equals(wybranaZawodniczka)) {
+                idZawodniczki = zaw.get_id();
+            }
+        }
+        return idZawodniczki;
     }
 }

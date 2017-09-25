@@ -533,6 +533,47 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             //db.close();
         }
     }
+
+    public List<Wydarzenie> getWydarzeniaNaKtoreNieJestZapisanaZawodniczka(Integer idZawodniczki) {
+
+        ArrayList<Wydarzenie> wydarzenieList = new ArrayList<Wydarzenie>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_PLAYERS + " tp JOIN " + TABLE_PLAYER_EVENT + " tpe ON (tp." + KEY_ID + "= tpe." + KEY_PLAYER_ID +
+                ") JOIN " + TABLE_EVENTS + " te on ( tpe." + KEY_EVENT_ID + " = te." + KEY_ID_EVENT + ") WHERE tp." + KEY_ID + " = '" + idZawodniczki + "'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        String wydarzeniaNaKtoreJestZapisana=new String;
+
+        if (cursor.moveToFirst()) {
+            do {
+                wydarzeniaNaKtoreJestZapisana+="'"+cursor.getString(cursor.getColumnIndex(KEY_ID_EVENT))+" '";
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("nie jest zapisana na ", wydarzeniaNaKtoreJestZapisana);
+
+        String selectQuery1 = "SELECT * FROM " + TABLE_EVENTS + " te WHERE te." + KEY_ID + " NOT IN('" + wydarzeniaNaKtoreJestZapisana + "')";
+        Cursor cursor1 = db.rawQuery(selectQuery1, null);
+        if (cursor1.moveToFirst()) {
+            do {
+                Wydarzenie wydarzenie = new Wydarzenie();
+                wydarzenie.set_id_wydarzenia(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_EVENT)));
+                wydarzenie.set_id_typu_wydarzenia(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_TYPE)));
+                wydarzenie.set_data(cursor1.getString(cursor1.getColumnIndex(KEY_DATE)));
+                wydarzenie.set_godzina(cursor1.getString(cursor1.getColumnIndex(KEY_HOUR)));
+                wydarzenie.set_miejsce(cursor1.getString(cursor1.getColumnIndex(KEY_PLACE)));
+                wydarzenie.set_opis(cursor1.getString(cursor1.getColumnIndex(KEY_DESC)));
+                wydarzenie.set_cena(cursor1.getInt(cursor1.getColumnIndex(KEY_PRICE)));
+
+                wydarzenieList.add(wydarzenie);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("nie jest zapisana ", Integer.valueOf(wydarzenieList.size()).toString());
+    return wydarzenieList;
+    }
 }
 
 
