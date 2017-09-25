@@ -271,9 +271,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String countQuery = "SELECT  * FROM " + TABLE_EVENTS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
+        //cursor.close();
         //dodalam
-        db.close();
+        //db.close();
         // return count
         return cursor.getCount();
     }
@@ -538,41 +538,112 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ArrayList<Wydarzenie> wydarzenieList = new ArrayList<Wydarzenie>();
 
+        //wyszukanie, na co jest zapisana
         String selectQuery = "SELECT * FROM " + TABLE_PLAYERS + " tp JOIN " + TABLE_PLAYER_EVENT + " tpe ON (tp." + KEY_ID + "= tpe." + KEY_PLAYER_ID +
                 ") JOIN " + TABLE_EVENTS + " te on ( tpe." + KEY_EVENT_ID + " = te." + KEY_ID_EVENT + ") WHERE tp." + KEY_ID + " = '" + idZawodniczki + "'";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        String wydarzeniaNaKtoreJestZapisana=new String;
+        String wydarzeniaNaKtoreJestZapisana=new String();
 
         if (cursor.moveToFirst()) {
             do {
-                wydarzeniaNaKtoreJestZapisana+="'"+cursor.getString(cursor.getColumnIndex(KEY_ID_EVENT))+" '";
+                wydarzeniaNaKtoreJestZapisana+="'"+cursor.getString(cursor.getColumnIndex(KEY_ID_EVENT))+"',";
             } while (cursor.moveToNext());
         }
 
-        Log.d("nie jest zapisana na ", wydarzeniaNaKtoreJestZapisana);
+        String selectQuery1;
+        Cursor cursor1;
+        if(!wydarzeniaNaKtoreJestZapisana.isEmpty()) {
+            //jezeli jest na cos zapisana
+            Log.d("getWydarJestZapisana", wydarzeniaNaKtoreJestZapisana);
+            wydarzeniaNaKtoreJestZapisana = wydarzeniaNaKtoreJestZapisana.substring(0, wydarzeniaNaKtoreJestZapisana.length() - 1);
+            //wyszukanie, na co nie jest zapisana
+            selectQuery1 = //"SELECT * FROM "+TABLE_EVENTS +" EXCEPT "+
+                    "SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_ID_EVENT + " NOT IN (" + wydarzeniaNaKtoreJestZapisana + ")";
 
-        String selectQuery1 = "SELECT * FROM " + TABLE_EVENTS + " te WHERE te." + KEY_ID + " NOT IN('" + wydarzeniaNaKtoreJestZapisana + "')";
-        Cursor cursor1 = db.rawQuery(selectQuery1, null);
-        if (cursor1.moveToFirst()) {
-            do {
-                Wydarzenie wydarzenie = new Wydarzenie();
-                wydarzenie.set_id_wydarzenia(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_EVENT)));
-                wydarzenie.set_id_typu_wydarzenia(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_TYPE)));
-                wydarzenie.set_data(cursor1.getString(cursor1.getColumnIndex(KEY_DATE)));
-                wydarzenie.set_godzina(cursor1.getString(cursor1.getColumnIndex(KEY_HOUR)));
-                wydarzenie.set_miejsce(cursor1.getString(cursor1.getColumnIndex(KEY_PLACE)));
-                wydarzenie.set_opis(cursor1.getString(cursor1.getColumnIndex(KEY_DESC)));
-                wydarzenie.set_cena(cursor1.getInt(cursor1.getColumnIndex(KEY_PRICE)));
+            cursor1 = db.rawQuery(selectQuery1, null);
+            Log.d("getWydar query", selectQuery1);
 
-                wydarzenieList.add(wydarzenie);
-            } while (cursor.moveToNext());
+            if(cursor1.getCount()!=0) {
+                if (cursor1.moveToFirst()) {
+                    do {
+                        Wydarzenie wydarzenie = new Wydarzenie();
+                        wydarzenie.set_id_wydarzenia(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_EVENT)));
+                        wydarzenie.set_id_typu_wydarzenia(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_TYPE)));
+                        wydarzenie.set_data(cursor1.getString(cursor1.getColumnIndex(KEY_DATE)));
+                        wydarzenie.set_godzina(cursor1.getString(cursor1.getColumnIndex(KEY_HOUR)));
+                        wydarzenie.set_miejsce(cursor1.getString(cursor1.getColumnIndex(KEY_PLACE)));
+                        wydarzenie.set_opis(cursor1.getString(cursor1.getColumnIndex(KEY_DESC)));
+                        wydarzenie.set_cena(cursor1.getInt(cursor1.getColumnIndex(KEY_PRICE)));
+                        Log.d("idNaCoNieJest ", Integer.valueOf(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_EVENT))).toString());
+                        wydarzenieList.add(wydarzenie);
+                    } while (cursor1.moveToNext());
+                }
+            }
         }
 
-        Log.d("nie jest zapisana ", Integer.valueOf(wydarzenieList.size()).toString());
+        Log.d("getWydarzeNieJestZap ", Integer.valueOf(wydarzenieList.size()).toString());
     return wydarzenieList;
+    }
+
+    public Integer czyJestNaCosZapisana(Integer idZawodniczki){
+        String selectQuery = "SELECT * FROM " + TABLE_PLAYER_EVENT + " WHERE "
+                + KEY_PLAYER_ID + " = '" + idZawodniczki + "'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        Integer czyJestZapisana=0;
+
+        Log.d("Sprawdzam,"," czy jest zapisana");
+        if (cursor.moveToFirst()) {
+            do {
+                Log.d("chech,co jest w curos", Integer.valueOf(cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT))).toString());
+            } while (cursor.moveToNext());
+        }
+
+        if(cursor!=null && cursor.getCount()==0) {
+            czyJestZapisana = 0;
+        }
+        else if(cursor!=null && cursor.getCount()>0){
+            czyJestZapisana = 1;
+        }
+
+        Log.d("return ",czyJestZapisana.toString());
+
+        return czyJestZapisana;
+    }
+
+    public Integer liczbaNaIleJestZapisana(Integer idZawodniczki){
+
+        ArrayList<Wydarzenie> wydarzenieList = new ArrayList<Wydarzenie>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_PLAYERS + " tp JOIN " + TABLE_PLAYER_EVENT + " tpe ON (tp." + KEY_ID + "= tpe." + KEY_PLAYER_ID +
+                ") JOIN " + TABLE_EVENTS + " te on ( tpe." + KEY_EVENT_ID + " = te." + KEY_ID_EVENT + ") WHERE tp." + KEY_ID + " = '" + idZawodniczki + "'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor1 = db.rawQuery(selectQuery, null);
+
+        if(cursor1.getCount()!=0) {
+            if (cursor1.moveToFirst()) {
+                do {
+                    Wydarzenie wydarzenie = new Wydarzenie();
+                    wydarzenie.set_id_wydarzenia(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_EVENT)));
+                    wydarzenie.set_id_typu_wydarzenia(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_TYPE)));
+                    wydarzenie.set_data(cursor1.getString(cursor1.getColumnIndex(KEY_DATE)));
+                    wydarzenie.set_godzina(cursor1.getString(cursor1.getColumnIndex(KEY_HOUR)));
+                    wydarzenie.set_miejsce(cursor1.getString(cursor1.getColumnIndex(KEY_PLACE)));
+                    wydarzenie.set_opis(cursor1.getString(cursor1.getColumnIndex(KEY_DESC)));
+                    wydarzenie.set_cena(cursor1.getInt(cursor1.getColumnIndex(KEY_PRICE)));
+                    Log.d("idNaCoNieJest ", Integer.valueOf(cursor1.getInt(cursor1.getColumnIndex(KEY_ID_EVENT))).toString());
+                    wydarzenieList.add(wydarzenie);
+                } while (cursor1.moveToNext());
+            }
+        }
+
+        return wydarzenieList.size();
     }
 }
 

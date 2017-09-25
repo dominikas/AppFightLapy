@@ -1,21 +1,15 @@
 package com.example.domi.fightlapyapp;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,7 +134,7 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(ZapisZawodniczkiNaWydarzenieActivity.this);
         builder.setTitle("Wybierz wydarzenie");
         if(!wybranaZawodniczkaET.getText().toString().isEmpty()) {
-            wypisanieWydarzenNaKtoreNieJestZapisanaZawodniczka(wybranaZawodniczka.toString());
+            wypisanieWlasciwychWydarzen(wybranaZawodniczka.toString());
         }
         else
         {
@@ -150,7 +144,6 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
                 valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
             }
         }
-        //spr, co sie dzieje, jak zawodniczka nie jest wybrana
         builder.setSingleChoiceItems(valuesWydarzenie, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 ListView lwWyd = (alertDialogWydarzenie).getListView();
@@ -268,16 +261,53 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void wypisanieWydarzenNaKtoreNieJestZapisanaZawodniczka(String idZawodniczki) {
+    public void wypisanieWlasciwychWydarzen(String idZawodniczki) {
 
+        List<Wydarzenie> wydarzenieList=new ArrayList<Wydarzenie>();
+
+        //jaka to zawodniczka
+        Integer szukanaZawodniczka=jakaToZawodniczka(idZawodniczki);
+
+        //1. Czy jest na cos zapisana?
         DatabaseHandler db = new DatabaseHandler(this);
+        Integer czyJestZapis=db.czyJestNaCosZapisana(szukanaZawodniczka);
+
+        if(czyJestZapis.equals(1)){
+            //jezeli jest zapisana
+            //2. czy jest zapisana na wszystko?
+            Integer liczbaWszystkichWydarzen=db.getLiczbaWydarzen();
+            if(liczbaWszystkichWydarzen.equals(db.liczbaNaIleJestZapisana(szukanaZawodniczka))){
+                //TO DO zmienic co ma sie wyswietlac
+                valuesWydarzenie[0] = "Na wszystko zapisana";
+            }
+            else{
+                wydarzenieList=db.getWydarzeniaNaKtoreNieJestZapisanaZawodniczka(szukanaZawodniczka);
+            }
+        }
+        else{
+            //jezeli nie jest zapisana
+            Log.d("Nie jest ", "na nic zapisana");
+            wydarzenieList=db.getWszystkieWydarzenia();
+            Log.d("Liczba wydarzen ", Integer.valueOf(wydarzenieList.size()).toString());
+        }
+
+
+        valuesWydarzenie=new String[wydarzenieList.size()];
+        for (Wydarzenie wyd : wydarzenieList) {
+            valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
+        }
+
+        /*
+        //Integer liczbaWydarzen=db.getLiczbaWydarzen();
+
         List<Wydarzenie> wydarzenieList = db.getWydarzeniaNaKtoreNieJestZapisanaZawodniczka(jakaToZawodniczka(idZawodniczki));
 
         Integer idWydarzenia = 0;
 
         //jeżeli nie jest zapisana na nic
         if (wydarzenieList.size() == 0) {
-            Log.d("zapisana na ", "zero wydarzen");
+            Log.d("wypisanieWydarzenZapisa", "wszystko ");
+            //TO DO jest zapisana na wszystko -> nic nie powinno być na liście
             List<Wydarzenie> wydarzeniaWszystkieList = db.getWszystkieWydarzenia();
             valuesWydarzenie=new String[wydarzeniaWszystkieList.size()];
             for (Wydarzenie wyd : wydarzeniaWszystkieList) {
@@ -287,12 +317,13 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         }
         //jeżeli jest już na coś zapisana
         else {
-            Log.d("zapisana na ", "co najmniej 1 wydarzenie");
+            Log.d("wypisanieWydarzenZapisa", "co najmniej 1 wydarzenie");
             valuesWydarzenie=new String[wydarzenieList.size()];
             for (Wydarzenie wyd : wydarzenieList) {
                 valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
             }
         }
+        */
     }
 
     public Integer jakaToZawodniczka(String szukanaZawodniczka){
