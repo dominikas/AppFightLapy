@@ -514,7 +514,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void deleteZawodniczkeZWydarzenia(Integer idZawodniczki) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PLAYER_EVENT, KEY_ID + " = ?",
+        db.delete(TABLE_PLAYER_EVENT, KEY_PLAYER_ID + " = ?",
                 new String[]{idZawodniczki.toString()});
 
         String selectQuery = "SELECT * FROM " + TABLE_PLAYER_EVENT;

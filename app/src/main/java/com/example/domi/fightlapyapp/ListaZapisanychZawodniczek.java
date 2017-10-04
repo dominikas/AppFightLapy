@@ -61,8 +61,6 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
             listaZawodniczekLV.setAdapter(adapter);
         }
 
-
-
         listaZawodniczekLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
