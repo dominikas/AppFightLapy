@@ -44,7 +44,7 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
         db.close();
         valuesZawodniczka = new String[zawodniczkiList.size()];
-        //valuesWydarzenie = new String[wydarzenieList.size()];
+        //  valuesWydarzenie = new String[wydarzenieList.size()];
 
         for (Zawodniczka zaw : zawodniczkiList){
             valuesZawodniczka[zawodniczkiList.indexOf(zaw)] = zaw.getImie();
