@@ -22,7 +22,9 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
     private TextView idPozycjiTV;
     private TextView idZawodniczkiTV;
     private TextView idWydarzeniaTV;
-    private ListView mListView;
+    private ListView listaWydarzenTakZawodniczka;
+    private ListView listaWydarzenNieZawodniczka;
+    private ListView listaWydarzenTbcZawodniczka;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,9 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
         idPozycjiTV=(TextView) findViewById(R.id.idPozycji);
         idZawodniczkiTV =(TextView) findViewById(R.id.idZawodniczki);
         idWydarzeniaTV=(TextView) findViewById(R.id.idWydarzenia);
-        mListView = (ListView) findViewById(R.id.lista_wydarzen_zawodniczki);
+        listaWydarzenTakZawodniczka = (ListView) findViewById(R.id.lista_wydarzen_tak_zawodniczki);
+        listaWydarzenNieZawodniczka = (ListView) findViewById(R.id.lista_wydarzen_nie_zawodniczki);
+        listaWydarzenTbcZawodniczka = (ListView) findViewById(R.id.lista_wydarzen_tbc_zawodniczki);
 
         Intent i = getIntent();
         // getting attached intent data
@@ -45,6 +49,7 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
 
     }
 
+
     private void wyszukanieDanychZawodniczki(String product){
         Integer idZaw=666;
         Integer indeksZaw=666;
@@ -55,6 +60,7 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
 
         db.close();
 
+        //TODO do zawodniczkaObliczenia dodac
         for(Zawodniczka zaw:zawodniczkiList)
         {
             if((zaw.getImie()+" "+zaw.getNazwisko()).equals(product)) {
@@ -66,6 +72,7 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
         idZawodniczkiTV.setText(((zawodniczkiList.get(indeksZaw)).getId()).toString());
         numerTV.setText(((zawodniczkiList.get(indeksZaw)).getNumer()).toString());
 
+        //TODO do ZawodniczkaObliczenia dodac
         Integer pozycjaInt=(zawodniczkiList.get(indeksZaw)).getIdPozycji();
         String pozycjaString=new String();
 
@@ -89,20 +96,18 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
 
         idPozycjiTV.setText(pozycjaString);
 
-        // wydarzenie - wyszukanie  z tabeli zawodniczek_wydarzen id kliknietej zawodniczki i pobranie wydarzen, na ktore jest zapisana
+        // wydarzenie - wyszukanie  z tabeli zawodniczek_wydarzen id kliknietej zawodniczki
+        // i pobranie wydarzen, na ktore jest zapisana
         DatabaseHandler db1 = new DatabaseHandler(this);
-        //idWydarzeniaTV.setText((db1.getIdWyd(idZaw)).toString());
         Log.d("id zawodniczki", idZaw.toString());
 
         wydarzeniaList=db1.getWszystkieWydarzeniaPoZawodniczce(idZaw);
-        String[] listItems = new String[wydarzeniaList.size()];
         db1.close();
 
-        for (Wydarzenie wyd : wydarzeniaList){
-  //          int indeks = wydarzeniaList.indexOf(wyd);
-//            Integer indeks1 = (Integer) indeks;
-            listItems[wydarzeniaList.indexOf(wyd)] = wyd.getOpis()+" "+wyd.getData();
-        }
+        WydarzeniaObliczenia wydarzeniaObliczenia=new WydarzeniaObliczenia();
+        String[] wydarzeniaTak = wydarzeniaObliczenia.getWydarzeniaTakZawodniczka(wydarzeniaList);
+        String[] wydarzeniaNie = wydarzeniaObliczenia.getWydarzeniaNieZawodniczka(wydarzeniaList);
+        String[] wydarzeniaTbc = wydarzeniaObliczenia.getWydarzeniaTbcZawodniczka(wydarzeniaList);
 
         //wypisanie wszystkich wydarzen, na ktore zapisana jest wybrana zawodniczka
         if(wydarzeniaList.isEmpty())
@@ -110,8 +115,15 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
         else {
             //idwydarzenia do usuniecia
             idWydarzeniaTV.setText(wydarzeniaList.get(wydarzeniaList.size() - 1).getOpis());
-            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-            mListView.setAdapter(adapter);
+
+            ArrayAdapter adapterTak = new ArrayAdapter(this, android.R.layout.simple_list_item_1, wydarzeniaTak);
+            listaWydarzenTakZawodniczka.setAdapter(adapterTak);
+
+            ArrayAdapter adapterNie = new ArrayAdapter(this, android.R.layout.simple_list_item_1, wydarzeniaNie);
+            listaWydarzenNieZawodniczka.setAdapter(adapterNie);
+
+            ArrayAdapter adapterTbc = new ArrayAdapter(this, android.R.layout.simple_list_item_1, wydarzeniaTbc);
+            listaWydarzenTbcZawodniczka.setAdapter(adapterTbc);
         }
 
     }

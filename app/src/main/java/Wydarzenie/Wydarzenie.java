@@ -16,8 +16,17 @@ public class Wydarzenie {
     private ArrayList<Integer> listaZawodniczek;
     private Integer cena;
     private Integer idTypuWydarzenia;
+    private Integer obecnosc;
 
     public Wydarzenie(){}
+
+    public Integer getObecnosc() {
+        return obecnosc;
+    }
+
+    public void setObecnosc(Integer obecnosc) {
+        this.obecnosc = obecnosc;
+    }
 
     public Wydarzenie(Integer noweIdWydarzenia, Integer noweIdTypuWyd, String nowaData, String nowaGodzina, String noweMiejsce, String nowyOpis, Integer nowaCena){
 

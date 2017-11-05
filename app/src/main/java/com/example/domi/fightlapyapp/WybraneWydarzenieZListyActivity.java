@@ -49,11 +49,11 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
 
     }
 
-    private void wyszukanieDanychWydarzenia(String idWydarzenia) {
+    private void wyszukanieDanychWydarzenia(String opisWydarzenia) {
 
         //pobranie danych wybranego wydarzenia
         DatabaseHandler db = new DatabaseHandler(this);
-        Wydarzenie wybraneWydarzenie = db.getDaneWydarzeniaPoIdWydarzenia(idWydarzenia);
+        Wydarzenie wybraneWydarzenie = db.getDaneWydarzeniaPoIdWydarzenia(opisWydarzenia);
         db.close();
 
         wybraneWydarzenieTV.setText(wybraneWydarzenie.getOpis());

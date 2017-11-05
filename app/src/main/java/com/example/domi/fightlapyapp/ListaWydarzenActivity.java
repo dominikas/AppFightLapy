@@ -3,6 +3,7 @@ package com.example.domi.fightlapyapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,8 +36,8 @@ public class ListaWydarzenActivity extends AppCompatActivity {
             int indeks = wydarzenieList.indexOf(wyd);
             Integer indeks1 = (Integer) indeks;
             //TODO zamiast ID wypisac opis -> wyszukowanie w db handler zmienic na wyszukiwanie po opisie
-            listItems[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString();
-            //listItems[wydarzenieList.indexOf(wyd)] = wyd.getOpis();
+            //listItems[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString();
+            listItems[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString()+" "+wyd.getOpis();
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
@@ -45,9 +46,11 @@ public class ListaWydarzenActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String product = ((TextView) view).getText().toString();
-                // Launching new Activity on selecting single List Item
-                // sending data to new activity
+
+                String opisCaly = ((TextView) view).getText().toString();
+                Log.d("*** Opis caly ***", opisCaly);
+                String product = opisCaly.substring(0,1);
+                Log.d("*** ID ***", product);
                 i.putExtra("wydarzenie", product);
                 startActivity(i);
             }
