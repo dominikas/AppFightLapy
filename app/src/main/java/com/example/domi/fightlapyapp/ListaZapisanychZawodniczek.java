@@ -23,7 +23,9 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
 
     Intent i;
     private String product;
-    private ListView listaZawodniczekLV;
+    private ListView listaZawodniczekTakLV;
+    private ListView listaZawodniczekTbcLV;
+    private ListView listaZawodniczekNieLV;
     final Context context = this;
 
     @Override
@@ -31,84 +33,151 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_zapisanych_zawodniczek);
 
-
         Intent i = getIntent();
         product = i.getStringExtra("lista_zawodniczek");
         Log.d("lista zawodniczek ", product);
-        listaZawodniczekLV = (ListView) findViewById(R.id.lista_zapisanych_zawodniczek);
+        listaZawodniczekTakLV = (ListView) findViewById(R.id.lista_zapisanych_zawodniczek);
+        listaZawodniczekTbcLV = (ListView) findViewById(R.id.lista_zawodniczek_tbc);
+        listaZawodniczekNieLV = (ListView) findViewById(R.id.lista_zawodniczek_nie);
 
         //wyszuaknie i wypisanie zawodniczek zapisanych na wybrane wydarzenie
         DatabaseHandler db1 = new DatabaseHandler(this);
         //spra cos idzie w product
         List<Zawodniczka> wybraneZawodniczki = db1.getDaneZawodniczekPoIdWydarzenia(product);
-        Integer liczbaZaw=wybraneZawodniczki.size();
+        Integer liczbaZaw = wybraneZawodniczki.size();
 
         //Log.d("liczba za na liscie", liczbaZaw.toString());
 
         db1.close();
 
-        String[] listItems = new String[wybraneZawodniczki.size()];
-        for (Zawodniczka zaw : wybraneZawodniczki) {
-            listItems[wybraneZawodniczki.indexOf(zaw)] = zaw.get_imie() + " " + zaw.get_nazwisko();
+        int licznikTak = 0;
+        int licznikTbc = 0;
+        int licznikNie=0;
+
+        for (Zawodniczka zawod : wybraneZawodniczki) {
+            if (zawod.getObecnosc() == 1) {
+                licznikTak++;
+            }
+            else if(zawod.getObecnosc()==2){
+                licznikNie++;
+            }
+            else if (zawod.getObecnosc() == 3) {
+                licznikTbc++;
+            }
         }
+            String[] listItemsTak = new String[licznikTak];
+            String[] listItemsNie = new String[licznikNie];
+            String[] listItemsTbc = new String[licznikTbc];
 
-        //wypisanie wszystkich wydarzen, na ktore zapisana jest wybrana zawodniczka
-        if (wybraneZawodniczki.isEmpty())
-            Log.d("pusta", "pusta");
-        else {
-            Log.d("liczba zawodniczek", liczbaZaw.toString());
-            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-            listaZawodniczekLV.setAdapter(adapter);
-        }
+            Log.d("*** Liczba obecnych", Integer.valueOf(licznikTak).toString());
+            Log.d("*** Liczba TBC", Integer.valueOf(licznikTbc).toString());
 
+            licznikTak = 0;
+            licznikTbc = 0;
+            licznikNie = 0;
 
+            for (Zawodniczka zaw : wybraneZawodniczki) {
+                if (zaw.getObecnosc() == 1) {
+                    listItemsTak[licznikTak] = zaw.getImie() + " " + zaw.getNazwisko();
+                    Log.i("*****Dodaje zawodniczke", " obecna*****");
+                    licznikTak++;
 
-        listaZawodniczekLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                }
+                else if(zaw.getObecnosc()==2){
+                    listItemsNie[licznikNie] = zaw.getImie() + " " + zaw.getNazwisko();
+                    Log.i("*****Dodaje zawodniczke", " nieobecna*****");
+                    licznikNie++;
+                }
+                else if (zaw.getObecnosc() == 3) {
+                    listItemsTbc[licznikTbc] = zaw.getImie() + " " + zaw.getNazwisko();
+                    Log.i("*****Dodaje zawodniczke", " TBC*****");
+                    licznikTbc++;
+                }
+            }
+
+            //wypisanie zawodniczek, ktore są zapisane na wydarzenie
+            if (wybraneZawodniczki.isEmpty())
+                Log.d("pusta", "pusta");
+            else {
+                //
+                Log.d("*****JESTEM TUTAJ*****", liczbaZaw.toString());
+                ArrayAdapter adapterTak = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItemsTak);
+                ArrayAdapter adapterTbc = new ArrayAdapter(context, android.R.layout.simple_list_item_1, listItemsTbc);
+                ArrayAdapter adapterNie = new ArrayAdapter(context, android.R.layout.simple_list_item_1, listItemsNie);
+                listaZawodniczekTakLV.setAdapter(adapterTak);
+                listaZawodniczekTbcLV.setAdapter(adapterTbc);
+                listaZawodniczekNieLV.setAdapter(adapterNie);
+            }
+
+            listaZawodniczekTakLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                               int pos, long id) {
+
+                    //pobranie danych zawodniczki, ktora ma byc usunieta
+                    String imieINazwisko = ((TextView) arg1).getText().toString();
+                    final Integer idZawodniczki = wyszukanieDanychZawodniczki(imieINazwisko);
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            context);
+                    alertDialogBuilder.setTitle("Usuwanie zawodniczki z wydarzenia");
+                    alertDialogBuilder
+                            .setMessage("Czy na pewno chcesz usunąć zawodniczkę z wydarzenia?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    usuniecieZawodniczkiZWydarzenia(idZawodniczki);
+                                    ListaZapisanychZawodniczek.this.finish();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                    Log.v("long clicked", "pos: " + pos);
+
+                    return true;
+                }
+            });
+
+        listaZawodniczekTbcLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
 
                 //pobranie danych zawodniczki, ktora ma byc usunieta
                 String imieINazwisko = ((TextView) arg1).getText().toString();
-                final Integer idZawodniczki=wyszukanieDanychZawodniczki(imieINazwisko);
+                final Integer idZawodniczki = wyszukanieDanychZawodniczki(imieINazwisko);
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
-
-                // set title
                 alertDialogBuilder.setTitle("Usuwanie zawodniczki z wydarzenia");
-
-                // set dialog message
                 alertDialogBuilder
                         .setMessage("Czy na pewno chcesz usunąć zawodniczkę z wydarzenia?")
                         .setCancelable(false)
-                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                // if this button is clicked, close
-                                // current activity
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
                                 usuniecieZawodniczkiZWydarzenia(idZawodniczki);
                                 ListaZapisanychZawodniczek.this.finish();
                             }
                         })
-                        .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                // if this button is clicked, just close
-                                // the dialog box and do nothing
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
                         });
-
-                // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
                 alertDialog.show();
-                Log.v("long clicked","pos: " + pos);
+                Log.v("long clicked", "pos: " + pos);
 
                 return true;
             }
         });
-    }
+        }
+
 
     private void usuniecieZawodniczkiZWydarzenia(Integer idZawodniczki){
         Log.v("id zawodniczki ", idZawodniczki.toString());
@@ -134,9 +203,9 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
 
             for(Zawodniczka zaw:zawodniczkiList)
             {
-                if((zaw.get_imie()+" "+zaw.get_nazwisko()).equals(imieINazwisko)) {
-                    //if((zaw.get_id().toString().equals(product))) {
-                    idZaw = zaw.get_id();
+                if((zaw.getImie()+" "+zaw.getNazwisko()).equals(imieINazwisko)) {
+                    //if((zaw.getId().toString().equals(product))) {
+                    idZaw = zaw.getId();
                     indeksZaw=zawodniczkiList.indexOf(zaw);
                 }
             }

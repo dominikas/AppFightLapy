@@ -10,44 +10,45 @@ import MyExceptions.*;
 
 public class Zawodniczka{
 
-    private Integer id_zawodniczki;
+    private Integer idZawodniczki;
     private String imie;
     private String nazwisko;
-    private Integer id_pozycji;
+    private Integer idPozycji;
     private Integer numer;
     private ArrayList<Integer> listaWydarzen;
+    private int obecnosc;
 
     public Zawodniczka(){
 
     }
 
-    public Zawodniczka(Integer nowe_id, String nowe_imie, String nowe_nazwisko, Integer nowe_id_pozycji,Integer nowy_numer)
+    public Zawodniczka(Integer noweId, String noweImie, String noweNazwisko, Integer noweIdPozycji,Integer nowyNumer)
             /*throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception*/
     {
         //sprawdzenie danych przekazywanych -> wyjatki
-        //weryfikacjaDanych(nowe_id, nowe_imie, nowe_nazwisko, nowe_id_pozycji, nowy_numer);
+        //weryfikacjaDanych(noweId, noweImie, noweNazwisko, noweIdPozycji, nowyNumer);
 
-        this.id_zawodniczki=nowe_id;
-        this.imie=nowe_imie;
-        this.nazwisko=nowe_nazwisko;
-        this.id_pozycji=nowe_id_pozycji;
-        this.numer=nowy_numer;
+        this.idZawodniczki =noweId;
+        this.imie=noweImie;
+        this.nazwisko=noweNazwisko;
+        this.idPozycji =noweIdPozycji;
+        this.numer=nowyNumer;
         this.listaWydarzen= new ArrayList<Integer>();
 
         /*
-        set_id(nowe_id);
-        set_imie(nowe_imie);
-        set_nazwisko(nowe_nazwisko);
-        set_id_pozycji(nowe_id_pozycji);
-        set_numer(nowy_numer);
+        setId(noweId);
+        setImie(noweImie);
+        setNazwisko(noweNazwisko);
+        setIdPozycji(noweIdPozycji);
+        setNumer(nowyNumer);
         this.listaWydarzen= new ArrayList<Integer>();
         */
     }
-    public Zawodniczka(String nowe_imie, String nowe_nazwisko, Integer nowe_id_pozycji,Integer nowy_numer){
-        this.imie = nowe_imie;
-        this.nazwisko = nowe_nazwisko;
-        this.id_pozycji = nowe_id_pozycji;
-        this.numer = nowy_numer;
+    public Zawodniczka(String noweImie, String noweNazwisko, Integer noweIdPozycji,Integer nowyNumer){
+        this.imie = noweImie;
+        this.nazwisko = noweNazwisko;
+        this.idPozycji = noweIdPozycji;
+        this.numer = nowyNumer;
         this.listaWydarzen = new ArrayList<Integer>();
     }
     /*public void dodaj_zawodniczke()
@@ -55,147 +56,156 @@ public class Zawodniczka{
 
     }
     */
-    public Integer get_id(){
-        return this.id_zawodniczki;
+
+    public int getObecnosc() {
+        return obecnosc;
     }
 
-    public String get_imie(){
+    public void setObecnosc(int obecnosc) {
+        this.obecnosc = obecnosc;
+    }
+
+    public Integer getId(){
+        return this.idZawodniczki;
+    }
+
+    public String getImie(){
         return this.imie;
     }
 
-    public String get_nazwisko(){
+    public String getNazwisko(){
         return this.nazwisko;
     }
 
-    public Integer get_id_pozycji(){
-        return this.id_pozycji;
+    public Integer getIdPozycji(){
+        return this.idPozycji;
     }
 
-    public Integer get_numer(){
+    public Integer getNumer(){
         return this.numer;
     }
 
-    public ArrayList<Integer> get_listaWydarzen(){
+    public ArrayList<Integer> getListaWydarzen(){
         return this.listaWydarzen;
     }
 
-    public void set_id(Integer nowe_id) //throws Puste_Pole_Exception, Za_Dlugi_Exception
+    public void setId(Integer noweId) //throws Puste_Pole_Exception, Za_Dlugi_Exception
     {
 /*
-        if(nowe_id==null)
+        if(noweId==null)
         {
             throw new Puste_Pole_Exception("ID zawodniczki");
         }
 
-        if(nowe_id.toString().length()>3)
+        if(noweId.toString().length()>3)
         {
             throw new Za_Dlugi_Exception("ID zawodniczki");
         }
 
         // czy juz takie id istnieje
 */
-        this.id_zawodniczki=nowe_id;
+        this.idZawodniczki =noweId;
     }
 
-    public void set_imie(String nowe_imie) //throws Bledny_Format_Exception, Puste_Pole_Exception, Za_Dlugi_Exception
+    public void setImie(String noweImie) //throws Bledny_Format_Exception, Puste_Pole_Exception, Za_Dlugi_Exception
     {
 /*
-        if(nowe_imie==null)
+        if(noweImie==null)
         {
             throw new Puste_Pole_Exception("imię zawodniczki");
         }
 
-        if(nowe_imie.length()>50)
+        if(noweImie.length()>50)
         {
             throw new Za_Dlugi_Exception("imię zawodniczki");
         }
 
-        if(nowe_imie.matches("[a-zA-Z]+")==false)
+        if(noweImie.matches("[a-zA-Z]+")==false)
         {
             throw new Bledny_Format_Exception("imię zawodniczki");
         }
 */
-        this.imie=nowe_imie;
+        this.imie=noweImie;
     }
 
-    public void set_nazwisko(String nowe_nazwisko) //throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception
+    public void setNazwisko(String noweNazwisko) //throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception
     {
 /*
-        if(nowe_nazwisko==null)
+        if(noweNazwisko==null)
         {
             throw new Puste_Pole_Exception("nazwisko zawodniczki");
         }
 
-        if(nowe_nazwisko.length()>50)
+        if(noweNazwisko.length()>50)
         {
             throw new Za_Dlugi_Exception("nazwisko zawodniczki");
         }
 
-        if(nowe_nazwisko.matches("[a-zA-Z]+")==false)
+        if(noweNazwisko.matches("[a-zA-Z]+")==false)
         {
             throw new Bledny_Format_Exception("nazwisko zawodniczki");
         }
 */
-        this.nazwisko=nowe_nazwisko;
+        this.nazwisko=noweNazwisko;
     }
 
-    public void set_id_pozycji(Integer nowe_id_pozycji) //throws Puste_Pole_Exception, Za_Dlugi_Exception, Niedozwolony_Id_Exception
+    public void setIdPozycji(Integer noweIdPozycji) //throws Puste_Pole_Exception, Za_Dlugi_Exception, Niedozwolony_Id_Exception
     {
 /*
-        if(nowe_id_pozycji==null)
+        if(noweIdPozycji==null)
         {
             throw new Puste_Pole_Exception("ID pozycji");
         }
 
-        if(nowe_id_pozycji.toString().length()>3)
+        if(noweIdPozycji.toString().length()>3)
         {
             throw new Za_Dlugi_Exception("ID pozycji");
         }
 
         //niedozwolone sie ID
-        if(nowe_id_pozycji<0 || nowe_id_pozycji>5)
+        if(noweIdPozycji<0 || noweIdPozycji>5)
         {
-            throw new Niedozwolony_Id_Exception(nowe_id_pozycji,"pozycji");
+            throw new Niedozwolony_Id_Exception(noweIdPozycji,"pozycji");
         }
         */
-        this.id_pozycji=nowe_id_pozycji;
+        this.idPozycji =noweIdPozycji;
     }
 
-    public void set_numer(Integer nowy_numer) //throws Puste_Pole_Exception, Za_Dlugi_Exception
+    public void setNumer(Integer nowyNumer) //throws Puste_Pole_Exception, Za_Dlugi_Exception
     {
 /*
-        if(nowy_numer==null)
+        if(nowyNumer==null)
         {
             throw new Puste_Pole_Exception("numer");
         }
 
-        if(nowy_numer.toString().length()>3)
+        if(nowyNumer.toString().length()>3)
         {
             throw new Za_Dlugi_Exception("numer");
         }
 
         //powtarzajace sie pole
         */
-        this.numer=nowy_numer;
+        this.numer=nowyNumer;
     }
 
-    public void dodajWydarzenieDoZawodniczki(Integer id_wydarzenia) //throws Puste_Pole_Exception, Za_Dlugi_Exception
+    public void dodajWydarzenieDoZawodniczki(Integer idWydarzenia) //throws Puste_Pole_Exception, Za_Dlugi_Exception
     {
         /*
         //if(this.liczbaWydarzenZawodniczki()!=0)
-        if(id_wydarzenia==null)
+        if(idWydarzenia==null)
         {
             throw new Puste_Pole_Exception("ID wydarzenia");
         }
 
-        if(id_wydarzenia.toString().length()>3)
+        if(idWydarzenia.toString().length()>3)
         {
             throw new Za_Dlugi_Exception("ID wydarzenia");
         }
 
         //powtarzajace się id
 */
-        this.listaWydarzen.add(id_wydarzenia);
+        this.listaWydarzen.add(idWydarzenia);
     }
 
     private int liczbaWydarzenZawodniczki() //throws Brak_Wydarzen_Exception
@@ -210,70 +220,70 @@ public class Zawodniczka{
         return liczba;
     }
 
-    private void weryfikacjaDanych(Integer nowe_id, String nowe_imie, String nowe_nazwisko, Integer nowe_id_pozycji,Integer nowy_numer)
+    private void weryfikacjaDanych(Integer noweId, String noweImie, String noweNazwisko, Integer noweIdPozycji,Integer nowyNumer)
             throws Puste_Pole_Exception, Bledny_Format_Exception, Za_Dlugi_Exception
     {
         //weryfikacja ID
-        if(nowe_id==null)
+        if(noweId==null)
         {
             throw new Puste_Pole_Exception("ID zawodniczki");
         }
 
-        if(nowe_id.toString().length()>3)
+        if(noweId.toString().length()>3)
         {
             throw new Za_Dlugi_Exception("ID zawodniczki");
         }
 
         //weryfikacja imienia
-        if(nowe_imie==null)
+        if(noweImie==null)
         {
             throw new Puste_Pole_Exception("imię zawodniczki");
         }
 
-        if(nowe_imie.length()>50)
+        if(noweImie.length()>50)
         {
             throw new Za_Dlugi_Exception("imię zawodniczki");
         }
 
-        if(nowe_imie.matches("[a-zA-Z]+")==false)
+        if(noweImie.matches("[a-zA-Z]+")==false)
         {
             throw new Bledny_Format_Exception("imię zawodniczki");
         }
 
         //weryfikacja nazwiska
-        if(nowe_nazwisko==null)
+        if(noweNazwisko==null)
         {
             throw new Puste_Pole_Exception("nazwisko zawodniczki");
         }
 
-        if(nowe_nazwisko.length()>50)
+        if(noweNazwisko.length()>50)
         {
             throw new Za_Dlugi_Exception("nazwisko zawodniczki");
         }
 
-        if(nowe_nazwisko.matches("[a-zA-Z]+")==false)
+        if(noweNazwisko.matches("[a-zA-Z]+")==false)
         {
             throw new Bledny_Format_Exception("nazwisko zawodniczki");
         }
 
         //weryfikacja ID pozycji
-        if(nowe_id_pozycji==null)
+        if(noweIdPozycji==null)
         {
             throw new Puste_Pole_Exception("ID pozycji");
         }
 
-        if(nowe_id_pozycji.toString().length()>3)
+        if(noweIdPozycji.toString().length()>3)
         {
             throw new Za_Dlugi_Exception("ID pozycji");
         }
 
         //weryfikacja numeru
-        if(nowy_numer==null)
+        if(nowyNumer==null)
         {
             throw new Puste_Pole_Exception("numer");
         }
 
-        if(nowy_numer.toString().length()>3)
+        if(nowyNumer.toString().length()>3)
         {
             throw new Za_Dlugi_Exception("numer");
         }

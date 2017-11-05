@@ -1,14 +1,10 @@
 package com.example.domi.fightlapyapp;
 import DatabaseHandler.*;
 import Zawodniczka.*;
-import Wydarzenie.*;
-import MyExceptions.*;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-
-import org.junit.Test;
 
 import java.util.List;
 
@@ -32,7 +28,7 @@ public class DatabaseHandlerTests extends Activity {
         List<Zawodniczka> zawodniczki = db.getWszystkieZawodniczki();
 
         for (Zawodniczka zaw : zawodniczki) {
-            String log = "Id: "+zaw.get_id()+" ,Name: " + zaw.get_imie() + " ,Numer: " + zaw.get_numer();
+            String log = "Id: "+zaw.getId()+" ,Name: " + zaw.getImie() + " ,Numer: " + zaw.getNumer();
             // Writing Contacts to log
             Log.d("Name: ", log);
         }

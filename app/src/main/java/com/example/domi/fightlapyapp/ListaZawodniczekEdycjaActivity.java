@@ -38,7 +38,7 @@ public class ListaZawodniczekEdycjaActivity extends AppCompatActivity {
 
 
         for (Zawodniczka zaw : zawodniczkiList){
-            listItems[zawodniczkiList.indexOf(zaw)] = zaw.get_imie()+" "+zaw.get_nazwisko();
+            listItems[zawodniczkiList.indexOf(zaw)] = zaw.getImie()+" "+zaw.getNazwisko();
         }
 
 

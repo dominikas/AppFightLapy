@@ -3,7 +3,6 @@ package com.example.domi.fightlapyapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 
 import DatabaseHandler.*;
 import Wydarzenie.Wydarzenie;
-import Zawodniczka.Zawodniczka;
 
 public class ListaWydarzenActivity extends AppCompatActivity {
     private ListView mListView;
@@ -37,8 +35,8 @@ public class ListaWydarzenActivity extends AppCompatActivity {
             int indeks = wydarzenieList.indexOf(wyd);
             Integer indeks1 = (Integer) indeks;
             //TODO zamiast ID wypisac opis -> wyszukowanie w db handler zmienic na wyszukiwanie po opisie
-            listItems[wydarzenieList.indexOf(wyd)] = wyd.get_id_wydarzenia().toString();
-            //listItems[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
+            listItems[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString();
+            //listItems[wydarzenieList.indexOf(wyd)] = wyd.getOpis();
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);

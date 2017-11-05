@@ -47,12 +47,12 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         //valuesWydarzenie = new String[wydarzenieList.size()];
 
         for (Zawodniczka zaw : zawodniczkiList){
-            valuesZawodniczka[zawodniczkiList.indexOf(zaw)] = zaw.get_imie();
+            valuesZawodniczka[zawodniczkiList.indexOf(zaw)] = zaw.getImie();
         }
 
         /*
         for (Wydarzenie wyd : wydarzenieList) {
-            valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
+            valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.getOpis();
         }
 */
         valuesStatus = new String[3];
@@ -141,7 +141,7 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
             DatabaseHandler db = new DatabaseHandler(this);
             ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
             for (Wydarzenie wyd : wydarzenieList) {
-                valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
+                valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.getOpis();
             }
         }
         builder.setSingleChoiceItems(valuesWydarzenie, -1, new DialogInterface.OnClickListener() {
@@ -206,9 +206,9 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
 
         Integer licznikWyd = 0;
         for (Wydarzenie wyd : wydarzenieList) {
-            if (wyd.get_opis().equals(wybraneWydarzenie)) {
+            if (wyd.getOpis().equals(wybraneWydarzenie)) {
 
-                idWydarzenia = wyd.get_id_wydarzenia();
+                idWydarzenia = wyd.getIdWydarzenia();
                 licznikWyd++;
             }
         }
@@ -258,7 +258,7 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
 
         valuesWydarzenie=new String[wydarzenieList.size()];
         for (Wydarzenie wyd : wydarzenieList) {
-            valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
+            valuesWydarzenie[wydarzenieList.indexOf(wyd)] = wyd.getOpis();
         }
     }
 
@@ -269,8 +269,8 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
 
         Integer idZawodniczki = 0;
         for (Zawodniczka zaw : zawodniczkiList) {
-            if (zaw.get_imie().equals(wybranaZawodniczka)) {
-                idZawodniczki = zaw.get_id();
+            if (zaw.getImie().equals(wybranaZawodniczka)) {
+                idZawodniczki = zaw.getId();
             }
         }
         return idZawodniczki;

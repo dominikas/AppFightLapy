@@ -57,16 +57,16 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
 
         for(Zawodniczka zaw:zawodniczkiList)
         {
-            if((zaw.get_imie()+" "+zaw.get_nazwisko()).equals(product)) {
-                idZaw = zaw.get_id();
+            if((zaw.getImie()+" "+zaw.getNazwisko()).equals(product)) {
+                idZaw = zaw.getId();
                 indeksZaw=zawodniczkiList.indexOf(zaw);
             }
         }
 
-        idZawodniczkiTV.setText(((zawodniczkiList.get(indeksZaw)).get_id()).toString());
-        numerTV.setText(((zawodniczkiList.get(indeksZaw)).get_numer()).toString());
+        idZawodniczkiTV.setText(((zawodniczkiList.get(indeksZaw)).getId()).toString());
+        numerTV.setText(((zawodniczkiList.get(indeksZaw)).getNumer()).toString());
 
-        Integer pozycjaInt=(zawodniczkiList.get(indeksZaw)).get_id_pozycji();
+        Integer pozycjaInt=(zawodniczkiList.get(indeksZaw)).getIdPozycji();
         String pozycjaString=new String();
 
         switch(pozycjaInt){
@@ -101,7 +101,7 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
         for (Wydarzenie wyd : wydarzeniaList){
   //          int indeks = wydarzeniaList.indexOf(wyd);
 //            Integer indeks1 = (Integer) indeks;
-            listItems[wydarzeniaList.indexOf(wyd)] = wyd.get_opis()+" "+wyd.get_data();
+            listItems[wydarzeniaList.indexOf(wyd)] = wyd.getOpis()+" "+wyd.getData();
         }
 
         //wypisanie wszystkich wydarzen, na ktore zapisana jest wybrana zawodniczka
@@ -109,7 +109,7 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
             Log.d("pusta", "pusta");
         else {
             //idwydarzenia do usuniecia
-            idWydarzeniaTV.setText(wydarzeniaList.get(wydarzeniaList.size() - 1).get_opis());
+            idWydarzeniaTV.setText(wydarzeniaList.get(wydarzeniaList.size() - 1).getOpis());
             ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
             mListView.setAdapter(adapter);
         }

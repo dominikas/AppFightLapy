@@ -15,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import DatabaseHandler.*;
@@ -178,7 +177,7 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
         db.dodajWydarzenie(wydarzenieTestowe);
         db.close();
 
-        Intent intent = new Intent(this, Udany_zapis_wydarzenia.class);
+        Intent intent = new Intent(this, UdanyZapisWydarzenia.class);
         startActivity(intent);
     }
 

@@ -1,9 +1,7 @@
 package com.example.domi.fightlapyapp;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import MyExceptions.*;
 import Zawodniczka.*;
@@ -28,17 +26,17 @@ public void nowa_zawodniczka() throws Exception {
     @Test
     public void stworzenie_nowej_zawodniczki() throws Exception {
 
-        assertEquals("0", (nowa.get_id()).toString());
-        assertEquals("Anna", nowa.get_imie());
-        assertEquals("Kowalska", nowa.get_nazwisko());
-        assertEquals("1", (nowa.get_id_pozycji()).toString());
-        assertEquals("2", (nowa.get_numer().toString()));
+        assertEquals("0", (nowa.getId()).toString());
+        assertEquals("Anna", nowa.getImie());
+        assertEquals("Kowalska", nowa.getNazwisko());
+        assertEquals("1", (nowa.getIdPozycji()).toString());
+        assertEquals("2", (nowa.getNumer().toString()));
     }
 
     @Test(expected = Puste_Pole_Exception.class)
     public void idNull_stworzenie_nowej_zawodniczki() throws Exception {
     //   Zawodniczka nowa = new Zawodniczka(null, "Anna", "Kowalska", 1, 2);
-        nowa.set_id(null);
+        nowa.setId(null);
     }
 
     @Test(expected = Puste_Pole_Exception.class)
@@ -76,7 +74,7 @@ public void nowa_zawodniczka() throws Exception {
         Zawodniczka nowa = new Zawodniczka(3, "oko", "Nowak", 5, 8);
 
         nowa.dodajWydarzenieDoZawodniczki(858);
-        assertEquals("858",(nowa.get_listaWydarzen().get(0)).toString());
+        assertEquals("858",(nowa.getListaWydarzen().get(0)).toString());
     }
 
     @Test(expected = Za_Dlugi_Exception.class)

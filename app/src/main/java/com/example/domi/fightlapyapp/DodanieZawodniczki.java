@@ -130,13 +130,13 @@ public class DodanieZawodniczki extends AppCompatActivity {
         int ostatnia=zawodniczki.size();
         Zawodniczka zaw = zawodniczki.get(ostatnia-1);
         //for (Zawodniczka zaw : zawodniczki) {
-            String log = "Id: " + zaw.get_id() + " ,Name: " + zaw.get_imie() + " ,Nazwisko: " + zaw.get_nazwisko()+" ,id pozycji "+zaw.get_id_pozycji()+" ,numer "+zaw.get_numer();
+            String log = "Id: " + zaw.getId() + " ,Name: " + zaw.getImie() + " ,Nazwisko: " + zaw.getNazwisko()+" ,id pozycji "+zaw.getIdPozycji()+" ,numer "+zaw.getNumer();
             Log.d("Ostatnia: ", log);
             db.close();
             */
         //}
 
-        Intent intent = new Intent(this, udany_zapis_zawodniczki.class);
+        Intent intent = new Intent(this, UdanyZapisZawodniczki.class);
         startActivity(intent);
     }
 

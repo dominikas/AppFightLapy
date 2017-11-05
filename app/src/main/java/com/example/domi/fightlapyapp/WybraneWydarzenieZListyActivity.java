@@ -5,18 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import DatabaseHandler.DatabaseHandler;
 import Wydarzenie.Wydarzenie;
-import Zawodniczka.Zawodniczka;
 
 public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
 
@@ -63,9 +56,9 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
         Wydarzenie wybraneWydarzenie = db.getDaneWydarzeniaPoIdWydarzenia(idWydarzenia);
         db.close();
 
-        wybraneWydarzenieTV.setText(wybraneWydarzenie.get_opis());
+        wybraneWydarzenieTV.setText(wybraneWydarzenie.getOpis());
 
-        Integer typWydarzenia = wybraneWydarzenie.get_id_typu_wydarzenia();
+        Integer typWydarzenia = wybraneWydarzenie.getIdTypuWydarzenia();
         String typWydarzeniaString = new String();
 
         switch (typWydarzenia) {
@@ -81,11 +74,11 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
 
         }
         rodzajWydarzeniaTV.setText(typWydarzeniaString);
-        dataWydarzeniaTV.setText(wybraneWydarzenie.get_data());
+        dataWydarzeniaTV.setText(wybraneWydarzenie.getData());
 
-        godzinaWydarzeniaTV.setText(wybraneWydarzenie.get_godzina().toString());
-        miejsceWydarzeniaTV.setText(wybraneWydarzenie.get_miejsce());
-        cenaWydarzeniaTV.setText(wybraneWydarzenie.get_cena().toString());
+        godzinaWydarzeniaTV.setText(wybraneWydarzenie.getGodzina().toString());
+        miejsceWydarzeniaTV.setText(wybraneWydarzenie.getMiejsce());
+        cenaWydarzeniaTV.setText(wybraneWydarzenie.getCena().toString());
     }
 
     public void listaZapianychZawodniczek(View view) {

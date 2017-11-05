@@ -62,13 +62,13 @@ public class DatabaseHandlerEvents extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
 
             ContentValues values = new ContentValues();
-            //values.put(KEY_ID, zawodniczka.get_id());
-            values.put(KEY_ID_TYPE, wydarzenie.get_id_typu_wydarzenia());
-            values.put(KEY_DATE, wydarzenie.get_data());
-            values.put(KEY_HOUR, wydarzenie.get_godzina());
-            values.put(KEY_PLACE, wydarzenie.get_miejsce());
-            values.put(KEY_DESC, wydarzenie.get_opis());
-            values.put(KEY_PRICE, wydarzenie.get_cena());
+            //values.put(KEY_ID, zawodniczka.getId());
+            values.put(KEY_ID_TYPE, wydarzenie.getIdTypuWydarzenia());
+            values.put(KEY_DATE, wydarzenie.getData());
+            values.put(KEY_HOUR, wydarzenie.getGodzina());
+            values.put(KEY_PLACE, wydarzenie.getMiejsce());
+            values.put(KEY_DESC, wydarzenie.getOpis());
+            values.put(KEY_PRICE, wydarzenie.getCena());
             // Inserting Row
             db.insert(TABLE_EVENTS, null, values);
             db.close(); // Closing database connection
@@ -106,13 +106,13 @@ public class DatabaseHandlerEvents extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Wydarzenie wydarzenie = new Wydarzenie();
-                wydarzenie.set_id_wydarzenia(Integer.parseInt(cursor.getString(0)));
-                wydarzenie.set_id_typu_wydarzenia(Integer.parseInt(cursor.getString(1)));
-                wydarzenie.set_data(cursor.getString(2));
-                wydarzenie.set_godzina(cursor.getString(3));
-                wydarzenie.set_miejsce(cursor.getString(4));
-                wydarzenie.set_opis(cursor.getString(5));
-                wydarzenie.set_cena(Integer.parseInt(cursor.getString(6)));
+                wydarzenie.setIdWydarzenia(Integer.parseInt(cursor.getString(0)));
+                wydarzenie.setIdTypuWydarzenia(Integer.parseInt(cursor.getString(1)));
+                wydarzenie.setData(cursor.getString(2));
+                wydarzenie.setGodzina(cursor.getString(3));
+                wydarzenie.setMiejsce(cursor.getString(4));
+                wydarzenie.setOpis(cursor.getString(5));
+                wydarzenie.setCena(Integer.parseInt(cursor.getString(6)));
 
                 wydarzenieList.add(wydarzenie);
             } while (cursor.moveToNext());
@@ -137,21 +137,21 @@ public class DatabaseHandlerEvents extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID_TYPE, wydarzenie.get_id_typu_wydarzenia());
-        values.put(KEY_DATE, wydarzenie.get_data());
-        values.put(KEY_HOUR, wydarzenie.get_godzina());
-        values.put(KEY_PLACE, wydarzenie.get_miejsce());
-        values.put(KEY_DESC, wydarzenie.get_opis());
-        values.put(KEY_PRICE, wydarzenie.get_cena());
+        values.put(KEY_ID_TYPE, wydarzenie.getIdTypuWydarzenia());
+        values.put(KEY_DATE, wydarzenie.getData());
+        values.put(KEY_HOUR, wydarzenie.getGodzina());
+        values.put(KEY_PLACE, wydarzenie.getMiejsce());
+        values.put(KEY_DESC, wydarzenie.getOpis());
+        values.put(KEY_PRICE, wydarzenie.getCena());
         // updating row
         return db.update(TABLE_EVENTS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(wydarzenie.get_id_wydarzenia()) });
+                new String[] { String.valueOf(wydarzenie.getIdWydarzenia()) });
     }
 
     public void deleteWydarzenie(Wydarzenie wydarzenie) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_EVENTS, KEY_ID + " = ?",
-                new String[] { String.valueOf(wydarzenie.get_id_wydarzenia()) });
+                new String[] { String.valueOf(wydarzenie.getIdWydarzenia()) });
         db.close();
     }
 

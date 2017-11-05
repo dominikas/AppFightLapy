@@ -32,7 +32,7 @@
             android:name=".DodanieZawodniczki"
             android:parentActivityName=".WyborZawodniczkiActivity" />
         <activity
-            android:name=".udany_zapis_zawodniczki"
+            android:name=".UdanyZapisZawodniczki"
             android:parentActivityName=".WyborZawodniczkiActivity" />
         <activity
             android:name=".WyborWydarzeniaActivity"
@@ -41,7 +41,7 @@
             android:name=".DodanieWydarzeniaActivity"
             android:parentActivityName=".WyborWydarzeniaActivity" />
         <activity
-            android:name=".Udany_zapis_wydarzenia"
+            android:name=".UdanyZapisWydarzenia"
             android:parentActivityName=".WyborWydarzeniaActivity" />
         <activity
             android:name=".ListaWydarzenActivity"

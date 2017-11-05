@@ -2,52 +2,46 @@ package Wydarzenie;
 
 import java.util.ArrayList;
 
-import MyExceptions.Bledny_Format_Exception;
-import MyExceptions.Juz_Istnieje_Exception;
-import MyExceptions.Niedozwolony_Id_Exception;
-import MyExceptions.Puste_Pole_Exception;
-import MyExceptions.Za_Dlugi_Exception;
-
 /**
  * Created by Domi on 2017-07-10.
  */
 
 public class Wydarzenie {
 
-    private Integer id_wydarzenia;
+    private Integer idWydarzenia;
     private String data;
     private String godzina;
     private String miejsce;
     private String opis;
     private ArrayList<Integer> listaZawodniczek;
     private Integer cena;
-    private Integer id_typu_wydarzenia;
+    private Integer idTypuWydarzenia;
 
     public Wydarzenie(){}
 
-    public Wydarzenie(Integer nowe_id_wydarzenia, Integer nowe_id_typu_wyd, String nowa_data, String nowa_godzina, String nowe_miejsce, String nowy_opis, Integer nowa_cena){
+    public Wydarzenie(Integer noweIdWydarzenia, Integer noweIdTypuWyd, String nowaData, String nowaGodzina, String noweMiejsce, String nowyOpis, Integer nowaCena){
 
-        walidacjaDanych(nowe_id_wydarzenia, nowa_data, nowe_miejsce, nowy_opis, nowa_cena, nowe_id_typu_wyd);
+        walidacjaDanych(noweIdWydarzenia, nowaData, noweMiejsce, nowyOpis, nowaCena, noweIdTypuWyd);
 
-        this.id_wydarzenia=nowe_id_wydarzenia;
-        this.data=nowa_data;
-        this.godzina=nowa_godzina;
-        this.miejsce=nowe_miejsce;
-        this.opis=nowy_opis;
+        this.idWydarzenia =noweIdWydarzenia;
+        this.data=nowaData;
+        this.godzina=nowaGodzina;
+        this.miejsce=noweMiejsce;
+        this.opis=nowyOpis;
         this.listaZawodniczek=new ArrayList<Integer>();
-        this.cena=nowa_cena;
-        this.id_typu_wydarzenia=nowe_id_typu_wyd;
+        this.cena=nowaCena;
+        this.idTypuWydarzenia =noweIdTypuWyd;
     }
 
-    public Wydarzenie(Integer nowe_id_typu_wyd, String nowa_data, String nowa_godzina, String nowe_miejsce, String nowy_opis, Integer nowa_cena){
+    public Wydarzenie(Integer noweIdTypuWyd, String nowaData, String nowaGodzina, String noweMiejsce, String nowyOpis, Integer nowaCena){
 
-        this.data=nowa_data;
-        this.godzina=nowa_godzina;
-        this.miejsce=nowe_miejsce;
-        this.opis=nowy_opis;
+        this.data=nowaData;
+        this.godzina=nowaGodzina;
+        this.miejsce=noweMiejsce;
+        this.opis=nowyOpis;
         this.listaZawodniczek=new ArrayList<Integer>();
-        this.cena=nowa_cena;
-        this.id_typu_wydarzenia=nowe_id_typu_wyd;
+        this.cena=nowaCena;
+        this.idTypuWydarzenia =noweIdTypuWyd;
     }
 
 
@@ -125,23 +119,23 @@ public class Wydarzenie {
         */
     }
 
-    public Integer get_id_wydarzenia() {return this.id_wydarzenia; }
+    public Integer getIdWydarzenia() {return this.idWydarzenia; }
 
-    public String get_data() {return this.data;}
+    public String getData() {return this.data;}
 
-    public String get_godzina() {return this.godzina;}
+    public String getGodzina() {return this.godzina;}
 
-    public String get_miejsce() {return this.miejsce;}
+    public String getMiejsce() {return this.miejsce;}
 
-    public String get_opis() {return this.opis;}
+    public String getOpis() {return this.opis;}
 
-    public ArrayList<Integer> get_lista_zawodniczek() {return this.listaZawodniczek;}
+    public ArrayList<Integer> getListaZawodniczek() {return this.listaZawodniczek;}
 
-    public Integer get_cena() {return this.cena;}
+    public Integer getCena() {return this.cena;}
 
-    public Integer get_id_typu_wydarzenia() {return this.id_typu_wydarzenia;}
+    public Integer getIdTypuWydarzenia() {return this.idTypuWydarzenia;}
 
-    public void set_id_wydarzenia(Integer nowe_id_wydarzenia)
+    public void setIdWydarzenia(Integer nowe_id_wydarzenia)
             //throws Puste_Pole_Exception, Za_Dlugi_Exception
             {
             /*
@@ -157,10 +151,10 @@ public class Wydarzenie {
             throw new Za_Dlugi_Exception("id wydarzenia");
         }
 */
-        this.id_wydarzenia=nowe_id_wydarzenia;
+        this.idWydarzenia =nowe_id_wydarzenia;
     }
 
-    public void set_data(String nowa_data)
+    public void setData(String nowa_data)
             //throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception
     {
     /*
@@ -175,7 +169,7 @@ public class Wydarzenie {
         this.data=nowa_data;
     }
 
-    public void set_godzina(String nowa_godzina)
+    public void setGodzina(String nowa_godzina)
             //throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception
     {
         /*
@@ -190,7 +184,7 @@ public class Wydarzenie {
         this.godzina=nowa_godzina;
     }
 
-    public void set_miejsce(String nowe_miejsce)
+    public void setMiejsce(String nowe_miejsce)
             //throws Puste_Pole_Exception, Za_Dlugi_Exception
     {
         /*
@@ -208,7 +202,7 @@ public class Wydarzenie {
         this.miejsce=nowe_miejsce;
     }
 
-    public void set_opis(String nowy_opis)
+    public void setOpis(String nowy_opis)
             //throws Puste_Pole_Exception, Za_Dlugi_Exception
     {
     /*
@@ -248,7 +242,7 @@ public class Wydarzenie {
         this.listaZawodniczek.add(id_zawodniczki);
     }
 
-    public void set_cena(Integer nowa_cena)
+    public void setCena(Integer nowa_cena)
             //throws Puste_Pole_Exception
     {
         /*
@@ -261,7 +255,7 @@ public class Wydarzenie {
         this.cena=nowa_cena;
     }
 
-    public void set_id_typu_wydarzenia(Integer nowy_typ_wydarzenia)
+    public void setIdTypuWydarzenia(Integer nowy_typ_wydarzenia)
     //        throws Puste_Pole_Exception, Niedozwolony_Id_Exception
     {
       /*
@@ -277,7 +271,7 @@ public class Wydarzenie {
             throw new Niedozwolony_Id_Exception(nowy_typ_wydarzenia,"wydarzenia");
         }
 */
-        this.id_typu_wydarzenia=nowy_typ_wydarzenia;
+        this.idTypuWydarzenia =nowy_typ_wydarzenia;
     }
 
 }

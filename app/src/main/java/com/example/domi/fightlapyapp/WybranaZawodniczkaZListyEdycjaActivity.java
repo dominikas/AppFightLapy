@@ -8,16 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import DatabaseHandler.DatabaseHandler;
-import Wydarzenie.Wydarzenie;
 import Zawodniczka.Zawodniczka;
 
 public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
@@ -120,25 +117,25 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
 
         for(Zawodniczka zaw:zawodniczkiList)
         {
-            if((zaw.get_imie()+" "+zaw.get_nazwisko()).equals(product)) {
-            //if((zaw.get_id().toString().equals(product))) {
-                idZaw = zaw.get_id();
+            if((zaw.getImie()+" "+zaw.getNazwisko()).equals(product)) {
+            //if((zaw.getId().toString().equals(product))) {
+                idZaw = zaw.getId();
                 indeksZaw=zawodniczkiList.indexOf(zaw);
             }
         }
 
         Zawodniczka edytowanaZawodniczka= zawodniczkiList.get(indeksZaw);
 
-        imieZawodniczkiEdycjaET.setText(edytowanaZawodniczka.get_imie());
+        imieZawodniczkiEdycjaET.setText(edytowanaZawodniczka.getImie());
         imieZawodniczkiEdycjaET.setSelection(imieZawodniczkiEdycjaET.getText().length());
 
-        nazwiskoZawodniczkiEdycjaET.setText(edytowanaZawodniczka.get_nazwisko());
+        nazwiskoZawodniczkiEdycjaET.setText(edytowanaZawodniczka.getNazwisko());
         nazwiskoZawodniczkiEdycjaET.setSelection(nazwiskoZawodniczkiEdycjaET.getText().length());
 
-        numerEdycjaET.setText(edytowanaZawodniczka.get_numer().toString());
+        numerEdycjaET.setText(edytowanaZawodniczka.getNumer().toString());
         numerEdycjaET.setSelection(numerEdycjaET.getText().length());
 
-        Integer pozycjaInt=edytowanaZawodniczka.get_id_pozycji();
+        Integer pozycjaInt=edytowanaZawodniczka.getIdPozycji();
         String pozycjaString=new String();
 
         switch(pozycjaInt){
@@ -198,12 +195,12 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
         DatabaseHandler db = new DatabaseHandler(this);
         Log.d("Insert: ", "Inserting ..");
         Zawodniczka edytowanaZawodniczka = new Zawodniczka();
-        edytowanaZawodniczka.set_id(idZaw);
+        edytowanaZawodniczka.setId(idZaw);
         Log.d("Indeks zmienianej : ", idZaw.toString());
-        edytowanaZawodniczka.set_imie(imie_zawodniczki);
-        edytowanaZawodniczka.set_nazwisko(nazwisko_zawodniczki);
-        edytowanaZawodniczka.set_numer(numerInt);
-        edytowanaZawodniczka.set_id_pozycji(idPozycji);
+        edytowanaZawodniczka.setImie(imie_zawodniczki);
+        edytowanaZawodniczka.setNazwisko(nazwisko_zawodniczki);
+        edytowanaZawodniczka.setNumer(numerInt);
+        edytowanaZawodniczka.setIdPozycji(idPozycji);
 
         db.updateZawodniczka(edytowanaZawodniczka);
 

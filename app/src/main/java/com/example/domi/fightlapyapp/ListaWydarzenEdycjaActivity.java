@@ -37,8 +37,8 @@ public class ListaWydarzenEdycjaActivity extends AppCompatActivity {
             Integer indeks1 = (Integer) indeks;
 
             //TODO zamiast ID wypisac opis -> wyszukowanie w db handler zmienic na wyszukiwanie po opisie
-            listItems[wydarzenieList.indexOf(wyd)] = wyd.get_id_wydarzenia().toString();
-            //listItems[wydarzenieList.indexOf(wyd)] = wyd.get_opis();
+            listItems[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString();
+            //listItems[wydarzenieList.indexOf(wyd)] = wyd.getOpis();
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);

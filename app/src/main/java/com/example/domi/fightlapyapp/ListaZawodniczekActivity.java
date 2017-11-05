@@ -36,13 +36,13 @@ public class ListaZawodniczekActivity extends AppCompatActivity {
         String[] listItems = new String[zawodniczkiList.size()];
 
         for (Zawodniczka zaw : zawodniczkiList){
-            String log = "Id: " + zaw.get_id() + " ,Name: " + zaw.get_imie() + " ,Nazwisko: " + zaw.get_nazwisko()+" ,id pozycji "+zaw.get_id_pozycji()+" ,numer "+zaw.get_numer();
+            String log = "Id: " + zaw.getId() + " ,Name: " + zaw.getImie() + " ,Nazwisko: " + zaw.getNazwisko()+" ,id pozycji "+zaw.getIdPozycji()+" ,numer "+zaw.getNumer();
             Log.d("Ostatnia: ", log);
             int indeks = zawodniczkiList.indexOf(zaw);
             Integer indeks1 = (Integer) indeks;
             Log.d("Indeks", indeks1.toString());
 
-            listItems[zawodniczkiList.indexOf(zaw)] = zaw.get_imie()+" "+zaw.get_nazwisko();
+            listItems[zawodniczkiList.indexOf(zaw)] = zaw.getImie()+" "+zaw.getNazwisko();
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);

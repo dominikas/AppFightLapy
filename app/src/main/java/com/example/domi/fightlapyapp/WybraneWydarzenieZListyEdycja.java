@@ -16,11 +16,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
-import java.util.List;
 
 import DatabaseHandler.DatabaseHandler;
 import Wydarzenie.Wydarzenie;
-import Zawodniczka.Zawodniczka;
 
 public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
 
@@ -170,25 +168,25 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
         Wydarzenie wybraneWydarzenie = db.getDaneWydarzeniaPoIdWydarzenia(idWydarzenia);
         db.close();
 
-        miejsceET.setText(wybraneWydarzenie.get_miejsce().toString());
+        miejsceET.setText(wybraneWydarzenie.getMiejsce().toString());
         miejsceET.setSelection(miejsceET.getText().length());
 
-        cenaET.setText(wybraneWydarzenie.get_cena().toString());
+        cenaET.setText(wybraneWydarzenie.getCena().toString());
         cenaET.setSelection(cenaET.getText().length());
 
-        opisET.setText(wybraneWydarzenie.get_opis().toString());
+        opisET.setText(wybraneWydarzenie.getOpis().toString());
         opisET.setSelection(opisET.getText().length());
 
-        Integer typWydarzenia = wybraneWydarzenie.get_id_typu_wydarzenia();
+        Integer typWydarzenia = wybraneWydarzenie.getIdTypuWydarzenia();
         Log.d("id wydarzenia", typWydarzenia.toString());
 
        typWydarzeniaSpinner.setSelection(typWydarzenia-1);
 
-        date.setText(wybraneWydarzenie.get_data().toString());
+        date.setText(wybraneWydarzenie.getData().toString());
 
-        Log.i("Godzina ",wybraneWydarzenie.get_godzina().toString());
+        Log.i("Godzina ",wybraneWydarzenie.getGodzina().toString());
         //TO DO poorawic uzupelnianie godziny aktualnej wydarzenia
-        //time.setText(wybraneWydarzenie.get_godzina().toString());
+        //time.setText(wybraneWydarzenie.getGodzina().toString());
 
     }
 
@@ -209,13 +207,13 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
         DatabaseHandler db = new DatabaseHandler(this);
         Wydarzenie edytowaneWydarzenie = new Wydarzenie();
 
-        edytowaneWydarzenie.set_id_wydarzenia(Integer.valueOf(product));
-        edytowaneWydarzenie.set_id_typu_wydarzenia(typWydarzenia);
-        edytowaneWydarzenie.set_data(dataWydarzeniaNew);
-        edytowaneWydarzenie.set_miejsce(miejsceWydarzenieNew);
-        edytowaneWydarzenie.set_cena(cenaWydarzeniaNew);
-        edytowaneWydarzenie.set_opis(opisWydarzeniaNew);
-        edytowaneWydarzenie.set_godzina(godzineWydarzeniaNew);
+        edytowaneWydarzenie.setIdWydarzenia(Integer.valueOf(product));
+        edytowaneWydarzenie.setIdTypuWydarzenia(typWydarzenia);
+        edytowaneWydarzenie.setData(dataWydarzeniaNew);
+        edytowaneWydarzenie.setMiejsce(miejsceWydarzenieNew);
+        edytowaneWydarzenie.setCena(cenaWydarzeniaNew);
+        edytowaneWydarzenie.setOpis(opisWydarzeniaNew);
+        edytowaneWydarzenie.setGodzina(godzineWydarzeniaNew);
 
         db.updateWydarzenie(edytowaneWydarzenie);
 
