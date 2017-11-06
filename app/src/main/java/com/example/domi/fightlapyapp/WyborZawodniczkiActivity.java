@@ -14,7 +14,7 @@ public class WyborZawodniczkiActivity extends AppCompatActivity {
     }
     public void dodanieZawodniczki(View view)
     {
-        Intent intent = new Intent(this, DodanieZawodniczki.class);
+        Intent intent = new Intent(this, DodanieZawodniczkiActivity.class);
         startActivity(intent);
     }
 

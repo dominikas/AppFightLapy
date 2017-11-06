@@ -13,11 +13,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import DatabaseHandler.DatabaseHandler;
-import Zawodniczka.Zawodniczka;
+import Zawodniczka.*;
 
 public class ListaZawodniczekEdycjaActivity extends AppCompatActivity {
 
-    private ListView mListView;
+    private ListView listaZawodniczekEdycja;
     Intent i;
     Integer indeks1;
 
@@ -28,31 +28,24 @@ public class ListaZawodniczekEdycjaActivity extends AppCompatActivity {
 
         i= new Intent(getApplicationContext(), WybranaZawodniczkaZListyEdycjaActivity.class);
 
-        mListView = (ListView) findViewById(R.id.listazawodniczekedycja_list_view);
+        listaZawodniczekEdycja = (ListView) findViewById(R.id.listazawodniczekedycja_list_view);
 
-        Log.d("Reading: ", "Reading all contacts..");
         DatabaseHandler db = new DatabaseHandler(this);
         ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
         db.close();
-        String[] listItems = new String[zawodniczkiList.size()];
 
+        ZawodniczkaObliczenia zawodniczkaObliczenia=new ZawodniczkaObliczenia();
 
-        for (Zawodniczka zaw : zawodniczkiList){
-            listItems[zawodniczkiList.indexOf(zaw)] = zaw.getImie()+" "+zaw.getNazwisko();
-        }
+        String[] listaZawodniczek=zawodniczkaObliczenia.getTablicaZawodniczek(zawodniczkiList);
 
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaZawodniczek);
+        listaZawodniczekEdycja.setAdapter(adapter);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-        mListView.setAdapter(adapter);
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listaZawodniczekEdycja.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String product = ((TextView) view).getText().toString();
-                //String product = indeks1.toString();
                 Log.d("indeks wybranej zawodn ", product);
-                // Launching new Activity on selecting single List Item
-                // sending data to new activity
                 i.putExtra("imie i nazwisko", product);
                 startActivity(i);
             }

@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DatabaseHandler.DatabaseHandler;
-import Zawodniczka.Zawodniczka;
+
+import Zawodniczka.*;
 
 public class ListaZapisanychZawodniczek extends AppCompatActivity {
 
@@ -42,70 +43,29 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
 
         //wyszuaknie i wypisanie zawodniczek zapisanych na wybrane wydarzenie
         DatabaseHandler db1 = new DatabaseHandler(this);
-        //spra cos idzie w product
+
         List<Zawodniczka> wybraneZawodniczki = db1.getDaneZawodniczekPoIdWydarzenia(product);
         Integer liczbaZaw = wybraneZawodniczki.size();
 
-        //Log.d("liczba za na liscie", liczbaZaw.toString());
-
         db1.close();
+        ZawodniczkaObliczenia zawodniczkaObliczenia = new ZawodniczkaObliczenia();
 
-        int licznikTak = 0;
-        int licznikTbc = 0;
-        int licznikNie=0;
-
-        for (Zawodniczka zawod : wybraneZawodniczki) {
-            if (zawod.getObecnosc() == 1) {
-                licznikTak++;
-            }
-            else if(zawod.getObecnosc()==2){
-                licznikNie++;
-            }
-            else if (zawod.getObecnosc() == 3) {
-                licznikTbc++;
-            }
-        }
-            String[] listItemsTak = new String[licznikTak];
-            String[] listItemsNie = new String[licznikNie];
-            String[] listItemsTbc = new String[licznikTbc];
-
-            Log.d("*** Liczba obecnych", Integer.valueOf(licznikTak).toString());
-            Log.d("*** Liczba TBC", Integer.valueOf(licznikTbc).toString());
-
-            licznikTak = 0;
-            licznikTbc = 0;
-            licznikNie = 0;
-
-            for (Zawodniczka zaw : wybraneZawodniczki) {
-                if (zaw.getObecnosc() == 1) {
-                    listItemsTak[licznikTak] = zaw.getImie() + " " + zaw.getNazwisko();
-                    Log.i("*****Dodaje zawodniczke", " obecna*****");
-                    licznikTak++;
-
-                }
-                else if(zaw.getObecnosc()==2){
-                    listItemsNie[licznikNie] = zaw.getImie() + " " + zaw.getNazwisko();
-                    Log.i("*****Dodaje zawodniczke", " nieobecna*****");
-                    licznikNie++;
-                }
-                else if (zaw.getObecnosc() == 3) {
-                    listItemsTbc[licznikTbc] = zaw.getImie() + " " + zaw.getNazwisko();
-                    Log.i("*****Dodaje zawodniczke", " TBC*****");
-                    licznikTbc++;
-                }
-            }
+        String[] listItemsTak = zawodniczkaObliczenia.getZawodniczkiTakWydarzenie(wybraneZawodniczki);
+        String[] listItemsNie = zawodniczkaObliczenia.getZawodniczkiNieWydarzenie(wybraneZawodniczki);
+        String[] listItemsTbc = zawodniczkaObliczenia.getZawodniczkiTbcWydarzenie(wybraneZawodniczki);
 
             //wypisanie zawodniczek, ktore są zapisane na wydarzenie
             if (wybraneZawodniczki.isEmpty())
                 Log.d("pusta", "pusta");
             else {
-                //
-                Log.d("*****JESTEM TUTAJ*****", liczbaZaw.toString());
+
                 ArrayAdapter adapterTak = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItemsTak);
-                ArrayAdapter adapterTbc = new ArrayAdapter(context, android.R.layout.simple_list_item_1, listItemsTbc);
-                ArrayAdapter adapterNie = new ArrayAdapter(context, android.R.layout.simple_list_item_1, listItemsNie);
                 listaZawodniczekTakLV.setAdapter(adapterTak);
+
+                ArrayAdapter adapterTbc = new ArrayAdapter(context, android.R.layout.simple_list_item_1, listItemsTbc);
                 listaZawodniczekTbcLV.setAdapter(adapterTbc);
+
+                ArrayAdapter adapterNie = new ArrayAdapter(context, android.R.layout.simple_list_item_1, listItemsNie);
                 listaZawodniczekNieLV.setAdapter(adapterNie);
             }
 
@@ -191,25 +151,14 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
 
     private Integer wyszukanieDanychZawodniczki(String imieINazwisko){
 
-            Integer idZaw=666;
-            Integer indeksZaw=666;
-            //Log.d("Co zostalo przeniesione", indeksZaw.toString());
-
             DatabaseHandler db = new DatabaseHandler(this);
             ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
-            //List<Wydarzenie> wydarzeniaList = new ArrayList<>();
-
             db.close();
 
-            for(Zawodniczka zaw:zawodniczkiList)
-            {
-                if((zaw.getImie()+" "+zaw.getNazwisko()).equals(imieINazwisko)) {
-                    //if((zaw.getId().toString().equals(product))) {
-                    idZaw = zaw.getId();
-                    indeksZaw=zawodniczkiList.indexOf(zaw);
-                }
-            }
-            Log.v("id zawodniczki wysz ", idZaw.toString());
-            return idZaw;
+        ZawodniczkaObliczenia zawodniczkaObliczenia=new ZawodniczkaObliczenia();
+        Zawodniczka zawodniczka = zawodniczkaObliczenia.wyszukanieZawodniczkiZListy(zawodniczkiList,imieINazwisko);
+        Integer idZaw=zawodniczka.getId();
+
+        return idZaw;
     }
 }

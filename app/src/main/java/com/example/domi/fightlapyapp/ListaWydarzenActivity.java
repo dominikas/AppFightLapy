@@ -16,7 +16,7 @@ import DatabaseHandler.*;
 import Wydarzenie.Wydarzenie;
 
 public class ListaWydarzenActivity extends AppCompatActivity {
-    private ListView mListView;
+    private ListView listaWydarzenLV;
     Intent i;
 
     @Override
@@ -25,7 +25,7 @@ public class ListaWydarzenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_wydarzen);
 
         i= new Intent(getApplicationContext(), WybraneWydarzenieZListyActivity.class);
-        mListView = (ListView) findViewById(R.id.listawydarzen_list_view);
+        listaWydarzenLV = (ListView) findViewById(R.id.listawydarzen_list_view);
 
         DatabaseHandler db = new DatabaseHandler(this);
         ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
@@ -35,15 +35,13 @@ public class ListaWydarzenActivity extends AppCompatActivity {
         for (Wydarzenie wyd : wydarzenieList){
             int indeks = wydarzenieList.indexOf(wyd);
             Integer indeks1 = (Integer) indeks;
-            //TODO zamiast ID wypisac opis -> wyszukowanie w db handler zmienic na wyszukiwanie po opisie
-            //listItems[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString();
             listItems[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString()+" "+wyd.getOpis();
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-        mListView.setAdapter(adapter);
+        listaWydarzenLV.setAdapter(adapter);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listaWydarzenLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 

@@ -13,11 +13,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import DatabaseHandler.DatabaseHandler;
-import Zawodniczka.Zawodniczka;
+import Zawodniczka.*;
 
 public class ListaZawodniczekActivity extends AppCompatActivity {
 
-    private ListView mListView;
+    private ListView listaZawodniczek;
     Intent i;
 
     @Override
@@ -27,33 +27,22 @@ public class ListaZawodniczekActivity extends AppCompatActivity {
 
         i= new Intent(getApplicationContext(), WybranaZawodniczkaZListy.class);
 
-        mListView = (ListView) findViewById(R.id.listazawodniczek_list_view);
+        listaZawodniczek = (ListView) findViewById(R.id.listazawodniczek_list_view);
 
-        Log.d("Reading: ", "Reading all contacts..");
         DatabaseHandler db = new DatabaseHandler(this);
         ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
         db.close();
-        String[] listItems = new String[zawodniczkiList.size()];
 
-        for (Zawodniczka zaw : zawodniczkiList){
-            String log = "Id: " + zaw.getId() + " ,Name: " + zaw.getImie() + " ,Nazwisko: " + zaw.getNazwisko()+" ,id pozycji "+zaw.getIdPozycji()+" ,numer "+zaw.getNumer();
-            Log.d("Ostatnia: ", log);
-            int indeks = zawodniczkiList.indexOf(zaw);
-            Integer indeks1 = (Integer) indeks;
-            Log.d("Indeks", indeks1.toString());
+        ZawodniczkaObliczenia zawodniczkaObliczenia = new ZawodniczkaObliczenia();
+        String[] listaZawodniczek = zawodniczkaObliczenia.getListaZawodniczek(zawodniczkiList);
 
-            listItems[zawodniczkiList.indexOf(zaw)] = zaw.getImie()+" "+zaw.getNazwisko();
-        }
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaZawodniczek);
+        this.listaZawodniczek.setAdapter(adapter);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-        mListView.setAdapter(adapter);
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        this.listaZawodniczek.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String product = ((TextView) view).getText().toString();
-                // Launching new Activity on selecting single List Item
-                // sending data to new activity
                 i.putExtra("imie i nazwisko", product);
                 startActivity(i);
             }

@@ -16,7 +16,7 @@ import DatabaseHandler.DatabaseHandler;
 import Wydarzenie.Wydarzenie;
 
 public class ListaWydarzenEdycjaActivity extends AppCompatActivity {
-    private ListView mListView;
+    private ListView listaWydarzenEdycjaLV;
     Intent i;
 
     @Override
@@ -25,7 +25,7 @@ public class ListaWydarzenEdycjaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_wydarzen_edycja);
 
         i= new Intent(getApplicationContext(), WybraneWydarzenieZListyEdycja.class);
-        mListView = (ListView) findViewById(R.id.listawydarzenedycja_list_view);
+        listaWydarzenEdycjaLV = (ListView) findViewById(R.id.listawydarzenedycja_list_view);
 
         DatabaseHandler db = new DatabaseHandler(this);
         ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
@@ -35,23 +35,22 @@ public class ListaWydarzenEdycjaActivity extends AppCompatActivity {
         for (Wydarzenie wyd : wydarzenieList){
             int indeks = wydarzenieList.indexOf(wyd);
             Integer indeks1 = (Integer) indeks;
+            listItems[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString()+" "+wyd.getOpis();
 
-            //TODO zamiast ID wypisac opis -> wyszukowanie w db handler zmienic na wyszukiwanie po opisie
-            listItems[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString();
-            //listItems[wydarzenieList.indexOf(wyd)] = wyd.getOpis();
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-        mListView.setAdapter(adapter);
+        listaWydarzenEdycjaLV.setAdapter(adapter);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listaWydarzenEdycjaLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String product = ((TextView) view).getText().toString();
-                Log.d("produkt ", product);
-                // Launching new Activity on selecting single List Item
-                // sending data to new activity
-                i.putExtra("wydarzenie_edycja", product);
+
+                String opisCaly = ((TextView) view).getText().toString();
+                Log.d("*** Opis caly ***", opisCaly);
+                String product = opisCaly.substring(0,1);
+                Log.d("*** ID ***", product);
+                i.putExtra("wydarzenie", product);
                 startActivity(i);
             }
         });

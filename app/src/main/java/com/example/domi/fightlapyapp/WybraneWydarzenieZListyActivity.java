@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import DatabaseHandler.DatabaseHandler;
-import Wydarzenie.Wydarzenie;
+import Wydarzenie.*;
 
 public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
 
@@ -56,23 +56,11 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
         Wydarzenie wybraneWydarzenie = db.getDaneWydarzeniaPoIdWydarzenia(opisWydarzenia);
         db.close();
 
-        wybraneWydarzenieTV.setText(wybraneWydarzenie.getOpis());
-
         Integer typWydarzenia = wybraneWydarzenie.getIdTypuWydarzenia();
-        String typWydarzeniaString = new String();
+        WydarzenieObliczenia wydarzenieObliczenia = new WydarzenieObliczenia();
+        String typWydarzeniaString = wydarzenieObliczenia.zamianaIdWydarzeniaNaZnaki(typWydarzenia);
 
-        switch (typWydarzenia) {
-            case (1):
-                typWydarzeniaString = "Trening";
-                break;
-            case (2):
-                typWydarzeniaString = "Mecz";
-                break;
-            case (3):
-                typWydarzeniaString = "Inne";
-                break;
-
-        }
+        wybraneWydarzenieTV.setText(wybraneWydarzenie.getOpis());
         rodzajWydarzeniaTV.setText(typWydarzeniaString);
         dataWydarzeniaTV.setText(wybraneWydarzenie.getData());
 

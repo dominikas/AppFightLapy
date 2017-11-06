@@ -31,9 +31,9 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
     private Spinner typWydarzeniaSpinner;
     private EditText opisET;
 
-    private TextInputLayout inputLayoutMiejsce;
-    private TextInputLayout inputLayoutCena;
-    private TextInputLayout inputLayoutTytul;
+    private TextInputLayout miejsceInputLayout;
+    private TextInputLayout cenaInputLayout;
+    private TextInputLayout tytulInputLayout;
 
     private String product;
 
@@ -42,9 +42,9 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wybrane_wydarzenie_zlisty_edycja);
 
-        inputLayoutMiejsce = (TextInputLayout) findViewById(R.id.input_layout_miejsce_edycja);
-        inputLayoutCena = (TextInputLayout) findViewById(R.id.input_layout_cena_edycja);
-        inputLayoutTytul = (TextInputLayout) findViewById(R.id.input_layout_tytul_edycja);
+        miejsceInputLayout = (TextInputLayout) findViewById(R.id.input_layout_miejsce_edycja);
+        cenaInputLayout = (TextInputLayout) findViewById(R.id.input_layout_cena_edycja);
+        tytulInputLayout = (TextInputLayout) findViewById(R.id.input_layout_tytul_edycja);
 
         miejsceET = (EditText) findViewById(R.id.miejsce_edycja);
         cenaET = (EditText) findViewById(R.id.cena_wydarzenia_edycja);
@@ -54,26 +54,25 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
         date = (TextView) findViewById(R.id.data_edycja);
 
         Intent i = getIntent();
-        product = i.getStringExtra("wydarzenie_edycja");
-        wyszukanieDanychWydarzenia(product);
+        product = i.getStringExtra("wydarzenie");
+        Wydarzenie wybraneWydarzenie=wyszukanieDanychWydarzenia(product);
 
         date.setOnClickListener(new View.OnClickListener() {
 
             @Override
 
             public void onClick(View v) {
-                // calender class's instance and get current date , month and year from calender
+
                 final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR); // current year
-                int mMonth = c.get(Calendar.MONTH); // current month
-                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-                // date picker dialog
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
                 datePickerDialog = new DatePickerDialog(WybraneWydarzenieZListyEdycja.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-                                // set day of month , month and year value in the edit text
                                 date.setText(dayOfMonth + "."
                                         + (monthOfYear + 1) + "." + year);
 
@@ -83,9 +82,8 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
             }
         });
 
-        //  initiate the edit text
         time = (TextView) findViewById(R.id.godzina_edycja);
-        // perform click event listener on edit text
+
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,14 +95,12 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         time.setText(selectedHour + ":" + selectedMinute);
                     }
-                }, hour, minute, true);//Yes 24 hour time
+                }, hour, minute, true);
                 timePickerDialog.setTitle("Godzina");
                 timePickerDialog.show();
 
             }
         });
-
-//TO DO odkomentowac, gdy ma zadzialac zapis
 
         findViewById(R.id.zapisz_edycja).setOnClickListener(new View.OnClickListener() {
 
@@ -112,47 +108,12 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
 
             public void onClick(View v) {
 
-                String rodzajWydarzeniaNew=String.valueOf(typWydarzeniaSpinner.getSelectedItem());
-                Integer typWydarzenia = jakieToWydarzenie(rodzajWydarzeniaNew);
+                String rodzajWydarzenia=String.valueOf(typWydarzeniaSpinner.getSelectedItem());
+                Integer typWydarzenia = jakieToWydarzenie(rodzajWydarzenia);
 
-                String dataWydarzeniaNew=date.getText().toString();
-                String miejsceWydarzenieNew = miejsceET.getText().toString();
-                Integer cenaWydarzeniaNew= Integer.valueOf(cenaET.getText().toString());
-                String opisWydarzeniaNew=opisET.getText().toString();
+                boolean czyOk = czyDaneWydarzeniaSaOk();
 
-                int czyOk = 0;
-
-                final String miejsce = miejsceET.getText().toString();
-
-                if (!czyPoleOk(miejsce)) {
-                    inputLayoutMiejsce.setError("Błedna wartość w polu miejsce");
-                    //miejsceET.setError("Błędna wartość w polu miejsce");
-                    requestFocus(miejsceET);
-                    czyOk++;
-                }
-                else
-                    inputLayoutMiejsce.setErrorEnabled(false);
-
-                final String cena = cenaET.getText().toString();
-                if (!czyPoleOk(cena)) {
-                    inputLayoutCena.setError("Błędna wartość w polu cena");
-                    //cenaET.setError("Błędna wartość w polu cena");
-                    czyOk++;
-                }
-                else
-                    inputLayoutCena.setErrorEnabled(false);
-
-                final String opis = opisET.getText().toString();
-                if (!czyPoleOk(opis)) {
-                    inputLayoutTytul.setError("Błedna wartość w polu opis");
-                    //opisET.setError("Błędna wartość w polu opis");
-                    requestFocus(opisET);
-                    czyOk++;
-                }
-                else
-                    inputLayoutTytul.setErrorEnabled(false);
-
-                if (czyOk == 0) {
+                if (czyOk) {
                     zapisEdytowanegoWydarzenia(v);
 
                 }
@@ -161,10 +122,11 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
 
     }
 
-    private void wyszukanieDanychWydarzenia(String idWydarzenia) {
-        Log.d("szukam"," szukam");
+    private Wydarzenie wyszukanieDanychWydarzenia(String idWydarzenia) {
+
         //pobranie danych wybranego wydarzenia
         DatabaseHandler db = new DatabaseHandler(this);
+        Log.d("Wybrane wydarzenie id", idWydarzenia);
         Wydarzenie wybraneWydarzenie = db.getDaneWydarzeniaPoIdWydarzenia(idWydarzenia);
         db.close();
 
@@ -178,21 +140,18 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
         opisET.setSelection(opisET.getText().length());
 
         Integer typWydarzenia = wybraneWydarzenie.getIdTypuWydarzenia();
-        Log.d("id wydarzenia", typWydarzenia.toString());
 
-       typWydarzeniaSpinner.setSelection(typWydarzenia-1);
+        typWydarzeniaSpinner.setSelection(typWydarzenia-1);
 
         date.setText(wybraneWydarzenie.getData().toString());
 
         Log.i("Godzina ",wybraneWydarzenie.getGodzina().toString());
-        //TO DO poorawic uzupelnianie godziny aktualnej wydarzenia
-        //time.setText(wybraneWydarzenie.getGodzina().toString());
+
+        return wybraneWydarzenie;
 
     }
 
     private void zapisEdytowanegoWydarzenia(View v){
-
-//        String wybraneWydarzenieNew=wybraneWydarzenieET.getText().toString();
 
         String rodzajWydarzeniaNew=String.valueOf(typWydarzeniaSpinner.getSelectedItem());
         Integer typWydarzenia = jakieToWydarzenie(rodzajWydarzeniaNew);
@@ -256,6 +215,39 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    private boolean czyDaneWydarzeniaSaOk(){
+
+        boolean czyOk=true;
+
+        final String miejsce = miejsceET.getText().toString();
+        if (!czyPoleOk(miejsce)) {
+            miejsceInputLayout.setError(getString(R.string.err_msg_miejsce));
+            requestFocus(miejsceET);
+            czyOk=false;
+        }
+        else
+            miejsceInputLayout.setErrorEnabled(false);
+
+        final String cena = cenaET.getText().toString();
+        if (!czyPoleOk(cena)) {
+            cenaInputLayout.setError(getString(R.string.err_msg_cena));
+            czyOk=false;
+        }
+        else
+            cenaInputLayout.setErrorEnabled(false);
+
+        final String opis = opisET.getText().toString();
+        if (!czyPoleOk(opis)) {
+            tytulInputLayout.setError(getString(R.string.err_msg_opis));
+            requestFocus(opisET);
+            czyOk=false;
+        }
+        else
+            tytulInputLayout.setErrorEnabled(false);
+
+        return czyOk;
     }
 
 }

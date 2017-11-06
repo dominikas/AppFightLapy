@@ -22,7 +22,7 @@ import Wydarzenie.*;
 
 public class DodanieWydarzeniaActivity extends AppCompatActivity {
 
-    private TextView date;
+    private TextView dataTV;
     private DatePickerDialog datePickerDialog;
     private TextView time;
     private TimePickerDialog timePickerDialog;
@@ -31,43 +31,42 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
     private Spinner typWydarzeniaSpinner;
     private EditText opisET;
 
-    private TextInputLayout inputLayoutMiejsce;
-    private TextInputLayout inputLayoutCena;
-    private TextInputLayout inputLayoutTytul;
+    private TextInputLayout miejsceInputLayout;
+    private TextInputLayout cenaInputLayout;
+    private TextInputLayout tytulInputLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodanie_wydarzenia);
 
-        inputLayoutMiejsce = (TextInputLayout) findViewById(R.id.input_layout_miejsce);
-        inputLayoutCena = (TextInputLayout) findViewById(R.id.input_layout_cena);
-        inputLayoutTytul = (TextInputLayout) findViewById(R.id.input_layout_tytul);
+        miejsceInputLayout = (TextInputLayout) findViewById(R.id.input_layout_miejsce);
+        cenaInputLayout = (TextInputLayout) findViewById(R.id.input_layout_cena);
+        tytulInputLayout = (TextInputLayout) findViewById(R.id.input_layout_tytul);
 
         miejsceET = (EditText) findViewById(R.id.miejsce);
         cenaET = (EditText) findViewById(R.id.cena_wydarzenia);
         opisET = (EditText) findViewById(R.id.tytul);
         typWydarzeniaSpinner = (Spinner) findViewById(R.id.spinner_wydarzenie);
 
-        date = (TextView) findViewById(R.id.data);
-        date.setOnClickListener(new View.OnClickListener() {
+        dataTV = (TextView) findViewById(R.id.data);
+        dataTV.setOnClickListener(new View.OnClickListener() {
 
             @Override
 
             public void onClick(View v) {
-                // calender class's instance and get current date , month and year from calender
+
                 final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR); // current year
-                int mMonth = c.get(Calendar.MONTH); // current month
-                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-                // date picker dialog
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                // dataTV picker dialog
                 datePickerDialog = new DatePickerDialog(DodanieWydarzeniaActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-                                // set day of month , month and year value in the edit text
-                                date.setText(dayOfMonth + "."
+                                dataTV.setText(dayOfMonth + "."
                                         + (monthOfYear + 1) + "." + year);
 
                             }
@@ -104,64 +103,25 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String typWydarzenia = String.valueOf(typWydarzeniaSpinner.getSelectedItem());
-                String dataWydarzenia =date.getText().toString();
+                String dataWydarzenia = dataTV.getText().toString();
                 String godzinaWydarzenia = time.getText().toString();
                 String miejsceWydarzenia = miejsceET.getText().toString();
-                String opisWydarzenia = opisET.getText().toString();
                 String cenaWydarzenia = cenaET.getText().toString();
+                String opisWydarzenia = opisET.getText().toString();
 
-                int czyOk = 0;
+                boolean czyOk = czyDaneSaOk(miejsceWydarzenia, opisWydarzenia, cenaWydarzenia, typWydarzenia, dataWydarzenia, godzinaWydarzenia);
 
-                final String miejsce = miejsceET.getText().toString();
-
-                if (!czyPoleOk(miejsce)) {
-                    inputLayoutMiejsce.setError("Błedna wartość w polu miejsce");
-                    //miejsceET.setError("Błędna wartość w polu miejsce");
-                    requestFocus(miejsceET);
-                    czyOk++;
-                }
-                else
-                    inputLayoutMiejsce.setErrorEnabled(false);
-
-                final String cena = cenaET.getText().toString();
-                if (!czyPoleOk(cena)) {
-                    inputLayoutCena.setError("Błędna wartość w polu cena");
-                    //cenaET.setError("Błędna wartość w polu cena");
-                    czyOk++;
-                }
-                else
-                    inputLayoutCena.setErrorEnabled(false);
-
-                final String opis = opisET.getText().toString();
-                if (!czyPoleOk(opis)) {
-                    inputLayoutTytul.setError("Błedna wartość w polu opis");
-                    //opisET.setError("Błędna wartość w polu opis");
-                    requestFocus(opisET);
-                    czyOk++;
-                }
-                else
-                    inputLayoutTytul.setErrorEnabled(false);
-
-                if (czyOk == 0) {
+                if (czyOk) {
                     zapiszWydarzenie(v);
-                    Log.d("id wydarzenia ", typWydarzenia);
-                    Log.d("Data", dataWydarzenia);
-                    Log.d("Godzina ", godzinaWydarzenia);
-                    Log.d("Miejsce ", miejsceWydarzenia);
-                    Log.d("Opis ", opisWydarzenia);
-                    Log.d("Cena ", cenaWydarzenia);
                 }
-
             }
-
-
         });
     }
 
     private void zapiszWydarzenie(View v) {
 
         String typWydarzenia = String.valueOf(typWydarzeniaSpinner.getSelectedItem());
-        String dataWydarzenia = date.getText().toString();
+        String dataWydarzenia = dataTV.getText().toString();
         String godzinaWydarzenia = time.getText().toString();
         String miejsceWydarzenia = miejsceET.getText().toString();
         String opisWydarzenia = opisET.getText().toString();
@@ -181,6 +141,7 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //TODO do klasy WalidacjaPol
     private boolean czyPoleOk(String wartoscPola) {
         boolean czyOk = true;
         if (wartoscPola.isEmpty()) {
@@ -219,6 +180,52 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    public boolean czyDaneSaOk(String miejsce, String opis, String cena, String typWydarzenia, String dataWydarzenia, String godzinaWydarzenia){
+
+        boolean czyOk = true;
+
+        if (!czyPoleOk(miejsce)) {
+            miejsceInputLayout.setError(getString(R.string.err_msg_miejsce));
+
+            requestFocus(miejsceET);
+            czyOk=false;
+        }
+        else
+            miejsceInputLayout.setErrorEnabled(false);
+
+        if (!czyPoleOk(cena)) {
+            cenaInputLayout.setError(getString(R.string.err_msg_cena));
+            czyOk=false;
+        }
+        else
+            cenaInputLayout.setErrorEnabled(false);
+
+        if (!czyPoleOk(opis)) {
+            tytulInputLayout.setError(getString(R.string.err_msg_opis));
+            requestFocus(opisET);
+            czyOk=false;
+        }
+        else
+            tytulInputLayout.setErrorEnabled(false);
+
+        if(typWydarzenia.isEmpty()){
+            //TODO dodać okienko, ze typ jest pusty
+            czyOk=false;
+        }
+
+        if(dataWydarzenia.isEmpty()){
+            //TODO dodać okienko, ze data jest pusta
+            czyOk=false;
+        }
+
+        if(godzinaWydarzenia.isEmpty()){
+            //TODO dodać okienko, ze godzina jest pusta
+            czyOk=false;
+        }
+
+        return czyOk;
     }
 }
 

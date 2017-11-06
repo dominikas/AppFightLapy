@@ -29,7 +29,7 @@
             android:name=".ListaZawodniczekActivity"
             android:parentActivityName=".WyborZawodniczkiActivity" />
         <activity
-            android:name=".DodanieZawodniczki"
+            android:name=".DodanieZawodniczkiActivity"
             android:parentActivityName=".WyborZawodniczkiActivity" />
         <activity
             android:name=".UdanyZapisZawodniczki"

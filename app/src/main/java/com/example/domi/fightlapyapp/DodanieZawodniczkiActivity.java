@@ -18,13 +18,14 @@ import DatabaseHandler.DatabaseHandler;
 import Zawodniczka.Zawodniczka;
 import android.util.Log;
 
-public class DodanieZawodniczki extends AppCompatActivity {
+public class DodanieZawodniczkiActivity extends AppCompatActivity {
     private Spinner spinner1;
     private EditText imieET;
     private EditText nazwiskoET;
     private EditText numerET;
     private TextInputLayout inputLayoutImie, inputLayoutNazwisko, inputLayoutNumer;
 
+    //TODO REFACTOR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +91,7 @@ public class DodanieZawodniczki extends AppCompatActivity {
         spinner1 = (Spinner) findViewById(R.id.spinner_pozycja);
         spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
     }
-
+    //TODO do klasy WalidacjaPol
     private boolean czyImieLubNazwiskoOK(String imieLubNazwisko_zawodniczki)
     {
         String IMIENAZWISKO_PATTERN = "[a-zA-Z]+";
@@ -99,7 +100,7 @@ public class DodanieZawodniczki extends AppCompatActivity {
         Matcher matcher = pattern.matcher(imieLubNazwisko_zawodniczki);
         return matcher.matches();
     }
-
+    //TODO do klasy WalidacjaPol
     private boolean czyNumerOK(String numer_zawodniczki)
     {
         String NUMER_PATTERN = "[0-9]+";
@@ -124,17 +125,6 @@ public class DodanieZawodniczki extends AppCompatActivity {
         Zawodniczka zawodniczkaTestowa = new Zawodniczka(imie_zawodniczki, nazwisko_zawodniczki, idPozycji, numerInt);
         db.dodajZawodniczke(zawodniczkaTestowa);
         db.close();
-        /*
-        Log.d("Reading: ", "Reading all contacts..");
-        List<Zawodniczka> zawodniczki = db.getWszystkieZawodniczki();
-        int ostatnia=zawodniczki.size();
-        Zawodniczka zaw = zawodniczki.get(ostatnia-1);
-        //for (Zawodniczka zaw : zawodniczki) {
-            String log = "Id: " + zaw.getId() + " ,Name: " + zaw.getImie() + " ,Nazwisko: " + zaw.getNazwisko()+" ,id pozycji "+zaw.getIdPozycji()+" ,numer "+zaw.getNumer();
-            Log.d("Ostatnia: ", log);
-            db.close();
-            */
-        //}
 
         Intent intent = new Intent(this, UdanyZapisZawodniczki.class);
         startActivity(intent);
@@ -164,7 +154,7 @@ public class DodanieZawodniczki extends AppCompatActivity {
 
         return idPozycji;
     }
-
+    //TODO do klasy WalidacjaPol
     private boolean czyWszystkoOK(Integer licznik)
     {
         boolean czOk=true;

@@ -15,15 +15,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import DatabaseHandler.DatabaseHandler;
-import Zawodniczka.Zawodniczka;
+import Zawodniczka.*;
 
 public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
 
-    private EditText imieZawodniczkiEdycjaET;
-    private EditText nazwiskoZawodniczkiEdycjaET;
+    private EditText imieEdycjaET;
+    private EditText nazwiskoEdycjaET;
     private String product=new String();
     private EditText numerEdycjaET;
-    private EditText idPozycjiEdycjaET;
+    private Spinner pozycjaEdycjaET;
     private String idZawodniczki;
 
     private TextInputLayout inputLayoutImie, inputLayoutNazwisko, inputLayoutNumer;
@@ -39,21 +39,18 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
         inputLayoutNazwisko=(TextInputLayout) findViewById(R.id.input_layout_nazwisko);
         inputLayoutNumer=(TextInputLayout) findViewById(R.id.input_layout_numer);
 
-        imieZawodniczkiEdycjaET = (EditText) findViewById(R.id.imie_edycja);
-        nazwiskoZawodniczkiEdycjaET =(EditText) findViewById(R.id.nazwisko_edycja);
-        //idPozycjiEdycjaET =(EditText) findViewById(R.id.idPozycji_edycja);
+        imieEdycjaET = (EditText) findViewById(R.id.imie_edycja);
+        nazwiskoEdycjaET =(EditText) findViewById(R.id.nazwisko_edycja);
+        pozycjaEdycjaET =(Spinner) findViewById(R.id.spinner_pozycja);
         numerEdycjaET =(EditText) findViewById(R.id.numer_zawodniczki) ;
         inputLayoutImie = (TextInputLayout) findViewById(R.id.input_layout_imie_edycja);
         inputLayoutNazwisko=(TextInputLayout) findViewById(R.id.input_layout_nazwisko_edycja);
         inputLayoutNumer=(TextInputLayout) findViewById(R.id.input_layout_numer);
 
         Intent i = getIntent();
-        // getting attached intent data
         product = i.getStringExtra("imie i nazwisko");
-        // displaying selected product name
 
-        //idZawodniczki.setText(product);
-        final int indeksZaw=wyszukanieDanychZawodniczki(product);
+        final Zawodniczka edytowanaZawodniczka=wyszukanieDanychZawodniczki(product);
 
         addListenerOnSpinnerItemSelection();
 
@@ -62,106 +59,84 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
             @Override
 
             public void onClick(View v) {
-                int czyOk=0;
+                final String imieZawodniczki = imieEdycjaET.getText().toString();
+                final String nazwiskoZawodniczki = nazwiskoEdycjaET.getText().toString();
+                final String numerZawodniczki = numerEdycjaET.getText().toString();
 
-                final String imie_zawodniczki = imieZawodniczkiEdycjaET.getText().toString();
+                boolean czyOk= czyDaneZawodniczkiSaOk(imieZawodniczki, nazwiskoZawodniczki, numerZawodniczki);
 
-                if (!czyImieLubNazwiskoOK(imie_zawodniczki)) {
-                    imieZawodniczkiEdycjaET.setError("Błędna wartość w polu imię");
-                    requestFocus(imieZawodniczkiEdycjaET);
-                    czyOk++;
-                }
-                else
-                    inputLayoutImie.setErrorEnabled(false);
-
-
-                final String nazwisko_zawodniczki = nazwiskoZawodniczkiEdycjaET.getText().toString();
-                if (!czyImieLubNazwiskoOK(nazwisko_zawodniczki)) {
-                    nazwiskoZawodniczkiEdycjaET.setError(getString(R.string.err_msg_nazwisko));
-                    requestFocus(nazwiskoZawodniczkiEdycjaET);
-                    czyOk++;
-                }
-                else
-                    inputLayoutNazwisko.setErrorEnabled(false);
-
-                final String numer_zawodniczki = numerEdycjaET.getText().toString();
-                if (!czyNumerOK(numer_zawodniczki)) {
-                    //numerET.setError("Błędna wartość w polu numer");
-                    inputLayoutNumer.setError(getString(R.string.err_msg_numer));
-                    requestFocus(numerEdycjaET);
-                    czyOk++;
-                }
-                else
-                    inputLayoutNumer.setEnabled(false);
-
-                if(czyOk==0) {
-                    zapisDanychEdytowanejZawodniczki(v, indeksZaw);
+                if(czyOk) {
+                    Log.d("Zapisuje dane zaw id ", Integer.valueOf(edytowanaZawodniczka.getId()).toString());
+                    zapisDanychEdytowanejZawodniczki(v, edytowanaZawodniczka.getId());
                 }
             }
-
 
         });
 
     }
 
-    private int wyszukanieDanychZawodniczki(String product){
+    private Zawodniczka wyszukanieDanychZawodniczki(String product){
         Integer idZaw=666;
         Integer indeksZaw=666;
-        //Log.d("Co zostalo przeniesione", indeksZaw.toString());
 
         DatabaseHandler db = new DatabaseHandler(this);
         ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
-        //List<Wydarzenie> wydarzeniaList = new ArrayList<>();
 
         db.close();
+        ZawodniczkaObliczenia zawodniczkaObliczenia = new ZawodniczkaObliczenia();
+        Zawodniczka edytowanaZawodniczka=zawodniczkaObliczenia.wyszukanieZawodniczkiZListy(zawodniczkiList,product);
 
-        for(Zawodniczka zaw:zawodniczkiList)
-        {
-            if((zaw.getImie()+" "+zaw.getNazwisko()).equals(product)) {
-            //if((zaw.getId().toString().equals(product))) {
-                idZaw = zaw.getId();
-                indeksZaw=zawodniczkiList.indexOf(zaw);
-            }
-        }
+        imieEdycjaET.setText(edytowanaZawodniczka.getImie());
+        imieEdycjaET.setSelection(imieEdycjaET.getText().length());
 
-        Zawodniczka edytowanaZawodniczka= zawodniczkiList.get(indeksZaw);
-
-        imieZawodniczkiEdycjaET.setText(edytowanaZawodniczka.getImie());
-        imieZawodniczkiEdycjaET.setSelection(imieZawodniczkiEdycjaET.getText().length());
-
-        nazwiskoZawodniczkiEdycjaET.setText(edytowanaZawodniczka.getNazwisko());
-        nazwiskoZawodniczkiEdycjaET.setSelection(nazwiskoZawodniczkiEdycjaET.getText().length());
+        nazwiskoEdycjaET.setText(edytowanaZawodniczka.getNazwisko());
+        nazwiskoEdycjaET.setSelection(nazwiskoEdycjaET.getText().length());
 
         numerEdycjaET.setText(edytowanaZawodniczka.getNumer().toString());
         numerEdycjaET.setSelection(numerEdycjaET.getText().length());
 
         Integer pozycjaInt=edytowanaZawodniczka.getIdPozycji();
-        String pozycjaString=new String();
+        String pozycjaString=zawodniczkaObliczenia.zamianaIdPozycjiNaZnaki(pozycjaInt);
 
-        switch(pozycjaInt){
-            case (1):
-                pozycjaString="Rozegranie";
-                break;
-            case(2):
-                pozycjaString="Atak";
-                break;
-            case(3):
-                pozycjaString="Przyjęcie";
-                break;
-            case(4):
-                pozycjaString="Środek";
-                break;
-            case(5):
-                pozycjaString="Libero";
-                break;
-        }
+        //TODO spinner sprawdzic
+        //spinner1.setSelection(pozycjaInt);
 
-        return idZaw;
+        return edytowanaZawodniczka;
     }
 
     public void addListenerOnSpinnerItemSelection() {
         spinner1 = (Spinner) findViewById(R.id.spinner_pozycja);
         spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+    }
+
+    public boolean czyDaneZawodniczkiSaOk(String imieZawodniczki, String nazwiskoZawodniczki, String numerZawodniczki){
+
+        boolean czyOk=true;
+        if (!czyImieLubNazwiskoOK(imieZawodniczki)) {
+            imieEdycjaET.setError(getString(R.string.err_msg_imie));
+            requestFocus(imieEdycjaET);
+            czyOk=false;
+        }
+        else
+            inputLayoutImie.setErrorEnabled(false);
+
+        if (!czyImieLubNazwiskoOK(nazwiskoZawodniczki)) {
+            nazwiskoEdycjaET.setError(getString(R.string.err_msg_nazwisko));
+            requestFocus(nazwiskoEdycjaET);
+            czyOk=false;
+        }
+        else
+            inputLayoutNazwisko.setErrorEnabled(false);
+
+        if (!czyNumerOK(numerZawodniczki)) {
+            inputLayoutNumer.setError(getString(R.string.err_msg_numer));
+            requestFocus(numerEdycjaET);
+            czyOk=false;
+        }
+        else
+            inputLayoutNumer.setEnabled(false);
+
+        return czyOk;
     }
 
     private boolean czyImieLubNazwiskoOK(String imieLubNazwisko_zawodniczki) {
@@ -183,25 +158,23 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
 
     private void zapisDanychEdytowanejZawodniczki(View view, Integer idZaw) {
 
-        String imie_zawodniczki = imieZawodniczkiEdycjaET.getText().toString();
-        String nazwisko_zawodniczki = nazwiskoZawodniczkiEdycjaET.getText().toString();
-        String numer_zawodniczki = numerEdycjaET.getText().toString();
-        Integer numerInt = Integer.parseInt(numer_zawodniczki);
-        String pozycja_zawodniczki = String.valueOf(spinner1.getSelectedItem());
+        String imieZawodniczki = imieEdycjaET.getText().toString();
+        String nazwiskoZawodniczki = nazwiskoEdycjaET.getText().toString();
+        String numerZawodniczki = numerEdycjaET.getText().toString();
+        Integer numerInt = Integer.parseInt(numerZawodniczki);
+        String pozycjaZawodniczki = String.valueOf(spinner1.getSelectedItem());
         String idZawodniczki = product;
 
-        Integer idPozycji = jakaToPozycja(pozycja_zawodniczki);
+        Integer idPozycji = jakaToPozycja(pozycjaZawodniczki);
 
         DatabaseHandler db = new DatabaseHandler(this);
-        Log.d("Insert: ", "Inserting ..");
         Zawodniczka edytowanaZawodniczka = new Zawodniczka();
         edytowanaZawodniczka.setId(idZaw);
-        Log.d("Indeks zmienianej : ", idZaw.toString());
-        edytowanaZawodniczka.setImie(imie_zawodniczki);
-        edytowanaZawodniczka.setNazwisko(nazwisko_zawodniczki);
+        edytowanaZawodniczka.setImie(imieZawodniczki);
+        edytowanaZawodniczka.setNazwisko(nazwiskoZawodniczki);
         edytowanaZawodniczka.setNumer(numerInt);
         edytowanaZawodniczka.setIdPozycji(idPozycji);
-
+        Log.d("Jestem w zapisie ","danych edytowaniej");
         db.updateZawodniczka(edytowanaZawodniczka);
 
         db.close();
@@ -248,5 +221,7 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
-    }
+
+
+}
 

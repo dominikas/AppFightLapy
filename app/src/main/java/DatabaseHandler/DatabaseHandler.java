@@ -180,6 +180,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_LAST_NAME, zawodniczka.getNazwisko());
         values.put(KEY_ID_POSITION, zawodniczka.getIdPozycji());
         values.put(KEY_NUMBER, zawodniczka.getNumer());
+        Log.d("Jestem w update ","data base handler");
+        Log.d("Zmieniam zaw nr  ",zawodniczka.getId().toString());
 
         // updating row
         db.update(TABLE_PLAYERS, values, KEY_ID + " = ?",
@@ -378,7 +380,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<Wydarzenie> getWszystkieWydarzeniaPoZawodniczce(Integer idZawodniczki) {
 
-        List<Wydarzenie> wydarzenia = new ArrayList<>();
+        List<Wydarzenie> listaWydarzen = new ArrayList<>();
         String selectQuery ="SELECT  * FROM " + TABLE_EVENTS + " te, "
                 + TABLE_PLAYER_EVENT + " tpe WHERE tpe."
                 +KEY_PLAYER_ID + " = '" + idZawodniczki + "' AND te."
@@ -403,19 +405,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 wydarzenie.setOpis(cursor.getString(cursor.getColumnIndex(KEY_DESC)));
                 wydarzenie.setCena(cursor.getInt(cursor.getColumnIndex(KEY_PRICE)));
                 wydarzenie.setObecnosc(cursor.getInt(cursor.getColumnIndex(KEY_PRESENCE)));
-                wydarzenia.add(wydarzenie);
+                listaWydarzen.add(wydarzenie);
             } while (cursor.moveToNext());
         }
-
+        Log.d("Liczba wydarzen", Integer.valueOf(listaWydarzen.size()).toString());
         //dodalam
         //db.close();
-        return wydarzenia;
+        return listaWydarzen;
     }
 
-    public Wydarzenie getDaneWydarzeniaPoIdWydarzenia(String opisWydarzenia) {
+    public Wydarzenie getDaneWydarzeniaPoIdWydarzenia(String idWydarzenia) {
 
         String selectQuery = "SELECT  * FROM " + TABLE_EVENTS + " te WHERE te."
-                + KEY_ID_EVENT + " = '" + opisWydarzenia + "'";
+                + KEY_ID_EVENT + " = '" + idWydarzenia + "'";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
