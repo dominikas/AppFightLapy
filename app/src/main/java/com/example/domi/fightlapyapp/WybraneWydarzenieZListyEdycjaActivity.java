@@ -24,7 +24,7 @@ import Wydarzenie.*;
  * Created by Dominika Saide on 2017-11-05.
  */
 
-public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
+public class WybraneWydarzenieZListyEdycjaActivity extends AppCompatActivity {
 
     private TextView date;
     private DatePickerDialog datePickerDialog;
@@ -72,7 +72,7 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
                 int mMonth = c.get(Calendar.MONTH);
                 int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                datePickerDialog = new DatePickerDialog(WybraneWydarzenieZListyEdycja.this,
+                datePickerDialog = new DatePickerDialog(WybraneWydarzenieZListyEdycjaActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year,
@@ -94,7 +94,7 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
-                timePickerDialog = new TimePickerDialog(WybraneWydarzenieZListyEdycja.this, new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog = new TimePickerDialog(WybraneWydarzenieZListyEdycjaActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         time.setText(selectedHour + ":" + selectedMinute);
@@ -181,7 +181,7 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
         db.updateWydarzenie(edytowaneWydarzenie);
         db.close();
 
-        Intent intent = new Intent(this, UdanyEdycjaWydarzenia.class);
+        Intent intent = new Intent(this, UdanyEdycjaWydarzeniaActivity.class);
         startActivity(intent);
     }
 

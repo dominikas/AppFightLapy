@@ -84,7 +84,7 @@ public class DodanieZawodniczkiActivity extends AppCompatActivity {
         db.dodajZawodniczke(zawodniczka);
         db.close();
 
-        Intent intent = new Intent(this, UdanyZapisZawodniczki.class);
+        Intent intent = new Intent(this, UdanyZapisZawodniczkiActivity.class);
         startActivity(intent);
     }
 

@@ -20,11 +20,13 @@ import DatabaseHandler.DatabaseHandler;
 
 import Zawodniczka.*;
 
+import static com.example.domi.fightlapyapp.R.id.parent;
+
 /**
  * Created by Dominika Saide on 2017-11-05.
  */
 
-public class ListaZapisanychZawodniczek extends AppCompatActivity {
+public class ListaZapisanychZawodniczekActivity extends AppCompatActivity {
 
     Intent i;
     private String product;
@@ -32,6 +34,9 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
     private ListView listaZawodniczekTbcLV;
     private ListView listaZawodniczekNieLV;
     final Context context = this;
+    private String[] listItemsTak;
+    private String[] listItemsNie;
+    private String[] listItemsTbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +58,15 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
 
         db1.close();
         ZawodniczkaObliczenia zawodniczkaObliczenia = new ZawodniczkaObliczenia();
-
-        String[] listItemsTak = zawodniczkaObliczenia.getZawodniczkiTakWydarzenie(wybraneZawodniczki);
-        String[] listItemsNie = zawodniczkaObliczenia.getZawodniczkiNieWydarzenie(wybraneZawodniczki);
-        String[] listItemsTbc = zawodniczkaObliczenia.getZawodniczkiTbcWydarzenie(wybraneZawodniczki);
-
+        if(!wybraneZawodniczki.isEmpty() && zawodniczkaObliczenia.getZawodniczkiTakWydarzenie(wybraneZawodniczki).length>0) {
+            listItemsTak = zawodniczkaObliczenia.getZawodniczkiTakWydarzenie(wybraneZawodniczki);
+        }
+        if(!wybraneZawodniczki.isEmpty() && zawodniczkaObliczenia.getZawodniczkiNieWydarzenie(wybraneZawodniczki).length>0) {
+            listItemsNie = zawodniczkaObliczenia.getZawodniczkiNieWydarzenie(wybraneZawodniczki);
+        }
+        if(!wybraneZawodniczki.isEmpty() && zawodniczkaObliczenia.getZawodniczkiTbcWydarzenie(wybraneZawodniczki).length>0) {
+            listItemsTbc = zawodniczkaObliczenia.getZawodniczkiTbcWydarzenie(wybraneZawodniczki);
+        }
             //wypisanie zawodniczek, ktore są zapisane na wydarzenie
             if (wybraneZawodniczki.isEmpty())
                 Log.d("pusta", "pusta");
@@ -91,7 +100,7 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     usuniecieZawodniczkiZWydarzenia(idZawodniczki);
-                                    ListaZapisanychZawodniczek.this.finish();
+                                    ListaZapisanychZawodniczekActivity.this.finish();
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -122,13 +131,13 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
                 alertDialogBuilder
                         .setMessage("Czy na pewno chcesz usunąć zawodniczkę z wydarzenia?")
                         .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Tak", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 usuniecieZawodniczkiZWydarzenia(idZawodniczki);
-                                ListaZapisanychZawodniczek.this.finish();
+                                ListaZapisanychZawodniczekActivity.this.finish();
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Nie", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }

@@ -11,13 +11,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="monospace"
         android:padding="10dip"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="Zawodniczka zapisana na wydarzenie"
+        android:text="@string/zapisWydarzenieOk"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 

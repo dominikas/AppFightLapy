@@ -22,13 +22,14 @@ import Wydarzenie.*;
 public class ListaWydarzenEdycjaActivity extends AppCompatActivity {
     private ListView listaWydarzenEdycjaLV;
     Intent i;
+    private String[] listaWydarzen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_wydarzen_edycja);
 
-        i= new Intent(getApplicationContext(), WybraneWydarzenieZListyEdycja.class);
+        i= new Intent(getApplicationContext(), WybraneWydarzenieZListyEdycjaActivity.class);
         listaWydarzenEdycjaLV = (ListView) findViewById(R.id.listawydarzenedycja_list_view);
 
         DatabaseHandler db = new DatabaseHandler(this);
@@ -36,11 +37,12 @@ public class ListaWydarzenEdycjaActivity extends AppCompatActivity {
         db.close();
 
         WydarzenieObliczenia wydarzenieObliczenia= new WydarzenieObliczenia();
-        String[] listaWydarzen=wydarzenieObliczenia.getListeWydarzen(wydarzenieList);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaWydarzen);
-
-        listaWydarzenEdycjaLV.setAdapter(adapter);
+        if(!wydarzenieList.isEmpty()) {
+            listaWydarzen = wydarzenieObliczenia.getListeWydarzen(wydarzenieList);
+            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaWydarzen);
+            listaWydarzenEdycjaLV.setAdapter(adapter);
+        }
 
         listaWydarzenEdycjaLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

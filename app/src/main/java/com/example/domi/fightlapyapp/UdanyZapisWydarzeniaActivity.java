@@ -7,11 +7,11 @@ import android.os.Bundle;
  * Created by Dominika Saide on 2017-11-05.
  */
 
-public class UdanyZapisZawodniczki extends AppCompatActivity {
+public class UdanyZapisWydarzeniaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_udany_zapis_zawodniczki);
+        setContentView(R.layout.activity_udany_zapis_wydarzenia);
     }
 }

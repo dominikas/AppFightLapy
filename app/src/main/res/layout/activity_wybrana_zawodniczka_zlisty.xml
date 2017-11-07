@@ -4,24 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.domi.fightlapyapp.WybranaZawodniczkaZListy">
+    tools:context="com.example.domi.fightlapyapp.WybranaZawodniczkaZListyActivity">
 
     <TextView
         android:id="@+id/wybrana_zaw_z_listy"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="monospace"
         android:padding="10dip"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp" />
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/numerZawodniczki"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="monospace"
         android:padding="10dip"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/wybrana_zaw_z_listy"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -29,10 +36,12 @@
         android:id="@+id/idPozycji"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="monospace"
         android:padding="10dip"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/numerZawodniczki"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -40,10 +49,12 @@
         android:id="@+id/idZawodniczki"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="monospace"
         android:padding="10dip"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/idPozycji"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -51,22 +62,17 @@
         android:id="@+id/lista_wydarzen_zawodniczkiTV"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="monospace"
+        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="@string/lista_wydarzen_zawodniczki"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="14sp"
-        tools:layout_editor_absoluteX="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/idZawodniczki" />
-
-    <ListView
-        android:id="@+id/lista_wydarzen_tak_zawodniczki"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/holo_green_light"
-        app:layout_constraintTop_toBottomOf="@+id/lista_wydarzen_zawodniczkiTV"
-        tools:layout_editor_absoluteX="0dp"/>
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/idZawodniczki"
+        tools:layout_editor_absoluteX="0dp" />
 
     <ListView
         android:id="@+id/lista_wydarzen_nie_zawodniczki"
@@ -74,8 +80,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@android:color/holo_red_light"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintTop_toBottomOf="@+id/lista_wydarzen_tak_zawodniczki"
-        tools:layout_editor_absoluteX="0dp"/>
+        tools:layout_editor_absoluteX="0dp" />
 
     <ListView
         android:id="@+id/lista_wydarzen_tbc_zawodniczki"
@@ -83,7 +90,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@android:color/holo_purple"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintTop_toBottomOf="@+id/lista_wydarzen_nie_zawodniczki"
-        tools:layout_editor_absoluteX="0dp"/>
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ListView
+        android:id="@+id/lista_wydarzen_tak_zawodniczki"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:background="@android:color/holo_green_light"
+        app:layout_constraintTop_toBottomOf="@+id/lista_wydarzen_zawodniczkiTV"
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>

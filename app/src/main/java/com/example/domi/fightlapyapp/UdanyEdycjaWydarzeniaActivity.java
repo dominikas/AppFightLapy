@@ -7,7 +7,7 @@ import android.os.Bundle;
  * Created by Dominika Saide on 2017-11-05.
  */
 
-public class UdanyEdycjaWydarzenia extends AppCompatActivity {
+public class UdanyEdycjaWydarzeniaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

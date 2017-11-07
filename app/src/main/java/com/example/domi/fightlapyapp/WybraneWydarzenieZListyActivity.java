@@ -75,7 +75,7 @@ public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
 
     public void listaZapianychZawodniczek(View view) {
 
-        Intent intent = new Intent(this, ListaZapisanychZawodniczek.class);
+        Intent intent = new Intent(this, ListaZapisanychZawodniczekActivity.class);
         intent.putExtra("lista_zawodniczek", product);
         startActivity(intent);
     }

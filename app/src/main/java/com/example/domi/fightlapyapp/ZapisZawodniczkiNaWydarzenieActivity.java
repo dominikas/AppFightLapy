@@ -127,8 +127,11 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         {
             DatabaseHandler db = new DatabaseHandler(this);
             ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
-            for (Wydarzenie wyd : wydarzenieList) {
-                wydarzenieValues[wydarzenieList.indexOf(wyd)] = wyd.getOpis();
+            Log.d("**liczba wydarzen",Integer.valueOf(wydarzenieList.size()).toString());
+
+            WydarzenieObliczenia wydarzenieObliczenia = new WydarzenieObliczenia();
+            if(wydarzenieList.size()>0){
+                wydarzenieValues=wydarzenieObliczenia.getListeWydarzen(wydarzenieList);
             }
         }
         builder.setSingleChoiceItems(wydarzenieValues, -1, new DialogInterface.OnClickListener() {
@@ -152,6 +155,7 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
         builder.setSingleChoiceItems(statusValues, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 ListView lwStatus = (statusAlertDialog).getListView();
+
                 Object checkedStatus = lwStatus.getAdapter().getItem(lwStatus.getCheckedItemPosition());
                 wybranyStatus = checkedStatus.toString();
                 Log.d("status ", wybranyStatus);

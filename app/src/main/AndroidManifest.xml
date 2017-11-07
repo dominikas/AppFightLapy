@@ -32,7 +32,7 @@
             android:name=".DodanieZawodniczkiActivity"
             android:parentActivityName=".WyborZawodniczkiActivity" />
         <activity
-            android:name=".UdanyZapisZawodniczki"
+            android:name=".UdanyZapisZawodniczkiActivity"
             android:parentActivityName=".WyborZawodniczkiActivity" />
         <activity
             android:name=".WyborWydarzeniaActivity"
@@ -41,7 +41,7 @@
             android:name=".DodanieWydarzeniaActivity"
             android:parentActivityName=".WyborWydarzeniaActivity" />
         <activity
-            android:name=".UdanyZapisWydarzenia"
+            android:name=".UdanyZapisWydarzeniaActivity"
             android:parentActivityName=".WyborWydarzeniaActivity" />
         <activity
             android:name=".ListaWydarzenActivity"
@@ -50,7 +50,7 @@
             android:name=".ZapisZawodniczkiNaWydarzenieActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".WybranaZawodniczkaZListy"
+            android:name=".WybranaZawodniczkaZListyActivity"
             android:parentActivityName=".ListaZawodniczekActivity" />
         <activity
             android:name=".UdanyZapisZawodniczkiNaWydarzenieActivity"
@@ -62,13 +62,13 @@
             android:name=".ListaWydarzenEdycjaActivity"
             android:parentActivityName=".WyborWydarzeniaActivity" />
         <activity
-            android:name=".WybraneWydarzenieZListyEdycja"
+            android:name=".WybraneWydarzenieZListyEdycjaActivity"
             android:parentActivityName=".WyborWydarzeniaActivity" />
         <activity
-            android:name=".UdanyEdycjaWydarzenia"
+            android:name=".UdanyEdycjaWydarzeniaActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".ListaZapisanychZawodniczek"
+            android:name=".ListaZapisanychZawodniczekActivity"
             android:parentActivityName=".ListaWydarzenEdycjaActivity" />
         <activity
             android:name=".ListaZawodniczekEdycjaActivity"

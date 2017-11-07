@@ -19,7 +19,7 @@ import Zawodniczka.*;
  * Created by Dominika Saide on 2017-11-05.
  */
 
-public class WybranaZawodniczkaZListy extends AppCompatActivity {
+public class WybranaZawodniczkaZListyActivity extends AppCompatActivity {
     private TextView imieNazwiskoZawodniczki;
     private String product=new String();
     private TextView numerTV;
@@ -28,6 +28,10 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
     private ListView listaWydarzenTakZawodniczka;
     private ListView listaWydarzenNieZawodniczka;
     private ListView listaWydarzenTbcZawodniczka;
+
+    private String[] wydarzeniaTak;
+    private String[] wydarzeniaNie;
+    private String[] wydarzeniaTbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +75,17 @@ public class WybranaZawodniczkaZListy extends AppCompatActivity {
         db1.close();
 
         WydarzenieObliczenia wydarzenieObliczenia =new WydarzenieObliczenia();
-        String[] wydarzeniaTak = wydarzenieObliczenia.getWydarzeniaTakZawodniczka(wydarzeniaList);
-        String[] wydarzeniaNie = wydarzenieObliczenia.getWydarzeniaNieZawodniczka(wydarzeniaList);
-        String[] wydarzeniaTbc = wydarzenieObliczenia.getWydarzeniaTbcZawodniczka(wydarzeniaList);
+        if(wydarzeniaList.size()>0 && (wydarzenieObliczenia.getWydarzeniaTakZawodniczka(wydarzeniaList)).length>0) {
+            wydarzeniaTak = wydarzenieObliczenia.getWydarzeniaTakZawodniczka(wydarzeniaList);
+        }
+
+        if(wydarzeniaList.size()>0 && (wydarzenieObliczenia.getWydarzeniaNieZawodniczka(wydarzeniaList)).length>0) {
+            wydarzeniaNie = wydarzenieObliczenia.getWydarzeniaNieZawodniczka(wydarzeniaList);
+        }
+
+        if(wydarzeniaList.size()>0 && (wydarzenieObliczenia.getWydarzeniaTbcZawodniczka(wydarzeniaList)).length>0){
+            wydarzeniaTbc = wydarzenieObliczenia.getWydarzeniaTbcZawodniczka(wydarzeniaList);
+        }
 
         //wypisanie wszystkich wydarzen, na ktore zapisana jest wybrana zawodniczka
         if(wydarzeniaList.isEmpty())

@@ -304,6 +304,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteWydarzenieTabelaWydarzeniaZawodniczka(Wydarzenie wydarzenie) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PLAYER_EVENT, KEY_EVENT_ID + " = ?",
+                new String[]{String.valueOf(wydarzenie.getIdWydarzenia())});
+        db.close();
+    }
+
     public void zapiszZawodniczkeNaWydarzenie(Integer idZawodniczki, Integer idWydarzenia, Integer idStatusu) {
         SQLiteDatabase db = this.getWritableDatabase();
         Log.d("dodaje zaw ", idZawodniczki.toString());
@@ -320,21 +327,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing datab
     }
 
-    /*
-        public Integer getIdZaw(int id){
-            SQLiteDatabase db = this.getReadableDatabase();
-
-            Cursor cursor = db.query(TABLE_PLAYER_EVENT, new String[] { KEY_ID,
-                            KEY_PLAYER_ID, KEY_EVENT_ID, KEY_PRESENCE}, KEY_ID + "=?",
-                    new String[] { String.valueOf(id) }, null, null, null, null);
-            if (cursor != null)
-                cursor.moveToFirst();
-
-           Integer idZaw = cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_ID));
-
-            return idZaw;
-        }
-    */
     public Integer getIdWyd(int id) {
 
         Integer idWyd;
@@ -347,37 +339,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         idWyd = cursor.getInt(cursor.getColumnIndex(KEY_EVENT_ID));
-/*
-        String selectQuery = "SELECT  * FROM " + TABLE_PLAYER_EVENT + " where IDZawodniczki="+id;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        idWyd= cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT));;
-*/
-        //dodalam
-        //db.close();
 
         return idWyd;
     }
 
-/*
-    public Integer getIdStatus(int id){
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_PLAYER_EVENT, new String[] { KEY_ID,
-                        KEY_PLAYER_ID, KEY_EVENT_ID, KEY_PRESENCE}, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        Integer idStatus = cursor.getInt(cursor.getColumnIndex(KEY_PRESENCE));
-
-        return idStatus;
-    }
-    */
-//public void getWszystkieWydarzeniaPoZawodniczce(Integer idZawodniczki) {
 
     public List<Wydarzenie> getWszystkieWydarzeniaPoZawodniczce(Integer idZawodniczki) {
 
@@ -537,8 +502,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             do {
                 Integer idPl = cursor.getInt(cursor.getColumnIndex(KEY_ID_EVENT));
                 Log.d("ID Wydarzenia", idPl.toString());
-                //String idEv = cursor.getString(cursor.getColumnIndex(KEY_DESC));
-                //Log.d("ID opis", idEv);
             } while (cursor.moveToNext());
 
             //db.close();
