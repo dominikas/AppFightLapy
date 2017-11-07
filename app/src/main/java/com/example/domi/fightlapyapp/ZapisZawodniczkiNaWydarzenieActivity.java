@@ -17,6 +17,10 @@ import DatabaseHandler.DatabaseHandler;
 import Zawodniczka.*;
 import Wydarzenie.*;
 
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
+
 public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
     private TextView wybranaZawodniczkaET;
     private TextView wybraneWydarzenieET;
@@ -170,11 +174,9 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
 
         Zawodniczka zawodniczka=jakaToZawodniczka(wybranaZawodniczka);
 
-        Integer idWydarzenia=wydarzenieObliczenia.wyszukanieWydarzenie(wydarzenieList, wybraneWydarzenie);
-        Log.d("wybrane wydarzenie", idWydarzenia.toString());
+        Integer idWydarzenia=wydarzenieObliczenia.wyszukanieWydarzeniaZListyPoId(wydarzenieList, wybraneWydarzenie);
 
         db.zapiszZawodniczkeNaWydarzenie(zawodniczka.getId(), idWydarzenia, idStatusu);
-
         db.close();
 
         Intent intent = new Intent(this, UdanyZapisZawodniczkiNaWydarzenieActivity.class);
@@ -210,7 +212,6 @@ public class ZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
             wydarzenieList=db.getWszystkieWydarzenia();
             Log.d("Liczba wydarzen ", Integer.valueOf(wydarzenieList.size()).toString());
         }
-
 
         wydarzenieValues =new String[wydarzenieList.size()];
         for (Wydarzenie wyd : wydarzenieList) {

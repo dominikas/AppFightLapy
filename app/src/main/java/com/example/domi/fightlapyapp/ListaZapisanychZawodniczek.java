@@ -20,6 +20,10 @@ import DatabaseHandler.DatabaseHandler;
 
 import Zawodniczka.*;
 
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
+
 public class ListaZapisanychZawodniczek extends AppCompatActivity {
 
     Intent i;
@@ -143,10 +147,9 @@ public class ListaZapisanychZawodniczek extends AppCompatActivity {
         Log.v("id zawodniczki ", idZawodniczki.toString());
 
         DatabaseHandler db = new DatabaseHandler(this);
-        Log.d("Delete: ", "...");
         db.deleteZawodniczkeZWydarzenia(idZawodniczki);
         db.close();
-        Log.d("Delete: ", "...");
+
     }
 
     private Integer wyszukanieDanychZawodniczki(String imieINazwisko){

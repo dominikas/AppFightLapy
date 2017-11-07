@@ -13,8 +13,9 @@ import java.util.List;
 import MyExceptions.*;
 import Wydarzenie.Wydarzenie;
 import Zawodniczka.*;
+
 /**
- * Created by Domi on 2017-07-16.
+ * Created by Dominika Saide on 2017-11-05.
  */
 
 public class DatabaseHandler extends SQLiteOpenHelper {

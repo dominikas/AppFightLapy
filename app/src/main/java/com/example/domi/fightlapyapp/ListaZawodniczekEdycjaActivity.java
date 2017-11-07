@@ -21,6 +21,10 @@ public class ListaZawodniczekEdycjaActivity extends AppCompatActivity {
     Intent i;
     Integer indeks1;
 
+    /**
+     * Created by Dominika Saide on 2017-11-05.
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +39,6 @@ public class ListaZawodniczekEdycjaActivity extends AppCompatActivity {
         db.close();
 
         ZawodniczkaObliczenia zawodniczkaObliczenia=new ZawodniczkaObliczenia();
-
         String[] listaZawodniczek=zawodniczkaObliczenia.getTablicaZawodniczek(zawodniczkiList);
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaZawodniczek);

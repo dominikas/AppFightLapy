@@ -18,7 +18,11 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 import DatabaseHandler.DatabaseHandler;
-import Wydarzenie.Wydarzenie;
+import Wydarzenie.*;
+
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
 
 public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
 
@@ -109,17 +113,16 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
             public void onClick(View v) {
 
                 String rodzajWydarzenia=String.valueOf(typWydarzeniaSpinner.getSelectedItem());
-                Integer typWydarzenia = jakieToWydarzenie(rodzajWydarzenia);
+                WydarzenieObliczenia wydarzenieObliczenia = new WydarzenieObliczenia();
+                //Integer typWydarzenia = wydarzenieObliczenia.zmianaWydarzeniaStringNaId(rodzajWydarzenia);
 
                 boolean czyOk = czyDaneWydarzeniaSaOk();
 
                 if (czyOk) {
                     zapisEdytowanegoWydarzenia(v);
-
                 }
             }
         });
-
     }
 
     private Wydarzenie wyszukanieDanychWydarzenia(String idWydarzenia) {
@@ -154,7 +157,8 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
     private void zapisEdytowanegoWydarzenia(View v){
 
         String rodzajWydarzeniaNew=String.valueOf(typWydarzeniaSpinner.getSelectedItem());
-        Integer typWydarzenia = jakieToWydarzenie(rodzajWydarzeniaNew);
+        WydarzenieObliczenia wydarzenieObliczenia = new WydarzenieObliczenia();
+        Integer typWydarzenia = wydarzenieObliczenia.zmianaWydarzeniaStringNaId(rodzajWydarzeniaNew);
 
         String dataWydarzeniaNew=date.getText().toString();
         String miejsceWydarzenieNew = miejsceET.getText().toString();
@@ -175,7 +179,6 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
         edytowaneWydarzenie.setGodzina(godzineWydarzeniaNew);
 
         db.updateWydarzenie(edytowaneWydarzenie);
-
         db.close();
 
         Intent intent = new Intent(this, UdanyEdycjaWydarzenia.class);
@@ -191,24 +194,6 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
         }
 
         return czyOk;
-    }
-
-    private Integer jakieToWydarzenie(String typWydarzenia) {
-        Integer idWydarzenia = 0;
-
-        switch (typWydarzenia) {
-            case ("Trening"):
-                idWydarzenia = 1;
-                break;
-            case ("Mecz"):
-                idWydarzenia = 2;
-                break;
-            case ("Inne"):
-                idWydarzenia = 3;
-                break;
-        }
-
-        return idWydarzenia;
     }
 
     private void requestFocus(View view) {
@@ -249,5 +234,4 @@ public class WybraneWydarzenieZListyEdycja extends AppCompatActivity {
 
         return czyOk;
     }
-
 }

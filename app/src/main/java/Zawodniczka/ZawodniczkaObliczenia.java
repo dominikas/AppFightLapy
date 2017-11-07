@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Domi on 2017-11-05.
+ * Created by Dominika Saide on 2017-11-05.
  */
 
 public class ZawodniczkaObliczenia {
@@ -54,6 +54,30 @@ public class ZawodniczkaObliczenia {
         }
 
         return pozycjaString;
+    }
+
+    public Integer zmianaPozycjiStringNaId(String pozycja) {
+        Integer idPozycji=0;
+
+        switch(pozycja){
+            case ("Rozegranie"):
+                idPozycji=1;
+                break;
+            case("Atak"):
+                idPozycji=2;
+                break;
+            case("Przyjęcie"):
+                idPozycji=3;
+                break;
+            case("Środek"):
+                idPozycji=4;
+                break;
+            case("Libero"):
+                idPozycji=5;
+                break;
+        }
+
+        return idPozycji;
     }
 
     public String[] getTablicaZawodniczek(ArrayList<Zawodniczka> zawodniczkiList){

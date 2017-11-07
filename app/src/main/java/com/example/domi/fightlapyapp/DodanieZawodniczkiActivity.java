@@ -8,32 +8,32 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import DatabaseHandler.DatabaseHandler;
-import Zawodniczka.Zawodniczka;
-import android.util.Log;
+import Zawodniczka.*;
+
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
 
 public class DodanieZawodniczkiActivity extends AppCompatActivity {
+
     private Spinner spinner1;
     private EditText imieET;
     private EditText nazwiskoET;
     private EditText numerET;
-    private TextInputLayout inputLayoutImie, inputLayoutNazwisko, inputLayoutNumer;
+    private TextInputLayout imieInputLayout, nazwiskoInputLayout, numerInputLayout;
 
-    //TODO REFACTOR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodanie_zawodniczki);
 
-        inputLayoutImie = (TextInputLayout) findViewById(R.id.input_layout_imie);
-        inputLayoutNazwisko=(TextInputLayout) findViewById(R.id.input_layout_nazwisko);
-        inputLayoutNumer=(TextInputLayout) findViewById(R.id.input_layout_numer);
+        imieInputLayout = (TextInputLayout) findViewById(R.id.input_layout_imie);
+        nazwiskoInputLayout =(TextInputLayout) findViewById(R.id.input_layout_nazwisko);
+        numerInputLayout =(TextInputLayout) findViewById(R.id.input_layout_numer);
 
         imieET = (EditText) findViewById(R.id.imie);
         nazwiskoET = (EditText) findViewById(R.id.nazwisko);
@@ -46,44 +46,17 @@ public class DodanieZawodniczkiActivity extends AppCompatActivity {
             @Override
 
             public void onClick(View v) {
-                int czyOk=0;
 
-                final String imie_zawodniczki = imieET.getText().toString();
+                String imie = imieET.getText().toString();
+                String nazwisko = nazwiskoET.getText().toString();
+                String numerZawodniczki = numerET.getText().toString();
 
-                if (!czyImieLubNazwiskoOK(imie_zawodniczki)) {
-                    inputLayoutImie.setError("Błędna wartość w polu imię");
-                    requestFocus(imieET);
-                    czyOk++;
-                    }
-                else
-                    inputLayoutImie.setErrorEnabled(false);
+                boolean czyOk=czyDaneSaOk(imie, nazwisko, numerZawodniczki);
 
-
-                final String nazwisko_zawodniczki = nazwiskoET.getText().toString();
-                if (!czyImieLubNazwiskoOK(nazwisko_zawodniczki)) {
-                    inputLayoutNazwisko.setError(getString(R.string.err_msg_nazwisko));
-                    requestFocus(nazwiskoET);
-                    czyOk++;
-                }
-                else
-                    inputLayoutNazwisko.setErrorEnabled(false);
-
-                final String numer_zawodniczki = numerET.getText().toString();
-                if (!czyNumerOK(numer_zawodniczki)) {
-                    //numerET.setError("Błędna wartość w polu numer");
-                    inputLayoutNumer.setError(getString(R.string.err_msg_numer));
-                    requestFocus(numerET);
-                    czyOk++;
-                }
-                else
-                    inputLayoutNumer.setEnabled(false);
-
-                if(czyOk==0) {
-                    zapisz_zawodniczke(v);
+                if(czyOk) {
+                    zapiszZawodniczke(v);
                 }
             }
-
-
         });
     }
 
@@ -91,82 +64,65 @@ public class DodanieZawodniczkiActivity extends AppCompatActivity {
         spinner1 = (Spinner) findViewById(R.id.spinner_pozycja);
         spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
     }
-    //TODO do klasy WalidacjaPol
-    private boolean czyImieLubNazwiskoOK(String imieLubNazwisko_zawodniczki)
-    {
-        String IMIENAZWISKO_PATTERN = "[a-zA-Z]+";
 
-        Pattern pattern = Pattern.compile(IMIENAZWISKO_PATTERN);
-        Matcher matcher = pattern.matcher(imieLubNazwisko_zawodniczki);
-        return matcher.matches();
-    }
-    //TODO do klasy WalidacjaPol
-    private boolean czyNumerOK(String numer_zawodniczki)
-    {
-        String NUMER_PATTERN = "[0-9]+";
+    private void zapiszZawodniczke(View view) {
 
-        Pattern pattern = Pattern.compile(NUMER_PATTERN);
-        Matcher matcher = pattern.matcher(numer_zawodniczki);
-        return matcher.matches();
-    }
-
-    private void zapisz_zawodniczke(View view) {
-
-        String imie_zawodniczki = imieET.getText().toString();
-        String nazwisko_zawodniczki = nazwiskoET.getText().toString();
-        String numer_zawodniczki = numerET.getText().toString();
-        Integer numerInt = Integer.parseInt(numer_zawodniczki);
-        String pozycja_zawodniczki = String.valueOf(spinner1.getSelectedItem());
-
-        Integer idPozycji = jakaToPozycja(pozycja_zawodniczki);
-
+        Zawodniczka zawodniczka = new Zawodniczka();
+        String imieZawodniczki = imieET.getText().toString();
+        String nazwiskoZawodniczki = nazwiskoET.getText().toString();
+        String numerZawodniczki = numerET.getText().toString();
+        Integer numerInt = Integer.parseInt(numerZawodniczki);
+        String pozycjaZawodniczki = String.valueOf(spinner1.getSelectedItem());
+        Integer idPozycji = zawodniczka.jakaToPozycja(pozycjaZawodniczki);
         DatabaseHandler db = new DatabaseHandler(this);
-        Log.d("Insert: ", "Inserting ..");
-        Zawodniczka zawodniczkaTestowa = new Zawodniczka(imie_zawodniczki, nazwisko_zawodniczki, idPozycji, numerInt);
-        db.dodajZawodniczke(zawodniczkaTestowa);
+
+        zawodniczka.setImie(imieZawodniczki);
+        zawodniczka.setNazwisko(nazwiskoZawodniczki);
+        zawodniczka.setNumer(numerInt);
+        zawodniczka.setIdPozycji(idPozycji);
+
+        db.dodajZawodniczke(zawodniczka);
         db.close();
 
         Intent intent = new Intent(this, UdanyZapisZawodniczki.class);
         startActivity(intent);
     }
 
-    private Integer jakaToPozycja(String pozycja)
-    {
-        Integer idPozycji=0;
-
-        switch(pozycja){
-            case ("Rozegranie"):
-                idPozycji=1;
-                break;
-            case("Atak"):
-                idPozycji=2;
-                break;
-            case("Przyjęcie"):
-                idPozycji=3;
-                break;
-            case("Środek"):
-                idPozycji=4;
-                break;
-            case("Libero"):
-                idPozycji=5;
-                break;
-        }
-
-        return idPozycji;
-    }
-    //TODO do klasy WalidacjaPol
-    private boolean czyWszystkoOK(Integer licznik)
-    {
-        boolean czOk=true;
-        if(licznik!=0)
-            czOk=false;
-
-        return czOk;
-    }
-
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    private boolean czyDaneSaOk(String imie, String nazwisko, String numer){
+
+        boolean czyOk=true;
+        WalidacjaDanychZawodniczki walidacjaDanychZawodniczki=new WalidacjaDanychZawodniczki();
+
+        if (!walidacjaDanychZawodniczki.czyImieLubNazwiskoOK(imie) || imie.isEmpty()) {
+            imieInputLayout.setError(getString(R.string.err_msg_imie));
+            requestFocus(imieET);
+            czyOk=false;
+        }
+        else
+            imieInputLayout.setErrorEnabled(false);
+
+        if (!walidacjaDanychZawodniczki.czyImieLubNazwiskoOK(nazwisko) || nazwisko.isEmpty()) {
+            nazwiskoInputLayout.setError(getString(R.string.err_msg_nazwisko));
+            requestFocus(nazwiskoET);
+            czyOk=false;
+        }
+        else
+            nazwiskoInputLayout.setErrorEnabled(false);
+
+        if (!walidacjaDanychZawodniczki.czyNumerOK(numer) || numer.isEmpty()) {
+            numerInputLayout.setError(getString(R.string.err_msg_numer));
+            requestFocus(numerET);
+            czyOk=false;
+        }
+        else
+            numerInputLayout.setEnabled(false);
+
+        return czyOk;
     }
 }

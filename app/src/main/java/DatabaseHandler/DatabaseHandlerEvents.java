@@ -14,7 +14,7 @@ import MyExceptions.Za_Dlugi_Exception;
 import Wydarzenie.Wydarzenie;
 
 /**
- * Created by Domi on 2017-07-16.
+ * Created by Dominika Saide on 2017-11-05.
  */
 
 public class DatabaseHandlerEvents extends SQLiteOpenHelper {

@@ -11,11 +11,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import DatabaseHandler.DatabaseHandler;
 import Zawodniczka.*;
+
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
 
 public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
 
@@ -76,8 +78,6 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
     }
 
     private Zawodniczka wyszukanieDanychZawodniczki(String product){
-        Integer idZaw=666;
-        Integer indeksZaw=666;
 
         DatabaseHandler db = new DatabaseHandler(this);
         ArrayList<Zawodniczka> zawodniczkiList = db.getWszystkieZawodniczki();
@@ -112,7 +112,9 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
     public boolean czyDaneZawodniczkiSaOk(String imieZawodniczki, String nazwiskoZawodniczki, String numerZawodniczki){
 
         boolean czyOk=true;
-        if (!czyImieLubNazwiskoOK(imieZawodniczki)) {
+        WalidacjaDanychZawodniczki walidacjaDanychZawodniczki=new WalidacjaDanychZawodniczki();
+
+        if (!walidacjaDanychZawodniczki.czyImieLubNazwiskoOK(imieZawodniczki) || imieZawodniczki.isEmpty()) {
             imieEdycjaET.setError(getString(R.string.err_msg_imie));
             requestFocus(imieEdycjaET);
             czyOk=false;
@@ -120,7 +122,7 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
         else
             inputLayoutImie.setErrorEnabled(false);
 
-        if (!czyImieLubNazwiskoOK(nazwiskoZawodniczki)) {
+        if (!walidacjaDanychZawodniczki.czyImieLubNazwiskoOK(nazwiskoZawodniczki) || nazwiskoZawodniczki.isEmpty()) {
             nazwiskoEdycjaET.setError(getString(R.string.err_msg_nazwisko));
             requestFocus(nazwiskoEdycjaET);
             czyOk=false;
@@ -128,7 +130,7 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
         else
             inputLayoutNazwisko.setErrorEnabled(false);
 
-        if (!czyNumerOK(numerZawodniczki)) {
+        if (!walidacjaDanychZawodniczki.czyNumerOK(numerZawodniczki) || numerZawodniczki.isEmpty()) {
             inputLayoutNumer.setError(getString(R.string.err_msg_numer));
             requestFocus(numerEdycjaET);
             czyOk=false;
@@ -137,23 +139,6 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
             inputLayoutNumer.setEnabled(false);
 
         return czyOk;
-    }
-
-    private boolean czyImieLubNazwiskoOK(String imieLubNazwisko_zawodniczki) {
-        String IMIENAZWISKO_PATTERN = "[a-zA-Z]+";
-
-        Pattern pattern = Pattern.compile(IMIENAZWISKO_PATTERN);
-        Matcher matcher = pattern.matcher(imieLubNazwisko_zawodniczki);
-        return matcher.matches();
-    }
-
-    private boolean czyNumerOK(String numer_zawodniczki)
-    {
-        String NUMER_PATTERN = "[0-9]+";
-
-        Pattern pattern = Pattern.compile(NUMER_PATTERN);
-        Matcher matcher = pattern.matcher(numer_zawodniczki);
-        return matcher.matches();
     }
 
     private void zapisDanychEdytowanejZawodniczki(View view, Integer idZaw) {
@@ -165,7 +150,8 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
         String pozycjaZawodniczki = String.valueOf(spinner1.getSelectedItem());
         String idZawodniczki = product;
 
-        Integer idPozycji = jakaToPozycja(pozycjaZawodniczki);
+        ZawodniczkaObliczenia zawodniczkaObliczenia=new ZawodniczkaObliczenia();
+        Integer idPozycji = zawodniczkaObliczenia.zmianaPozycjiStringNaId(pozycjaZawodniczki);
 
         DatabaseHandler db = new DatabaseHandler(this);
         Zawodniczka edytowanaZawodniczka = new Zawodniczka();
@@ -174,7 +160,6 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
         edytowanaZawodniczka.setNazwisko(nazwiskoZawodniczki);
         edytowanaZawodniczka.setNumer(numerInt);
         edytowanaZawodniczka.setIdPozycji(idPozycji);
-        Log.d("Jestem w zapisie ","danych edytowaniej");
         db.updateZawodniczka(edytowanaZawodniczka);
 
         db.close();
@@ -182,38 +167,6 @@ public class WybranaZawodniczkaZListyEdycjaActivity extends AppCompatActivity {
         Intent intent = new Intent(this, UdanaEdycjaZawodniczkiActivity.class);
         startActivity(intent);
 
-    }
-
-    private Integer jakaToPozycja(String pozycja) {
-        Integer idPozycji=0;
-
-        switch(pozycja){
-            case ("Rozegranie"):
-                idPozycji=1;
-                break;
-            case("Atak"):
-                idPozycji=2;
-                break;
-            case("Przyjęcie"):
-                idPozycji=3;
-                break;
-            case("Środek"):
-                idPozycji=4;
-                break;
-            case("Libero"):
-                idPozycji=5;
-                break;
-        }
-
-        return idPozycji;
-    }
-
-    private boolean czyWszystkoOK(Integer licznik) {
-        boolean czOk=true;
-        if(licznik!=0)
-            czOk=false;
-
-        return czOk;
     }
 
     private void requestFocus(View view) {

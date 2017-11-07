@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import DatabaseHandler.*;
 import Wydarzenie.Wydarzenie;
 
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
+
 public class ListaWydarzenActivity extends AppCompatActivity {
     private ListView listaWydarzenLV;
     Intent i;

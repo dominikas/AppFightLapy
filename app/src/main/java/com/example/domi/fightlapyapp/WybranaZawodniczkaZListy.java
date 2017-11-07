@@ -15,6 +15,10 @@ import DatabaseHandler.DatabaseHandler;
 import Wydarzenie.*;
 import Zawodniczka.*;
 
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
+
 public class WybranaZawodniczkaZListy extends AppCompatActivity {
     private TextView imieNazwiskoZawodniczki;
     private String product=new String();

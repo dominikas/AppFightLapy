@@ -13,7 +13,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import DatabaseHandler.DatabaseHandler;
-import Wydarzenie.Wydarzenie;
+import Wydarzenie.*;
+
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
 
 public class ListaWydarzenEdycjaActivity extends AppCompatActivity {
     private ListView listaWydarzenEdycjaLV;
@@ -30,16 +34,12 @@ public class ListaWydarzenEdycjaActivity extends AppCompatActivity {
         DatabaseHandler db = new DatabaseHandler(this);
         ArrayList<Wydarzenie> wydarzenieList = db.getWszystkieWydarzenia();
         db.close();
-        String[] listItems = new String[wydarzenieList.size()];
 
-        for (Wydarzenie wyd : wydarzenieList){
-            int indeks = wydarzenieList.indexOf(wyd);
-            Integer indeks1 = (Integer) indeks;
-            listItems[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString()+" "+wyd.getOpis();
+        WydarzenieObliczenia wydarzenieObliczenia= new WydarzenieObliczenia();
+        String[] listaWydarzen=wydarzenieObliczenia.getListeWydarzen(wydarzenieList);
 
-        }
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaWydarzen);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
         listaWydarzenEdycjaLV.setAdapter(adapter);
 
         listaWydarzenEdycjaLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {

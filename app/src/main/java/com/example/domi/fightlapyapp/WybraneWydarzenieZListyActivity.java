@@ -11,6 +11,10 @@ import android.widget.TextView;
 import DatabaseHandler.DatabaseHandler;
 import Wydarzenie.*;
 
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
+
 public class WybraneWydarzenieZListyActivity extends AppCompatActivity {
 
     private TextView wybraneWydarzenieTV;

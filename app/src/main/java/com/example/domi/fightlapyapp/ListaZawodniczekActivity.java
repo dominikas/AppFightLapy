@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import DatabaseHandler.DatabaseHandler;
 import Zawodniczka.*;
 
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
+
 public class ListaZawodniczekActivity extends AppCompatActivity {
 
     private ListView listaZawodniczek;

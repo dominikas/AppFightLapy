@@ -1,11 +1,12 @@
 package Wydarzenie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Wydarzenie.Wydarzenie;
 
 /**
- * Created by Domi on 2017-11-05.
+ * Created by Dominika Saide on 2017-11-05.
  */
 
 public class WydarzenieObliczenia {
@@ -19,16 +20,16 @@ public class WydarzenieObliczenia {
             }
         }
 
-        String[] listItems = new String[licznikTak];
+        String[] listaZawodniczekTak = new String[licznikTak];
         licznikTak=0;
         for (Wydarzenie wyd : wydarzeniaList) {
             if (wyd.getObecnosc() == 1) {
-                listItems[licznikTak] = wyd.getOpis() + " " + wyd.getData();
+                listaZawodniczekTak[licznikTak] = wyd.getOpis() + " " + wyd.getData();
                 licznikTak++;
             }
         }
 
-        return listItems;
+        return listaZawodniczekTak;
     }
 
     public String[] getWydarzeniaNieZawodniczka(List<Wydarzenie> wydarzeniaList){
@@ -40,16 +41,16 @@ public class WydarzenieObliczenia {
             }
         }
 
-        String[] listItems = new String[licznikNie];
+        String[] listaZawodniczekNie = new String[licznikNie];
         licznikNie=0;
         for (Wydarzenie wyd : wydarzeniaList) {
             if (wyd.getObecnosc() == 2) {
-                listItems[licznikNie] = wyd.getOpis() + " " + wyd.getData();
+                listaZawodniczekNie[licznikNie] = wyd.getOpis() + " " + wyd.getData();
                 licznikNie++;
             }
         }
 
-        return listItems;
+        return listaZawodniczekNie;
     }
 
     public String[] getWydarzeniaTbcZawodniczka(List<Wydarzenie> wydarzeniaList){
@@ -61,16 +62,16 @@ public class WydarzenieObliczenia {
             }
         }
 
-        String[] listItems = new String[licznikTbc];
+        String[] listaZawodniczekTbc = new String[licznikTbc];
         licznikTbc=0;
         for (Wydarzenie wyd : wydarzeniaList) {
             if (wyd.getObecnosc() == 3) {
-                listItems[licznikTbc] = wyd.getOpis() + " " + wyd.getData();
+                listaZawodniczekTbc[licznikTbc] = wyd.getOpis() + " " + wyd.getData();
                 licznikTbc++;
             }
         }
 
-        return listItems;
+        return listaZawodniczekTbc;
     }
 
     public String zamianaIdWydarzeniaNaZnaki(Integer typWydarzenia){
@@ -91,7 +92,6 @@ public class WydarzenieObliczenia {
         }
 
         return typWydarzeniaString;
-
     }
 
     public Integer zmianaStatusuNaID(String status){
@@ -113,7 +113,26 @@ public class WydarzenieObliczenia {
         return idStatusu;
     }
 
-    public Integer wyszukanieWydarzenie(List<Wydarzenie> wydarzenieList, String wybraneWydarzenie){
+    public Integer zmianaWydarzeniaStringNaId(String typWydarzenia) {
+
+        Integer idWydarzenia = 0;
+
+        switch (typWydarzenia) {
+            case ("Trening"):
+                idWydarzenia = 1;
+                break;
+            case ("Mecz"):
+                idWydarzenia = 2;
+                break;
+            case ("Inne"):
+                idWydarzenia = 3;
+                break;
+        }
+
+        return idWydarzenia;
+    }
+
+    public Integer wyszukanieWydarzeniaZListyPoId(List<Wydarzenie> wydarzenieList, String wybraneWydarzenie){
 
 
         Integer licznikWyd = 0;
@@ -126,5 +145,18 @@ public class WydarzenieObliczenia {
             }
         }
         return idWydarzenia;
+    }
+
+    public String[] getListeWydarzen(ArrayList<Wydarzenie> wydarzenieList){
+
+        String[] listaWydarzen = new String[wydarzenieList.size()];
+
+        for (Wydarzenie wyd : wydarzenieList){
+            int indeks = wydarzenieList.indexOf(wyd);
+            Integer indeks1 = (Integer) indeks;
+            listaWydarzen[wydarzenieList.indexOf(wyd)] = wyd.getIdWydarzenia().toString()+" "+wyd.getOpis();
+        }
+
+        return listaWydarzen;
     }
 }

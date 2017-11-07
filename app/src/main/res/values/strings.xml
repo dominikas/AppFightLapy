@@ -50,7 +50,7 @@
 
     <string name="err_msg_imie">Błędna wartość w polu imie</string>
     <string name="err_msg_nazwisko">Błędna wartość w polu nazwisko</string>
-    <string name="err_msg_numer">Błędna wartość w polu nazwisko</string>
+    <string name="err_msg_numer">Błędna wartość w polu numer</string>
     <string name="err_msg_miejsce">Błędna wartość w polu miejsce</string>
     <string name="err_msg_cena">Błędna wartość w polu cena</string>
     <string name="err_msg_opis">Błędna wartość w polu opis</string>

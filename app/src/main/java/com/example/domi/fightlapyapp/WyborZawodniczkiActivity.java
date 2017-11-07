@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
+
 public class WyborZawodniczkiActivity extends AppCompatActivity {
 
     @Override

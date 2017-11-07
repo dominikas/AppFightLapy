@@ -3,6 +3,10 @@ package com.example.domi.fightlapyapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
+
 public class UdanyZapisZawodniczkiNaWydarzenieActivity extends AppCompatActivity {
 
     @Override

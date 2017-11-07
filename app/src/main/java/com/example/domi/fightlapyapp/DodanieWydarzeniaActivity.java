@@ -20,6 +20,10 @@ import java.util.Calendar;
 import DatabaseHandler.*;
 import Wydarzenie.*;
 
+/**
+ * Created by Dominika Saide on 2017-11-05.
+ */
+
 public class DodanieWydarzeniaActivity extends AppCompatActivity {
 
     private TextView dataTV;
@@ -75,9 +79,8 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
             }
         });
 
-        //  initiate the edit text
         time = (TextView) findViewById(R.id.godzina);
-        // perform click event listener on edit text
+
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +123,8 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
 
     private void zapiszWydarzenie(View v) {
 
+        Wydarzenie wydarzenie = new Wydarzenie();
+
         String typWydarzenia = String.valueOf(typWydarzeniaSpinner.getSelectedItem());
         String dataWydarzenia = dataTV.getText().toString();
         String godzinaWydarzenia = time.getText().toString();
@@ -127,48 +132,21 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
         String opisWydarzenia = opisET.getText().toString();
         String cenaWydarzenia = cenaET.getText().toString();
         Integer cenaInt = Integer.parseInt(cenaWydarzenia);
+        Integer idWydarzenia = wydarzenie.jakieToWydarzenie(typWydarzenia);
 
-        Integer idWydarzenia = jakieToWydarzenie(typWydarzenia);
+        wydarzenie.setData(dataWydarzenia);
+        wydarzenie.setGodzina(godzinaWydarzenia);
+        wydarzenie.setMiejsce(miejsceWydarzenia);
+        wydarzenie.setOpis(opisWydarzenia);
+        wydarzenie.setCena(cenaInt);
+        wydarzenie.setIdTypuWydarzenia(idWydarzenia);
 
         DatabaseHandler db = new DatabaseHandler(this);
-        Log.d("Insert: ", "Inserting ..");
-        Wydarzenie wydarzenieTestowe = new Wydarzenie(idWydarzenia, dataWydarzenia, godzinaWydarzenia, miejsceWydarzenia, opisWydarzenia, cenaInt);
-
-        db.dodajWydarzenie(wydarzenieTestowe);
+        db.dodajWydarzenie(wydarzenie);
         db.close();
 
         Intent intent = new Intent(this, UdanyZapisWydarzenia.class);
         startActivity(intent);
-    }
-
-    //TODO do klasy WalidacjaPol
-    private boolean czyPoleOk(String wartoscPola) {
-        boolean czyOk = true;
-        if (wartoscPola.isEmpty()) {
-            czyOk = false;
-        } else if (wartoscPola.length() > 50) {
-            czyOk = false;
-        }
-
-        return czyOk;
-    }
-
-    private Integer jakieToWydarzenie(String typWydarzenia) {
-        Integer idWydarzenia = 0;
-
-        switch (typWydarzenia) {
-            case ("Trening"):
-                idWydarzenia = 1;
-                break;
-            case ("Mecz"):
-                idWydarzenia = 2;
-                break;
-            case ("Inne"):
-                idWydarzenia = 3;
-                break;
-        }
-
-        return idWydarzenia;
     }
 
     public void addListenerOnSpinnerItemSelection() {
@@ -182,11 +160,12 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
         }
     }
 
-    public boolean czyDaneSaOk(String miejsce, String opis, String cena, String typWydarzenia, String dataWydarzenia, String godzinaWydarzenia){
+    private boolean czyDaneSaOk(String miejsce, String opis, String cena, String typWydarzenia, String dataWydarzenia, String godzinaWydarzenia){
 
         boolean czyOk = true;
+        WalidacjaDanychWydarzenia walidacjaDanychWydarzenia = new WalidacjaDanychWydarzenia();
 
-        if (!czyPoleOk(miejsce)) {
+        if (!walidacjaDanychWydarzenia.czyPoleOk(miejsce)) {
             miejsceInputLayout.setError(getString(R.string.err_msg_miejsce));
 
             requestFocus(miejsceET);
@@ -195,14 +174,14 @@ public class DodanieWydarzeniaActivity extends AppCompatActivity {
         else
             miejsceInputLayout.setErrorEnabled(false);
 
-        if (!czyPoleOk(cena)) {
+        if (!walidacjaDanychWydarzenia.czyPoleOk(cena)) {
             cenaInputLayout.setError(getString(R.string.err_msg_cena));
             czyOk=false;
         }
         else
             cenaInputLayout.setErrorEnabled(false);
 
-        if (!czyPoleOk(opis)) {
+        if (!walidacjaDanychWydarzenia.czyPoleOk(opis)) {
             tytulInputLayout.setError(getString(R.string.err_msg_opis));
             requestFocus(opisET);
             czyOk=false;
