@@ -2,15 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.domi.fightlapyapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
+        android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:debuggable="true"
-        >
+        android:theme="@style/AppTheme">
+
+
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,66 +23,72 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WyborZawodniczkiActivity"
+            android:name=".zawodniczkaActivities.WyborZawodniczkiActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".ListaZawodniczekActivity"
-            android:parentActivityName=".WyborZawodniczkiActivity" />
+            android:name=".zawodniczkaActivities.ListaZawodniczekActivity"
+            android:parentActivityName=".zawodniczkaActivities.WyborZawodniczkiActivity" />
         <activity
-            android:name=".DodanieZawodniczkiActivity"
-            android:parentActivityName=".WyborZawodniczkiActivity" />
+            android:name=".zawodniczkaActivities.DodanieZawodniczkiActivity"
+            android:parentActivityName=".zawodniczkaActivities.WyborZawodniczkiActivity" />
         <activity
-            android:name=".UdanyZapisZawodniczkiActivity"
-            android:parentActivityName=".WyborZawodniczkiActivity" />
+            android:name=".zawodniczkaActivities.UdanyZapisZawodniczkiActivity"
+            android:parentActivityName=".zawodniczkaActivities.WyborZawodniczkiActivity" />
         <activity
-            android:name=".WyborWydarzeniaActivity"
+            android:name=".wydarzenieActivities.WyborWydarzeniaActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".DodanieWydarzeniaActivity"
-            android:parentActivityName=".WyborWydarzeniaActivity" />
+            android:name=".wydarzenieActivities.DodanieWydarzeniaActivity"
+            android:parentActivityName=".wydarzenieActivities.WyborWydarzeniaActivity" />
         <activity
-            android:name=".UdanyZapisWydarzeniaActivity"
-            android:parentActivityName=".WyborWydarzeniaActivity" />
+            android:name=".wydarzenieActivities.UdanyZapisWydarzenieActivity"
+            android:parentActivityName=".wydarzenieActivities.WyborWydarzeniaActivity" />
         <activity
-            android:name=".ListaWydarzenActivity"
-            android:parentActivityName=".WyborWydarzeniaActivity" />
+            android:name=".wydarzenieActivities.ListaWydarzenActivity"
+            android:parentActivityName=".wydarzenieActivities.WyborWydarzeniaActivity" />
         <activity
             android:name=".ZapisZawodniczkiNaWydarzenieActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".WybranaZawodniczkaZListyActivity"
-            android:parentActivityName=".ListaZawodniczekActivity" />
+            android:name=".zawodniczkaActivities.WybranaZawodniczkaZListyActivity"
+            android:parentActivityName=".zawodniczkaActivities.ListaZawodniczekActivity" />
         <activity
             android:name=".UdanyZapisZawodniczkiNaWydarzenieActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".WybraneWydarzenieZListyActivity"
-            android:parentActivityName=".WyborWydarzeniaActivity" />
+            android:name=".wydarzenieActivities.WybraneWydarzenieZListyActivity"
+            android:parentActivityName=".wydarzenieActivities.WyborWydarzeniaActivity" />
         <activity
-            android:name=".ListaWydarzenEdycjaActivity"
-            android:parentActivityName=".WyborWydarzeniaActivity" />
+            android:name=".wydarzenieActivities.ListaWydarzenEdycjaActivity"
+            android:parentActivityName=".wydarzenieActivities.WyborWydarzeniaActivity" />
         <activity
-            android:name=".WybraneWydarzenieZListyEdycjaActivity"
-            android:parentActivityName=".WyborWydarzeniaActivity" />
+            android:name=".wydarzenieActivities.WybraneWydarzenieZListyEdycjaActivity"
+            android:parentActivityName=".wydarzenieActivities.WyborWydarzeniaActivity" />
         <activity
-            android:name=".UdanyEdycjaWydarzeniaActivity"
+            android:name=".wydarzenieActivities.UdanaEdycjaWydarzeniaActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".ListaZapisanychZawodniczekActivity"
-            android:parentActivityName=".ListaWydarzenEdycjaActivity" />
+            android:name=".wydarzenieActivities.ListaZapisanychZawodniczekActivity"
+            android:parentActivityName=".wydarzenieActivities.ListaWydarzenEdycjaActivity" />
         <activity
-            android:name=".ListaZawodniczekEdycjaActivity"
-            android:parentActivityName=".WyborZawodniczkiActivity" />
+            android:name=".zawodniczkaActivities.ListaZawodniczekEdycjaActivity"
+            android:parentActivityName=".zawodniczkaActivities.WyborZawodniczkiActivity" />
         <activity
-            android:name=".WybranaZawodniczkaZListyEdycjaActivity"
-            android:parentActivityName=".ListaZawodniczekEdycjaActivity" />
+            android:name=".zawodniczkaActivities.WybranaZawodniczkaZListyEdycjaActivity"
+            android:parentActivityName=".zawodniczkaActivities.ListaZawodniczekEdycjaActivity" />
+        <activity
+            android:name=".zawodniczkaActivities.UdanaEdycjaZawodniczkiActivity"
+            android:parentActivityName=".zawodniczkaActivities.ListaZawodniczekEdycjaActivity" />
 
-        <activity android:name=".UdanaEdycjaZawodniczkiActivity"
-        android:parentActivityName=".ListaZawodniczekEdycjaActivity" />
+        <activity android:name=".FacebookActivity"
+            android:parentActivityName=".MainActivity"/>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
     </application>
 

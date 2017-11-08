@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AppFightLapy.iml" filepath="$PROJECT_DIR$/AppFightLapy.iml" />
       <module fileurl="file://$PROJECT_DIR$/FightLapyApp.iml" filepath="$PROJECT_DIR$/FightLapyApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook-android-sdk-4.28.0/facebook-android-sdk-4.28.0.iml" filepath="$PROJECT_DIR$/facebook-android-sdk-4.28.0/facebook-android-sdk-4.28.0.iml" />
     </modules>
   </component>
 </project>

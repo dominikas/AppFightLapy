@@ -1,6 +1,6 @@
 package com.example.domi.fightlapyapp;
-import DatabaseHandler.*;
-import Zawodniczka.*;
+import databaseHandler.*;
+import zawodniczka.*;
 
 import android.app.Activity;
 import android.os.Bundle;

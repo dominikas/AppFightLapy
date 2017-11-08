@@ -5,8 +5,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import MyExceptions.*;
-import Wydarzenie.*;
+import myExceptions.*;
+import wydarzenie.*;
 
 import static org.junit.Assert.*;
 

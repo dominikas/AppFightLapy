@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.domi.fightlapyapp.UdanyZapisZawodniczkiActivity">
+    tools:context="com.example.domi.fightlapyapp.zawodniczkaActivities.UdanyZapisZawodniczkiActivity">
 
     <TextView
         android:id="@+id/udany_zapis_zawodniczki"

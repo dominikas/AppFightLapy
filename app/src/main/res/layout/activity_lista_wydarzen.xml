@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.domi.fightlapyapp.ListaWydarzenActivity">
+    tools:context="com.example.domi.fightlapyapp.wydarzenieActivities.ListaWydarzenActivity">
 
     <ListView
         android:id="@+id/listawydarzen_list_view"

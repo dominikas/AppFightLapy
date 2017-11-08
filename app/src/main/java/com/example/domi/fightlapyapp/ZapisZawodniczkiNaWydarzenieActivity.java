@@ -13,9 +13,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import DatabaseHandler.DatabaseHandler;
-import Zawodniczka.*;
-import Wydarzenie.*;
+import databaseHandler.DatabaseHandler;
+import zawodniczka.*;
+import wydarzenie.*;
 
 /**
  * Created by Dominika Saide on 2017-11-05.

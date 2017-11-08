@@ -48,6 +48,7 @@
     <string name="wybierz_zawodniczke">Wybierz zawodniczkę</string>
     <string name="wybierz_wydarzenie">Wybierz wydarzenie</string>
     <string name="status">Status</string>
+    <string name="logowanieFb">Logowanie przez Facebook</string>
 
     <string name="err_msg_imie">Błędna wartość w polu imie</string>
     <string name="err_msg_nazwisko">Błędna wartość w polu nazwisko</string>
@@ -68,5 +69,8 @@
     <string name="edycja_zawodniczki">Edytuj dane zawodniczki</string>
     <string name="zapisz_edycja_zawodniczka">zapisz</string>
     <string name="udana_edycja_zawodniczki">Dane zawodniczki pomyślnie zaktualizowano</string>
+
+    <string name="facebook_app_id">1957782804442313</string>
+    <string name="fb_login_protocol_scheme">fb1957782804442313</string>
 
 </resources>

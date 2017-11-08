@@ -3,8 +3,8 @@ package com.example.domi.fightlapyapp;
 import org.junit.Before;
 import org.junit.Test;
 
-import MyExceptions.*;
-import Zawodniczka.*;
+import myExceptions.*;
+import zawodniczka.*;
 
 import static org.junit.Assert.*;
 
