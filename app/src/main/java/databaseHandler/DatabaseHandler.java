@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import myExceptions.*;
+import uzytkownik.Uzytkownik;
 import wydarzenie.Wydarzenie;
 import zawodniczka.*;
 
@@ -47,6 +48,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_EVENT_ID = "IDWydarzenia";
     private static final String KEY_PRESENCE = "dyspozycja";
 
+    //tabela zawodniczka użytkowników
+    private static final String TABLE_USERS = "TabelaUzytkownikow";
+    private static final String KEY_USER_ID = "IdUzytkownika";
+    private static final String KEY_USER_EMAIL = "mailUzytkownika";
+    private static final String KEY_ID_PLAYER = "idZawodniczki";
+    private static final String KEY_ROLE= "rolaUzytkownika";
+
     private static final String CREATE_TABLE_PLAYERS = "CREATE TABLE " + TABLE_PLAYERS + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_NAME + " TEXT NOT NULL,"
@@ -69,6 +77,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_EVENT_ID + " INTEGER,"
             + KEY_PRESENCE + " TEXT NOT NULL)";
 
+    private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
+            + KEY_USER_ID + " INTEGER PRIMARY KEY,"
+            + KEY_USER_EMAIL + " TEXT NOT NULL,"
+            + KEY_ID_PLAYER + " INTEGER NOT NULL,"
+            + KEY_ROLE + " TEXT NOT NULL";
+
+
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -80,6 +95,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_PLAYERS);
         db.execSQL(CREATE_TABLE_EVENTS);
         db.execSQL(CREATE_TABLE_PLAYER_EVENT);
+        db.execSQL(CREATE_TABLE_USERS);
     }
 
     // Upgrading database
@@ -89,6 +105,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYER_EVENT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         // Create tables again
         onCreate(db);
     }
@@ -97,13 +114,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        //values.put(KEY_ID, zawodniczka.getId());
         values.put(KEY_NAME, zawodniczka.getImie());
         values.put(KEY_LAST_NAME, zawodniczka.getNazwisko());
         values.put(KEY_ID_POSITION, zawodniczka.getIdPozycji());
         values.put(KEY_NUMBER, zawodniczka.getNumer());
-        //values.put(KEY_ID_EVENT, zawodniczka.);
-        // Inserting Row
+
         db.insert(TABLE_PLAYERS, null, values);
         db.close(); // Closing database connection
     }
@@ -117,7 +132,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        //(cursor.getInt(cursor.getColumnIndex(KEY_ID))),
         Zawodniczka zawodniczka = new Zawodniczka(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                 cursor.getString(cursor.getColumnIndex(KEY_NAME)),
                 cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME)),
@@ -127,7 +141,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return zawodniczka;
     }
 
-    public ArrayList<Zawodniczka> getWszystkieZawodniczki() /*throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception, Niedozwolony_Id_Exception*/ {
+    public ArrayList<Zawodniczka> getWszystkieZawodniczki(){
         ArrayList<Zawodniczka> zawodniczkaList = new ArrayList<Zawodniczka>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PLAYERS;
@@ -237,7 +251,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return wydarzenie;
     }
 
-    public ArrayList<Wydarzenie> getWszystkieWydarzenia() /*throws Puste_Pole_Exception, Za_Dlugi_Exception, Bledny_Format_Exception, Niedozwolony_Id_Exception*/ {
+    public ArrayList<Wydarzenie> getWszystkieWydarzenia(){
         ArrayList<Wydarzenie> wydarzenieList = new ArrayList<Wydarzenie>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_EVENTS;
@@ -351,11 +365,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + TABLE_PLAYER_EVENT + " tpe WHERE tpe."
                 +KEY_PLAYER_ID + " = '" + idZawodniczki + "' AND te."
                 +KEY_ID_EVENT+ " = tpe." +KEY_EVENT_ID;
-
-                /*"SELECT  * FROM " + TABLE_PLAYERS + " tp, "
-                + TABLE_EVENTS + " te, " + TABLE_PLAYER_EVENT + " tpe WHERE tp."
-                + KEY_ID + " = '" + idZawodniczki + "'" + " AND tp." + KEY_ID
-                + " = " + "tpe." + KEY_PLAYER_ID;*/
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -618,6 +627,97 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
 
         return wydarzenieList.size();
+    }
+
+    public void dodajUzytkownika(Uzytkownik user) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_USER_ID, user.getUserID());
+        values.put(KEY_USER_EMAIL, user.getUserEmail());
+        values.put(KEY_ID_PLAYER, user.getZawodniczkaID());
+        values.put(KEY_ROLE, user.getUserRole());
+
+        // Inserting Row
+        db.insert(TABLE_USERS, null, values);
+        db.close(); // Closing database connection
+    }
+
+    public Uzytkownik getUzytkownik(int id) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_USERS, new String[] { KEY_USER_ID,
+                        KEY_USER_EMAIL, KEY_ID_PLAYER, KEY_ROLE}, KEY_USER_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Uzytkownik user = new Uzytkownik(cursor.getInt(cursor.getColumnIndex(KEY_USER_ID)),
+                                         cursor.getString(cursor.getColumnIndex(KEY_USER_EMAIL)),
+                                         cursor.getInt(cursor.getColumnIndex(KEY_ID_PLAYER)),
+                                         cursor.getInt(cursor.getColumnIndex(KEY_ROLE)));
+        // return contact
+        return user;
+    }
+
+    public List<Uzytkownik> getAllUzytkownikow() {
+        List<Uzytkownik> userList = new ArrayList<Uzytkownik>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_USERS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Uzytkownik user = new Uzytkownik();
+                user.setUserID(cursor.getColumnIndex(KEY_USER_ID));
+                user.setUserEmail(cursor.getString(cursor.getColumnIndex(KEY_USER_EMAIL)));
+                user.setZawodniczkaID(cursor.getInt(cursor.getColumnIndex(KEY_ID_PLAYER)));
+                user.setUserRole(cursor.getInt(cursor.getColumnIndex(KEY_ROLE)));
+                // Adding contact to list
+                userList.add(user);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return userList;
+    }
+
+    public int getUzytkownicyCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_USERS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+
+        // return count
+        return cursor.getCount();
+    }
+
+    public int updateContact(Uzytkownik user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_USER_ID, user.getUserID());
+        values.put(KEY_USER_EMAIL, user.getUserEmail());
+        values.put(KEY_ID_PLAYER, user.getZawodniczkaID());
+        values.put(KEY_ROLE, user.getUserRole());
+
+        // updating row
+        return db.update(TABLE_USERS, values, KEY_ID + " = ?",
+                new String[] { user.getUserID().toString() } );
+    }
+
+    public void deleteUzytkownik(Uzytkownik user) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_USERS, KEY_ID + " = ?",
+                new String[] { user.getUserID().toString() });
+
+        db.close();
     }
 }
 

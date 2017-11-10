@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.domi.fightlapyapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,9 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".zawodniczkaActivities.WyborZawodniczkiActivity"
             android:parentActivityName=".MainActivity">
@@ -29,6 +27,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity
             android:name=".zawodniczkaActivities.ListaZawodniczekActivity"
             android:parentActivityName=".zawodniczkaActivities.WyborZawodniczkiActivity" />
@@ -83,12 +82,22 @@
         <activity
             android:name=".zawodniczkaActivities.UdanaEdycjaZawodniczkiActivity"
             android:parentActivityName=".zawodniczkaActivities.ListaZawodniczekEdycjaActivity" />
+        <activity
+            android:name=".FacebookActivity"
+            android:parentActivityName=".MainActivity" />
 
-        <activity android:name=".FacebookActivity"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity android:name=".AfterLoggingActivity"
             android:parentActivityName=".MainActivity"/>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+        <activity android:name=".userActivities.ZapisUseraNaWydarzenieActivity"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity android:name=".userActivities.EdycjaDanychUsera"
+            android:parentActivityName=".MainActivity"/>
 
     </application>
 

@@ -34,6 +34,7 @@
     <string name="action_settings">Settings</string>
     <string name="wybor_zawodniczki">Zawodniczki</string>
     <string name="wybor_wydarzen">Wydarzenia</string>
+    <string name="edycja_user">Edytuj swoje dane</string>
     <string name="udany_zapis_zawodniczki">Zawodniczka zapisana</string>
     <string name="zapisWydarzenieOk">Zawodniczka zapisana na wydarzenie</string>
     <string name="dodaj_wydarzenie">Dodaj wydarzenie</string>
@@ -45,10 +46,12 @@
     <string name="godzina_wydarzenia">Godzina</string>
     <string name="udany_zapis_wydarzenia">Wydarzenie zapisane</string>
     <string name="zapisz_zawodniczke_wydarzenie">Zapisz zawodniczkę na wydarzenie</string>
+    <string name="zapisz_na_wydarzenie_user">Zapisz się na wydarzenie</string>
     <string name="wybierz_zawodniczke">Wybierz zawodniczkę</string>
     <string name="wybierz_wydarzenie">Wybierz wydarzenie</string>
     <string name="status">Status</string>
     <string name="logowanieFb">Logowanie przez Facebook</string>
+    <string name="wybor_user">Uzytkownik</string>
 
     <string name="err_msg_imie">Błędna wartość w polu imie</string>
     <string name="err_msg_nazwisko">Błędna wartość w polu nazwisko</string>
@@ -70,6 +73,9 @@
     <string name="zapisz_edycja_zawodniczka">zapisz</string>
     <string name="udana_edycja_zawodniczki">Dane zawodniczki pomyślnie zaktualizowano</string>
 
+    <string name="udane_logowanie">Logowanie powiodlo sie</string>
+    <string name="nieudane_logowanie">Logowanie nie powiodlo sie</string>
+    <string name="logowanie_anulowane">Logowanie anulowano</string>
     <string name="facebook_app_id">1957782804442313</string>
     <string name="fb_login_protocol_scheme">fb1957782804442313</string>
 

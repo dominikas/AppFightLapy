@@ -37,4 +37,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void wyborUsera(View view){
+        Intent intent = new Intent(this, AfterLoggingActivity.class);
+        startActivity(intent);
+    }
+
 }

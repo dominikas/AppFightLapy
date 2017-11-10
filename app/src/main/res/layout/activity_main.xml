@@ -62,4 +62,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zapisz_zawodniczke_na_wydarzenie" />
 
+    <Button
+        android:id="@+id/wybor_user"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="monospace"
+        android:onClick="wyborUsera"
+        android:text="@string/wybor_user"
+        android:textSize="24sp"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logowanie_facebook" />
+
 </android.support.constraint.ConstraintLayout>
